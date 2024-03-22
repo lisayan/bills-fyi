@@ -1,6 +1,6 @@
 import React from "react"
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-import tabContainer from '../../styles/tabs.css'
+import tabContainer from '../../styles/Tabs.css'
 
 export default function InsuranceTabs(props) {
 // 1. Create the component
