@@ -1,0 +1,5 @@
+/* Styles for the moving image */
+.moving-image {
+    position: absolute;
+    animation: moveImage 3s linear infinite;
+  }
