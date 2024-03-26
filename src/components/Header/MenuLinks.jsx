@@ -19,7 +19,7 @@ export default function MenuLinks({ isOpen }) {
           <MenuItem to="/how">How It works </MenuItem>
           <MenuItem to="/features">Features </MenuItem>
           <MenuItem to="/pricing">Pricing </MenuItem>
-          <MenuItem>
+          <MenuItem to="/add-bills">
             <Button
               size="sm"
               rounded="xl"
