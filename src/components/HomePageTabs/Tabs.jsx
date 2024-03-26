@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import { tabContainer } from '../../styles/Tabs.css';
+import { tabContainer } from '../../styles/tabs.css';
 
 export default function HomePageTabs(props) {
     // 1. Create the component
