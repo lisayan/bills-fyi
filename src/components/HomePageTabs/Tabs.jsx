@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import { tabContainer } from '../../styles/Tabs.css';
 
 export default function HomePageTabs(props) {
@@ -15,8 +15,13 @@ export default function HomePageTabs(props) {
                 </TabList>
                 <TabPanels>
                     {data.map((tab, index) => (
-                    <TabPanel p={4} px={0} key={index}>
-                        {tab.content}
+                    <TabPanel p={4} px={2} key={index}>
+                        <TabPanel p={0} px={-2} key={index}>
+                            <Box fontSize="med" fontWeight="bold" color="gray.500">
+                                {tab.content}
+                            </Box>
+                        {/* Rest of your code */}
+                        </TabPanel>
                         {/* Subtabs */}
                         <Tabs variant="solid-rounded" colorScheme="green" size='sm'>
                             <TabList>
@@ -27,7 +32,9 @@ export default function HomePageTabs(props) {
                             <TabPanels>
                                 {tab.subTabs.map((subTab, subIndex) => (
                                 <TabPanel p={4} px={0} key={subIndex}>
-                                    {subTab.content}
+                                    <Box fontSize="med" fontWeight="bold" color="gray.500">
+                                        {subTab.content}
+                                    </Box>
                                     {/* Second layer of subtabs */}
                                     <Tabs variant="soft-rounded" colorScheme="green" size='sm'>
                                         <TabList>
@@ -74,12 +81,12 @@ export default function HomePageTabs(props) {
     const insuranceTabs = [
         {
           label: "Aetna",
-          content: "",
+          content: "Providers",
           subTabs: providerTabs
         },
         {
           label: "BlueCross",
-          content: "",
+          content: "Providers",
           subTabs: providerTabs
         }
       ]
@@ -87,12 +94,12 @@ export default function HomePageTabs(props) {
     const procedureTabs = [
         {
           label: "MRI",
-          content: "",
+          content: "Insurance carriers",
           subTabs: insuranceTabs
         },
         {
           label: "X-Ray",
-          content: "",
+          content: "Insurance carriers",
           subTabs: insuranceTabs
         }
     ];
