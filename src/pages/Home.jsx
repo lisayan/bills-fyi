@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from "../components/Header";
-import Tabs from "../components/HomePageTabs";
+import DisplayData from "../components/DisplayData";
 import LiveBills from "../components/LiveBills"
 
 export default function HomePage() {
@@ -8,7 +8,7 @@ export default function HomePage() {
         <div>
             <Header />
             <LiveBills />
-            <Tabs />
+            <DisplayData />
         </div>
     )
 };
