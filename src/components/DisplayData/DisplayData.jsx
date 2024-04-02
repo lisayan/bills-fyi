@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import HomePageTabs from './HomePageTabs/Tabs.jsx';
-import BoxPlotComponent from './SummaryBoxPlot/BoxPlotSummaries.jsx';
+import BoxPlotComponent from './SummaryBoxPlots/Boxplots.jsx';
 import { dataObject } from '../../data/data.jsx';
+import PieChart from './SummaryPieCharts/PieCharts.jsx';
+import { boxContainer, parentContainer } from '../../styles/plots.css';
 
 export default function DisplayData() {
   // State to hold selected tabs
@@ -22,27 +24,52 @@ export default function DisplayData() {
     console.log(tab)
     if (tab==="procedure") {
       setSelectedTabIndex(index);
-    } else if (tab=="insurance")  {
+    } else if (tab==="insurance")  {
       setSelectedSubTabIndex(index)
     }
-    else if (tab=="provider") {
+    else if (tab==="provider") {
       setSelectedSubSubTabIndex(index);
     }
   };
   
   return (
     <div>
-      {/* Pass selectedTabs and handleTabSelect as props to Tabs component */}
       <HomePageTabs selectedTabIndex={selectedTabIndex}
-        selectedSubTabIndex={selectedSubTabIndex}
-        selectedSubSubTabIndex={selectedSubSubTabIndex}
-        onTabChange={handleTabChange}/>
-      {/* Pass selectedTabs to ScatterPlotComponent */}
-      <BoxPlotComponent
-        selectedTabIndex={selectedTabIndex}
-        selectedSubTabIndex={selectedSubTabIndex}
-        selectedSubSubTabIndex={selectedSubSubTabIndex}
-        data={dataObject}/>
+          selectedSubTabIndex={selectedSubTabIndex}
+          selectedSubSubTabIndex={selectedSubSubTabIndex}
+          onTabChange={handleTabChange}/>
+      <div className='parentContainer'>
+        <div>
+          <div className='boxContainer'>
+              <BoxPlotComponent
+                selectedTabIndex={selectedTabIndex}
+                selectedSubTabIndex={selectedSubTabIndex}
+                selectedSubSubTabIndex={selectedSubSubTabIndex}
+                data={dataObject}/>
+              <PieChart
+                selectedTabIndex={selectedTabIndex}
+                selectedSubTabIndex={selectedSubTabIndex}
+                selectedSubSubTabIndex={selectedSubSubTabIndex}
+                data={dataObject}/>
+            </div>
+        </div>
+        <div>
+          {/* Pass selectedTabs and handleTabSelect as props to Tabs component */}
+          {/* Pass selectedTabs to ScatterPlotComponent */}
+          <div className='boxContainer'>
+            <BoxPlotComponent
+              selectedTabIndex={selectedTabIndex}
+              selectedSubTabIndex={selectedSubTabIndex}
+              selectedSubSubTabIndex={selectedSubSubTabIndex}
+              data={dataObject}/>
+            <PieChart
+              selectedTabIndex={selectedTabIndex}
+              selectedSubTabIndex={selectedSubTabIndex}
+              selectedSubSubTabIndex={selectedSubSubTabIndex}
+              data={dataObject}/>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,22 @@
+.boxContainer {
+    /* background-color: lightblue; */
+    /* justify-content: center; */
+    align-items: center;
+    display: flex;
+    flex-direction: column; /* Align items in a column */
+    padding: 50; /* Example padding */
+}
+
+.parentContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.testContainer {
+    height: 400px;
+    width: 600px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 50; /* Example padding */
+}
