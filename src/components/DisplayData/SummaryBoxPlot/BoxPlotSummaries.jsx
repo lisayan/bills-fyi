@@ -10,13 +10,13 @@ export default function BoxPlotComponent({ data, layout, selectedTabIndex, selec
     "provider": selectedSubSubTabIndex,
   })
 
-  const data_test = [
+  const data_out_of_pocket_payment_test = [
     {
       y: [1, 2, 3, 4, 5], // Sample data points
       type: 'box', // Type of plot
       boxpoints: 'all', // Display all data points as individual points
       jitter: 0.3, // Add jitter to the data points for better visualization
-      pointpos: -1.8, // Adjust position of the data points
+      pointpos: 0, // Adjust position of the data points
       marker: {
         color: 'rgb(7,40,89)', // Color of the box plot
       },
@@ -26,29 +26,26 @@ export default function BoxPlotComponent({ data, layout, selectedTabIndex, selec
     },
   ];
 
-  // Layout configuration for the plot
-  const layout_test = {
-    title: 'Box Plot Example', // Title of the plot
-    yaxis: {
-      title: 'Value', // Label for the y-axis
-    },
+  // CSS style for the plot title
+  const titleStyle = {
+    textAlign: 'left', // Align the title to the left
+    paddingLeft: '60px', // Add padding to the left
+    marginBottom: '0',
+    fontWeight: 'bold', // Make the title bold
+    fontSize: '20px', // Set the font size
   };
-  // const jsonString = JSON.stringify(selectedTabs)
-
-  // const displayedData = []
-  // for (let i = 0; i < data.length; i++) {
-
-  // }
 
   return (
-    <div style={{ textAlign: 'right', paddingRight: '100px' }}>
-      <h1>Amount you pay</h1>
-      <p style={{ textAlign: 'right' }}>Selected Tabs: {jsonString}</p>
-      <Plot
-        data={data_test} // Data for the plot
-        layout={layout_test} // Layout configuration
-        style={{ width: '100%', height: '400px' }} // Style to set width and height
-      />
+    <div style={{ textAlign: 'right', paddingRight: '200px' }}>
+      <div style={{width: '50%', height: '400px', marginLeft: 'auto'}}>
+        <div style={titleStyle}>Out-of-pocket payment spread</div>
+        <Plot
+          data={data_out_of_pocket_payment_test} // Data for the plot
+          layout={{ xaxis: { showticklabels: false } ,
+        yaxis: {tickprefix: "$"}}} // No need for layout configuration
+          style={{ width: '100%', height: '100%' }} // Style to set width and height
+        />
+      </div>
     </div>
   );
 }
