@@ -1,9 +1,50 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { ChakraProvider, Button, Input, Text } from "@chakra-ui/react";
+import AWS from 'aws-sdk';
 import Header from "../components/Header";
 import "../styles/addbill.css"
 
 export default function AddBillPage() {
+    // const [formData, setFormData] = useState({
+    //     insurance: '',
+    //     city: '',
+    //     state: '',
+    //     procedure: '',
+    //     provider: '',
+    //     amount_paid_insurance: '',
+    //     amount_paid_you: ''
+    // });
+
+    // const handleChange = (event) => {
+    //     setFormData({
+    //         ...formData,
+    //         [event.target.name]: event.target.value
+    //     });
+    // };
+
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     await submitFormData();
+    // };
+
+    // const submitFormData = async () => {
+    //     try {
+    //         const dynamodb = new AWS.DynamoDB.DocumentClient();
+
+    //         const params = {
+    //             TableName: 'bills-fyi',
+    //             Item: {
+    //                 Procedure: formData.procedure,
+    //                 Insurance: formData.insurance,
+
+    //             },
+    //             ExpressionAttributeNames: {
+    //                 '#amountPaidInsurance': 'Amount Paid (Insurance)'
+    //             }
+    //         };
+    //     }
+    // };
+
     return (
         <div>
             <Header />
