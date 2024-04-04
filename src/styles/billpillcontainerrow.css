@@ -1,0 +1,11 @@
+.billPillContainerRow {
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+
+.billPillTimestamp {
+    font-size: 10px;
+    margin-bottom: 5px !important;
+    padding-left: 4px;
+    padding-right: 4px;
+}

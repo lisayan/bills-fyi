@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Stat, StatLabel, StatNumber, StatHelpText, StatArrow, Icon } from '@chakra-ui/react';
 import { FiMapPin } from 'react-icons/fi'; // Importing the location icon
 
-const BillPill = ({ label, value, city, state }) => {
+export default function BillPill ({ label, value, city, state }) {
   return (
     <Box
       bg="gray.200"
@@ -23,7 +23,5 @@ const BillPill = ({ label, value, city, state }) => {
         </StatHelpText>
       </Stat>
     </Box>
-  );
+  )
 };
-
-export default BillPill;

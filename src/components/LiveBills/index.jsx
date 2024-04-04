@@ -1,2 +1,2 @@
-import BillPillContainer from "./BillPillContainer";
-export default BillPillContainer;
+import BillPillContainerRow from "./BillPillContainerRow";
+export default BillPillContainerRow;
