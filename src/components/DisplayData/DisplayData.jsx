@@ -31,6 +31,34 @@ export default function DisplayData() {
       setSelectedSubSubTabIndex(index);
     }
   };
+<<<<<<< HEAD
+=======
+
+  const columns = [
+    {
+      Header: 'Procedure',
+      accessor: 'procedure',
+    },
+    {
+      Header: 'Insurance',
+      accessor: 'insurance',
+    },
+    {
+      Header: 'Out-of-pocket payment',
+      accessor: 'oop_payment',
+    },
+    {
+      Header: 'Insurance payment',
+      accessor: 'insurance_payment',
+    },
+  ];
+
+  const data_table = [
+    { procedure: 'MRI', insurance: 'Aetna', oop_payment: 200, insurance_payment: 400 },
+    { procedure: 'MRI', insurance: 'Aetna', oop_payment: 100, insurance_payment: 8900 },
+    { procedure: 'MRI', insurance: 'Aetna', oop_payment: 400, insurance_payment: 999 },
+  ];
+>>>>>>> 06e885f... Add temporary data table
   
   return (
     <div>

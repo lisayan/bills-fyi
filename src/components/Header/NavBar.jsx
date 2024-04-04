@@ -12,7 +12,7 @@ function NavBar(props) {
     return (
       <NavBarContainer {...props}>
         <Logo
-          w="100px"
+          w="150px"
           color={["white", "white", "white", "white"]}
         />
         <MenuToggle toggle={toggle} isOpen={isOpen} />
