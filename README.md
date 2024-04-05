@@ -5,6 +5,7 @@ Making medical bills transparent for all.
 npm i @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^6
 npm install react-chartjs-2 chart.js
 npm install --save font-awesome
+npm install react-table
 
 # Generated JavaScript template with this command.
 npx create-react-app my-app --template @chakra-ui

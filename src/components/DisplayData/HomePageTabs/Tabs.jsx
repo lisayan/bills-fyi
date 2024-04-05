@@ -10,7 +10,7 @@
         function DataTabs({ data }) {
         return (
             <div className='tabContainer'>
-                <Tabs align='start' variant="line" colorScheme="green" index= {selectedTabIndex} onChange={(index) => onTabChange(index, "procedure")}>
+                <Tabs align='start' variant="line" color="#3b413c" index= {selectedTabIndex} onChange={(index) => onTabChange(index, "procedure")}>
                     <TabList>
                         {data.map((tab, index) => (
                         <Tab key={index} index={selectedTabIndex} fontWeight="bold">
@@ -28,7 +28,7 @@
                             {/* Rest of your code */}
                             </TabPanel>
                             {/* Subtabs */}
-                            <Tabs variant="solid-rounded" colorScheme="green" size='sm' index= {selectedSubTabIndex} onChange={(index) => onTabChange(index, "insurance")}>
+                            <Tabs variant="solid-rounded" color="#3b413c" size='sm' index= {selectedSubTabIndex} onChange={(index) => onTabChange(index, "insurance")}>
                                 <TabList>
                                     {tab.subTabs.map((subTab, subIndex) => (
                                     <Tab key={subIndex}>
@@ -43,7 +43,7 @@
                                             {subTab.content}
                                         </Box>
                                         {/* Second layer of subtabs */}
-                                        <Tabs variant="soft-rounded" colorScheme="green" size='sm' index= {selectedSubSubTabIndex} onChange={(index) => onTabChange(index, "provider")}>
+                                        <Tabs variant="soft-rounded" color="#3b413c" size='sm' index= {selectedSubSubTabIndex} onChange={(index) => onTabChange(index, "provider")}>
                                             <TabList>
                                                 {subTab.subTabs.map((secondSubTab, secondSubIndex) => (
                                                 <Tab key={secondSubIndex} fontSize="sm">

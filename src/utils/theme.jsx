@@ -2,15 +2,15 @@ import { background, extendTheme } from "@chakra-ui/react";
 
 const colors = {
   primary: {
-    100: "#86e091",
-    200: "#50d260",
-    300: "#32c344",
-    400: "#2daf3d",
-    500: "#279936",
-    600: "#22842e",
-    700: "#1b6925",
-    800: "#144d1b",
-    900: "#0c2f10"
+    100: "#9db5b2", // ash gray; header color
+    200: "#3b413c", // black olive
+    300: "#3b413c", // black olive
+    400: "#3b413c",
+    500: "#3b413c", // black olive; buttons
+    600: "#3b413c",
+    700: "#3b413c",
+    800: "#3b413c",
+    900: "#3b413c"
   }
 };
 

@@ -8,9 +8,9 @@ export default function BillPillContainer ({ label, value, city, state, timestam
     return (
         <div class="billPillContainer">
             <p class="billPillTimestamp" >
-                <span class="greyed" style={{ fontWeight: 600 }}>
+                <span color="#a2a2a2" style={{ fontWeight: 600 }}>
                     <FontAwesomeIcon icon={faClock}/>
-                    21 minutes ago
+                     21 minutes ago
                 </span>
             </p>
             <BillPill
