@@ -2,16 +2,16 @@
 export const providerTabs =
 [
     {
-        label: "Dr Wang",
-        content: "{'Insurance paid': 234, 'You paid': 123}"
+        label: "Dr. Serena Wang",
+        content: ""
     },
     {
-        label: "Dr. Yan",
-        content: "{'Insurance paid': 789, 'You paid': 789}"
+        label: "Dr. Lisa Yan",
+        content: ""
     },
     {
-        label: "Dr. Zang",
-        content: "{'Insurance paid': 456, 'You paid': 456}"
+        label: "Dr. Ethan Zang",
+        content: ""
     }
 ];
 
@@ -22,7 +22,7 @@ export const insuranceTabs = [
     subTabs: providerTabs
     },
     {
-    label: "BlueCross",
+    label: "Blue Cross Blue Shield",
     content: "Providers",
     subTabs: providerTabs
     }

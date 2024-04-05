@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+}
+
+.left-box {
+  flex: 1; /* Take up all available space */
+  background-color: lightblue;
+}
+
+.right-boxes {
+  display: flex;
+  flex-direction: column;
+}
+
+.right-box {
+  flex: 1; /* Each box takes up equal height */
+  margin-left: 10px; /* Adjust spacing between boxes */
+  background-color: lightgreen;
+}
