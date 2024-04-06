@@ -8,7 +8,6 @@ export default function HomePage() {
         <div>
             <Header />
             <ProcedurePanels />
-            {/* <DisplayData /> */}
         </div>
     )
 };

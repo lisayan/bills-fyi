@@ -1,2 +1,2 @@
-import BillPillContainerRow from "./BillPillContainerRow";
-export default BillPillContainerRow;
+import ProcedurePillContainerRow from "./ProcedurePillContainerRow";
+export default ProcedurePillContainerRow;
