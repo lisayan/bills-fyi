@@ -64,14 +64,6 @@ export default function BoxPlotComponent({ data, layout, selectedTabIndex, selec
             // style={{ width: '100%', height: '100%' }} // Style to set width and height
           />
         </div>
-        <div style={titleStyle}>{selectedProcedure} insurance payment spread</div>
-        <div>
-          <Plot
-            data={data_out_of_pocket_payment_test} // Data for the plot
-            layout={layout_box_plot} // No need for layout configuration
-            // style={{ width: '100%', height: '100%' }} // Style to set width and height
-          />
-        </div>
         {/* <p style={{ textAlign: 'right' }}>Selected Tabs: {jsonString}</p> */}
       </div>
     </div>

@@ -4,14 +4,17 @@ import BasicTable from './DataTable/ParentDataTable.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
 import HomePageTabs from './HomePageTabs/Tabs.jsx';
+import {mriBulletPoints} from '../../procedureDescriptions/MRI.jsx';
+import {xrayBulletPoints} from '../../procedureDescriptions/Xray.jsx';
 import BoxPlotComponent from './SummaryBoxPlots/Boxplots.jsx';
 import { dataObject } from '../../data/data.jsx';
 import PieChart from './SummaryPieCharts/PieCharts.jsx';
-import {bulletContainer, bulletParentContainer, imageContainer, mriImageContainer, mriImageContainer2, priceBoxContainer, priceBoxContainerLeftCenterColumn, priceBoxContainerRightCenterColumn, priceBoxContainerLeftColumn, priceBoxContainerRightColumn, textParentContainer, textTitleContainer} from '../../styles/procedureSummary.css';
-import { boxContainer, parentContainer } from '../../styles/plots.css';
+import '../../styles/procedureSummary.css';
+import '../../styles/plots.css';
 import { fetchData } from './AWS_DDB.jsx';
 import mriImage from '../../images/MRI.jpg'
 import mriImage2 from '../../images/MRI_2.jpg'
+import xrayImage from '../../images/Xray.jpg'
 
 export default function DisplayData({procedureIndex}) {
   const [selectedTabIndex, setSelectedTabIndex] = useState(procedureIndex);
@@ -28,6 +31,14 @@ export default function DisplayData({procedureIndex}) {
     } else if (tab === "provider") {
       setSelectedSubSubTabIndex(index);
     }
+  };
+
+  const handleScrollDown = () => {
+    const tabsElement = document.querySelector('.homePageTabs');
+    window.scrollTo({
+      top: 650, // Change this value to the number of pixels you want to scroll down
+      behavior: "smooth" // Add smooth scrolling behavior
+    });
   };
 
   useEffect(() => {
@@ -73,9 +84,15 @@ export default function DisplayData({procedureIndex}) {
   }
   const sum = amountPaidYouData.reduce((a, b) => a + b, 0);
   const avgProcedureCost = (sum / amountPaidYouData.length) || 0;
-  console.log(amountPaidYouData)
-  console.log('meowmeow')
-  console.log(avgProcedureCost)
+
+
+  var bulletPoints = []
+  if (selectedTabIndex == 0)  {
+    bulletPoints = mriBulletPoints
+  }
+  else if (selectedTabIndex == 1) {
+    bulletPoints = xrayBulletPoints
+  }
 
   const columns = [
     {
@@ -103,11 +120,23 @@ export default function DisplayData({procedureIndex}) {
   return (
     <div>
       <div className='parentContainer'>
+      {selectedTabIndex === 0 ? (
         <div className="imageContainer" >
           <div>
-            <img src={mriImage2} alt="MRI" className="mriImageContainer" />
+            <img src={mriImage2} alt="MRI" className="procedureImageContainer" />
           </div>
         </div>
+      ) : selectedTabIndex === 1 ? (
+        <div className="imageContainer" >
+          <div>
+            <img src={xrayImage} alt="Xray" className="procedureImageContainer" />
+          </div>
+        </div>
+      ) : (
+        <div>
+          {/* Content for all other cases */}
+        </div>
+      )}
         <div className="textParentContainer">
           <div className="textTitleContainer">
             <p>{procedureTabs[selectedTabIndex].label}</p>
@@ -123,7 +152,18 @@ export default function DisplayData({procedureIndex}) {
               <p>${avgProcedureCost}</p>
             </div>
             <div className="priceBoxContainerRightColumn">
-              <p>(average cost)</p>
+              <p>(average cost*)</p>
+            </div>
+          </div>
+          <div className="textAsteriskContainer">
+            <p>{'* Average cost across all insurance carriers and providers.'}</p>
+          </div>
+          <div className="bulletParentContainer">
+            <div className="bulletContainer">
+              <FontAwesomeIcon icon={faCheck}/>
+            </div>
+            <div className="bulletContainer">
+              <p>{bulletPoints[0]['content'][0]}</p>
             </div>
           </div>
           <div className="bulletParentContainer">
@@ -131,17 +171,22 @@ export default function DisplayData({procedureIndex}) {
               <FontAwesomeIcon icon={faCheck}/>
             </div>
             <div className="bulletContainer">
-              <p> Textext</p>
+              <p>{bulletPoints[0]['content'][1]}</p>
             </div>
+          </div>
+          <div className="scrollDownContainer">
+            <button className="buttonStyle" onClick={handleScrollDown}>See more details</button>
           </div>
         </div>
       </div>
-      <HomePageTabs
-        selectedTabIndex={selectedTabIndex}
-        selectedSubTabIndex={selectedSubTabIndex}
-        selectedSubSubTabIndex={selectedSubSubTabIndex}
-        onTabChange={handleTabChange}
-      />
+      <div>
+        <HomePageTabs
+          selectedTabIndex={selectedTabIndex}
+          selectedSubTabIndex={selectedSubTabIndex}
+          selectedSubSubTabIndex={selectedSubSubTabIndex}
+          onTabChange={handleTabChange}
+        />
+      </div>
       <div className='parentContainer'>
         <div>
           <div className='boxContainer'>
