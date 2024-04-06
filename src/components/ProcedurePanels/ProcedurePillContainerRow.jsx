@@ -59,30 +59,37 @@ export default function ProcedurePillContainerRow() {
             className="procedureCardRow"
           >
             <ProcedurePill
+              link="/MRI"
               image={mriIcon}
               procedure="MRI"
             />
             <ProcedurePill
+              link="/Xray"
               image={xrayIcon}
               procedure="X-Ray"
             />
             <ProcedurePill
+              link="/MRI"
               image={ERIcon}
               procedure="ER Visit"
             />
             <ProcedurePill
+              link="/MRI"
               image={IUDIcon}
               procedure="IUD"
             />
             <ProcedurePill
+              link="/MRI"
               image={bloodTestIcon}
               procedure="Blood Test"
             />
             <ProcedurePill
+              link="/MRI"
               image={cardioIcon}
               procedure="Cardiologist"
             />
             <ProcedurePill
+              link="/MRI"
               image={acneIcon}
               procedure="Acne"
             />
@@ -95,30 +102,37 @@ export default function ProcedurePillContainerRow() {
             className="procedureCardRow"
           >
             <ProcedurePill
+              link="/MRI"
               image={PTIcon}
               procedure="PT"
             />
             <ProcedurePill
+              link="/MRI"
               image={ambulanceIcon}
               procedure="Ambulance"
             />
             <ProcedurePill
+              link="/MRI"
               image={childBirthIcon}
               procedure="Childbirth"
             />
             <ProcedurePill
+              link="/MRI"
               image={mammogramIcon}
               procedure="Mammogram"
             />
             <ProcedurePill
+              link="/MRI"
               image={colonoscopyIcon}
               procedure="Colonoscopy"
             />
             <ProcedurePill
+              link="/MRI"
               image={virtualIcon}
               procedure="Virtual Visit"
             />
             <ProcedurePill
+              link="/MRI"
               image={primaryCareIcon}
               procedure="Primary Care"
             />
@@ -131,30 +145,37 @@ export default function ProcedurePillContainerRow() {
             className="procedureCardRow"
           >
             <ProcedurePill
+              link="/MRI"
               image={surgeryIcon}
               procedure="Surgery"
             />
             <ProcedurePill
+              link="/MRI"
               image={lipFillerIcon}
               procedure="Lip Filler"
             />
             <ProcedurePill
+              link="/MRI"
               image={botoxIcon}
               procedure="Botox"
             />
             <ProcedurePill
+              link="/MRI"
               image={stitchesIcon}
               procedure="Stitches"
             />
             <ProcedurePill
+              link="/MRI"
               image={heartSurgeryIcon}
               procedure="Heart Surgery"
             />
             <ProcedurePill
+              link="/MRI"
               image={papSmearIcon}
               procedure="Pap Smear"
             />
             <ProcedurePill
+              link="/MRI"
               image={chemoIcon}
               procedure="Chemotherapy"
             />
@@ -167,30 +188,37 @@ export default function ProcedurePillContainerRow() {
             className="procedureCardRow"
           >
             <ProcedurePill
+              link="/MRI"
               image={kneeSurgeryIcon}
               procedure="Knee Surgery"
             />
             <ProcedurePill
+              link="/MRI"
               image={hospitalStayIcon}
               procedure="Hospital Stay"
             />
             <ProcedurePill
+              link="/MRI"
               image={rootCanalIcon}
               procedure="Root Canal"
             />
             <ProcedurePill
+              link="/MRI"
               image={dentalCleaningIcon}
               procedure="Dental Visit"
             />
             <ProcedurePill
+              link="/MRI"
               image={stdIcon}
               procedure="STD"
             />
             <ProcedurePill
+              link="/MRI"
               image={hairTransplantIcon}
               procedure="Hair Transplant"
             />
             <ProcedurePill
+              link="/MRI"
               image={dialysisIcon}
               procedure="Dialysis"
             />
