@@ -12,7 +12,8 @@ export default function DisplayData() {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [selectedSubTabIndex, setSelectedSubTabIndex] = useState(0);
   const [selectedSubSubTabIndex, setSelectedSubSubTabIndex] = useState(0);
-  const [dataTable, setDataTable] = useState([]);
+  const [procedureDataTable, setProcedureDataTable] = useState([]);
+  const [combinedDataTable, setCombinedDataTable] = useState([]);
 
   const handleTabChange = (index, tab = "") => {
     if (tab === "procedure") {
@@ -28,7 +29,20 @@ export default function DisplayData() {
     const fetchDataAsync = async () => {
       try {
         const rawData = await fetchData('bills-exposed-database');
-        const formattedData = rawData
+        const procedureFilteredData = rawData
+          .filter(item => 
+            item.procedure === procedureTabs[selectedTabIndex].label
+          )
+          .map(item => ({
+            procedure: item.procedure,
+            insurance: item.insurance,
+            oop_payment: item.amountPaidYou,
+            insurance_payment: item.amountPaidInsurance,
+            provider: item.provider,
+          }));
+        setProcedureDataTable(procedureFilteredData);
+
+        const combinedFilteredData = rawData
           .filter(item => 
             item.procedure === procedureTabs[selectedTabIndex].label && 
             item.insurance === insuranceTabs[selectedSubTabIndex].label && 
@@ -41,13 +55,14 @@ export default function DisplayData() {
             insurance_payment: item.amountPaidInsurance,
             provider: item.provider,
           }));
-        setDataTable(formattedData);
+        setCombinedDataTable(combinedFilteredData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchDataAsync();
   }, [selectedTabIndex, selectedSubTabIndex, selectedSubSubTabIndex]);
+  console.log(procedureDataTable)
 
   const columns = [
     {
@@ -83,7 +98,7 @@ export default function DisplayData() {
       <div className='parentContainer'>
         <div>
           <div className='boxContainer'>
-            <BasicTable columns={columns} data={dataTable} />
+            <BasicTable columns={columns} data={combinedDataTable} />
           </div>
         </div>
         <div>
@@ -92,13 +107,13 @@ export default function DisplayData() {
               selectedTabIndex={selectedTabIndex}
               selectedSubTabIndex={selectedSubTabIndex}
               selectedSubSubTabIndex={selectedSubSubTabIndex}
-              data={dataObject}
+              data={procedureDataTable}
             />
             <PieChart
               selectedTabIndex={selectedTabIndex}
               selectedSubTabIndex={selectedSubTabIndex}
               selectedSubSubTabIndex={selectedSubSubTabIndex}
-              data={dataObject}
+              data={procedureDataTable}
             />
           </div>
         </div>

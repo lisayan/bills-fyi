@@ -48,8 +48,8 @@ export const dataObject = [
         provider: "Dr Wang",
         city: "Boston",
         state: "MA",
-        insurance_paid: 20,
-        you_paid: 10
+        amountPaidInsurance: 20,
+        amountPaidYou: 10
     },
     {
         procedure: "MRI",
@@ -57,8 +57,8 @@ export const dataObject = [
         provider: "Dr Wang",
         city: "Boston",
         state: "MA",
-        insurance_paid: 40,
-        you_paid: 20
+        amountPaidInsurance: 40,
+        amountPaidYou: 20
     },
     {
         procedure: "MRI",
@@ -66,8 +66,8 @@ export const dataObject = [
         provider: "Dr Wang",
         city: "Boston",
         state: "MA",
-        insurance_paid: 40,
-        you_paid: 30
+        amountPaidInsurance: 40,
+        amountPaidYou: 30
     },
     {
         procedure: "X-Ray",
@@ -75,8 +75,8 @@ export const dataObject = [
         provider: "Dr Zang",
         city: "Boston",
         state: "MA",
-        insurance_paid: 5,
-        you_paid: 0
+        amountPaidInsurance: 5,
+        amountPaidYou: 0
     },
     {
         procedure: "X-Ray",
@@ -84,7 +84,7 @@ export const dataObject = [
         provider: "Dr Yan",
         city: "Boston",
         state: "MA",
-        insurance_paid: 40,
-        you_paid: 60
+        amountPaidInsurance: 40,
+        amountPaidYou: 60
     }
 ];

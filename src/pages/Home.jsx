@@ -8,7 +8,7 @@ export default function HomePage() {
         <div>
             <Header />
             <LiveBills />
-            <DisplayData />
+            {/* <DisplayData /> */}
         </div>
     )
 };

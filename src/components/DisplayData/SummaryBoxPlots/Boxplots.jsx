@@ -11,6 +11,15 @@ export default function BoxPlotComponent({ data, layout, selectedTabIndex, selec
     "provider": selectedSubSubTabIndex,
   })
 
+  var amountPaidYouData = []
+  console.log('Okay')
+  console.log(data)
+  for (let i=0; i<Object.keys(data).length; i++)  {
+    amountPaidYouData.push(data[i]['oop_payment'])
+  }
+  console.log('Look here')
+  console.log(amountPaidYouData)
+;
   const data_out_of_pocket_payment_test = [
     {
       y: [1, 2, 3, 4, 5], // Sample data points

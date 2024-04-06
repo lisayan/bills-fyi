@@ -8,7 +8,7 @@ export const setupAWSEnv = () => {
         secretAccessKey: '', //re-add this 
         accessKeyId: 'AKIA6ODUZTKWCTGNDVLT',
     }
-    
+
     AWS.config.update(configuration)
 }
 
@@ -27,7 +27,6 @@ export const fetchData = async(tableName) => {
         items.Items.forEach((item) => scanResults.push(item));
         params.ExclusiveStartKey = items.LastEvaluatedKey;
     }while(typeof items.LastEvaluatedKey !== "undefined");
-    console.log(scanResults)
     
     return scanResults;
     
