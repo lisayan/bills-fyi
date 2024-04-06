@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { insuranceTabs, procedureTabs, providerTabs } from '../../data/data.jsx';
 import BasicTable from './DataTable/ParentDataTable.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
 import HomePageTabs from './HomePageTabs/Tabs.jsx';
 import BoxPlotComponent from './SummaryBoxPlots/Boxplots.jsx';
 import { dataObject } from '../../data/data.jsx';
 import PieChart from './SummaryPieCharts/PieCharts.jsx';
+import {bulletContainer, bulletParentContainer, imageContainer, mriImageContainer, mriImageContainer2, priceBoxContainer, priceBoxContainerLeftCenterColumn, priceBoxContainerRightCenterColumn, priceBoxContainerLeftColumn, priceBoxContainerRightColumn, textParentContainer, textTitleContainer} from '../../styles/procedureSummary.css';
 import { boxContainer, parentContainer } from '../../styles/plots.css';
 import { fetchData } from './AWS_DDB.jsx';
+import mriImage from '../../images/MRI.jpg'
+import mriImage2 from '../../images/MRI_2.jpg'
 
-export default function DisplayData() {
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+export default function DisplayData({procedureIndex}) {
+  const [selectedTabIndex, setSelectedTabIndex] = useState(procedureIndex);
   const [selectedSubTabIndex, setSelectedSubTabIndex] = useState(0);
   const [selectedSubSubTabIndex, setSelectedSubSubTabIndex] = useState(0);
   const [procedureDataTable, setProcedureDataTable] = useState([]);
@@ -62,7 +67,15 @@ export default function DisplayData() {
     };
     fetchDataAsync();
   }, [selectedTabIndex, selectedSubTabIndex, selectedSubSubTabIndex]);
-  console.log(procedureDataTable)
+  var amountPaidYouData = []
+  for (let i=0; i<Object.keys(procedureDataTable).length; i++)  {
+    amountPaidYouData.push(procedureDataTable[i]['oop_payment'])
+  }
+  const sum = amountPaidYouData.reduce((a, b) => a + b, 0);
+  const avgProcedureCost = (sum / amountPaidYouData.length) || 0;
+  console.log(amountPaidYouData)
+  console.log('meowmeow')
+  console.log(avgProcedureCost)
 
   const columns = [
     {
@@ -89,6 +102,40 @@ export default function DisplayData() {
 
   return (
     <div>
+      <div className='parentContainer'>
+        <div className="imageContainer" >
+          <div>
+            <img src={mriImage2} alt="MRI" className="mriImageContainer" />
+          </div>
+        </div>
+        <div className="textParentContainer">
+          <div className="textTitleContainer">
+            <p>{procedureTabs[selectedTabIndex].label}</p>
+          </div>
+          <div className="priceBoxContainer">
+            <div className="priceBoxContainerLeftColumn">
+              <FontAwesomeIcon icon={faUserDoctor} />
+            </div>
+            <div className="priceBoxContainerLeftCenterColumn">
+              <p>You Pay</p>
+            </div>
+            <div className="priceBoxContainerRightCenterColumn">
+              <p>${avgProcedureCost}</p>
+            </div>
+            <div className="priceBoxContainerRightColumn">
+              <p>(average cost)</p>
+            </div>
+          </div>
+          <div className="bulletParentContainer">
+            <div className="bulletContainer">
+              <FontAwesomeIcon icon={faCheck}/>
+            </div>
+            <div className="bulletContainer">
+              <p> Textext</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <HomePageTabs
         selectedTabIndex={selectedTabIndex}
         selectedSubTabIndex={selectedSubTabIndex}

@@ -6,7 +6,7 @@ export default function MRIPage() {
     return (
         <div>
             <Header/>
-            <DisplayData/>
+            <DisplayData procedureIndex={0}/>
         </div>
     )
 };
