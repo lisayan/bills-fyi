@@ -194,7 +194,7 @@ export default function DisplayData({procedureIndex}) {
               selectedTabIndex={selectedTabIndex}
               selectedSubTabIndex={selectedSubTabIndex}
               selectedSubSubTabIndex={selectedSubSubTabIndex}
-              data={procedureDataTable}
+              data={amountPaidYouData}
             />
             <BasicTable columns={columns} data={combinedDataTable} />
           </div>

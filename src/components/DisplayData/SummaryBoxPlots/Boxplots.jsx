@@ -14,7 +14,7 @@ export default function BoxPlotComponent({ data, layout, selectedTabIndex, selec
 ;
   const data_out_of_pocket_payment_test = [
     {
-      y: [1, 2, 3, 4, 5], // Sample data points
+      y: [100, 200, 700, 300, 400], // Sample data points
       type: 'box', // Type of plot
       boxpoints: 'all', // Display all data points as individual points
       jitter: 0.3, // Add jitter to the data points for better visualization
