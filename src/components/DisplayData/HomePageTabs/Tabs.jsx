@@ -13,7 +13,7 @@
                 <Tabs align='start' variant="line" index= {selectedTabIndex} onChange={(index) => onTabChange(index, "procedure")}>
                     <TabList>
                         {data.map((tab, index) => (
-                        <Tab key={index} index={selectedTabIndex} _selected={{color: "primary.400"}} fontWeight="bold">
+                        <Tab key={index} index={selectedTabIndex} _selected={{color: "black", bg: "primary.400", borderRadius: '10px'}} fontWeight="bold">
                             {tab.label}
                         </Tab>
                         ))}

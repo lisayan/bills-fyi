@@ -15,7 +15,7 @@ export default function ProcedurePill({ link, image, procedure }) {
             width="162px"
             height="122px"
             position="relative"
-            borderRadius="10px"
+            borderRadius="20px"
             padding="12px"
           >
             <div className="procedureCardInner">
