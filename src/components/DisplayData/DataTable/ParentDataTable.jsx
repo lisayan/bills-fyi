@@ -22,9 +22,9 @@ const BasicTable = ({ columns, data }) => {
                   {...column.getHeaderProps()}
                   style={{
                     padding: '8px', // Adjust the padding as needed
-                    backgroundColor: '#daf0ee', // Change the background color here
+                    backgroundColor: '#1B263B', // Change the background color here
                     borderRadius: '10px 10px 0 0', // Rounded corners for the header
-                    color: '#3b413c', // Change the font color here
+                    color: 'white', // Change the font color here
                   }}
                 >
                   {column.render('Header')}

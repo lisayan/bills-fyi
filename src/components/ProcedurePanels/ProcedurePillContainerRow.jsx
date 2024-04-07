@@ -42,8 +42,8 @@ export default function ProcedurePillContainerRow() {
             borderRadius="20px"
             variant="outline"
             borderStyle="dashed"
-            borderColor="blue"
-            textColor="blue"
+            borderColor="#1B263B"
+            textColor="#1B263B"
             p={3}
             px={5}
             width="200px"

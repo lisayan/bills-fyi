@@ -24,7 +24,7 @@ export default function MenuLinks({ isOpen }) {
               size="sm"
               rounded="xl"
               color={["primary.500", "primary.500", "white", "white"]}
-              bg={["white", "white", "primary.500", "primary.500"]}
+              bg={["white", "white", "primary.100", "primary.100"]}
               _hover={{
                 bg: ["primary.100", "primary.100", "primary.600", "primary.600"],
               }}
@@ -38,7 +38,7 @@ export default function MenuLinks({ isOpen }) {
               size="sm"
               rounded="xl"
               color={["primary.500", "primary.500", "white", "white"]}
-              bg={["white", "white", "primary.500", "primary.500"]}
+              bg={["white", "white", "primary.100", "primary.100"]}
               _hover={{
                 bg: ["primary.100", "primary.100", "primary.600", "primary.600"],
               }}

@@ -14,8 +14,8 @@ const PieChart = ({selectedTabIndex, selectedSubTabIndex, selectedSubSubTabIndex
     datasets: [{
       data: [12, 19],
       backgroundColor: [
-        'lightblue',
-        'lightgreen',
+        '#0D1B2A',
+        '#415A77',
       ]
     }]
   };

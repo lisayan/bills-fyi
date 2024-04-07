@@ -9,13 +9,13 @@ export default function ProcedurePill({ link, image, procedure }) {
     <div className="procedureCard">
         <Link to={link}>
           <Box
-            bg="#daf0ee"
+            bg="#E0E1DD"
             textAlign="left"
             display="inline-block"
             width="162px"
             height="122px"
             position="relative"
-            borderRadius="3px"
+            borderRadius="10px"
             padding="12px"
           >
             <div className="procedureCardInner">

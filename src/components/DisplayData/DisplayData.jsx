@@ -190,17 +190,17 @@ export default function DisplayData({procedureIndex}) {
       <div className='parentContainer'>
         <div>
           <div className='boxContainer'>
-            <BasicTable columns={columns} data={combinedDataTable} />
-          </div>
-        </div>
-        <div>
-          <div className='boxContainer'>
             <BoxPlotComponent
               selectedTabIndex={selectedTabIndex}
               selectedSubTabIndex={selectedSubTabIndex}
               selectedSubSubTabIndex={selectedSubSubTabIndex}
               data={procedureDataTable}
             />
+            <BasicTable columns={columns} data={combinedDataTable} />
+          </div>
+        </div>
+        <div>
+          <div className='boxContainer'>
             <PieChart
               selectedTabIndex={selectedTabIndex}
               selectedSubTabIndex={selectedSubTabIndex}

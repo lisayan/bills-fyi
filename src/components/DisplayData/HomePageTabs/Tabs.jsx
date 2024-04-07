@@ -10,10 +10,10 @@
         function DataTabs({ data }) {
         return (
             <div className='tabContainer'>
-                <Tabs align='start' variant="line" color="#3b413c" index= {selectedTabIndex} onChange={(index) => onTabChange(index, "procedure")}>
+                <Tabs align='start' variant="line" index= {selectedTabIndex} onChange={(index) => onTabChange(index, "procedure")}>
                     <TabList>
                         {data.map((tab, index) => (
-                        <Tab key={index} index={selectedTabIndex} fontWeight="bold">
+                        <Tab key={index} index={selectedTabIndex} _selected={{color: "primary.400"}} fontWeight="bold">
                             {tab.label}
                         </Tab>
                         ))}
@@ -28,10 +28,10 @@
                             {/* Rest of your code */}
                             </TabPanel>
                             {/* Subtabs */}
-                            <Tabs variant="solid-rounded" color="#3b413c" size='sm' index= {selectedSubTabIndex} onChange={(index) => onTabChange(index, "insurance")}>
+                            <Tabs variant="solid-rounded" size='sm' index= {selectedSubTabIndex} onChange={(index) => onTabChange(index, "insurance")}>
                                 <TabList>
                                     {tab.subTabs.map((subTab, subIndex) => (
-                                    <Tab key={subIndex}>
+                                    <Tab key={subIndex} _selected={{bg: "primary.400", color: "black"}}>
                                         {subTab.label}
                                     </Tab>
                                     ))}
@@ -46,7 +46,7 @@
                                         <Tabs variant="soft-rounded" color="#3b413c" size='sm' index= {selectedSubSubTabIndex} onChange={(index) => onTabChange(index, "provider")}>
                                             <TabList>
                                                 {subTab.subTabs.map((secondSubTab, secondSubIndex) => (
-                                                <Tab key={secondSubIndex} fontSize="sm">
+                                                <Tab key={secondSubIndex} fontSize="sm" _selected={{bg: "primary.400", color: "black"}}>
                                                     {secondSubTab.label}
                                                 </Tab>
                                                 ))}
