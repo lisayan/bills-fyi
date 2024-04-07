@@ -36,7 +36,8 @@ export default function ProcedurePillContainerRow() {
   return (
     <div className='procedureCardContainer'>
       <Box p={4}>
-        <Text fontSize="lg" fontWeight="bold" marginBottom="10px">Medical Bill Amounts</Text>
+        <Text fontSize="30px" fontWeight="bold" marginBottom="10px" marginLeft="20px">Find a treatment</Text>
+        <Text fontSize="18px" marginLeft="20px" marginBottom="20px">Choose a condition to learn more, see prices, and get started. Help us improve our data by adding your bill.</Text>
         <Link to="/addbillpage">
           <Button
             borderRadius="20px"
@@ -48,6 +49,7 @@ export default function ProcedurePillContainerRow() {
             px={5}
             width="200px"
             height="110px"
+            marginLeft="20px"
           >+ Add Your Bill</Button>
         </Link>
         <div className="procedureCardSection">
