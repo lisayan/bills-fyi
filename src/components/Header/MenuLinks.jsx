@@ -16,9 +16,7 @@ export default function MenuLinks({ isOpen }) {
           pt={[4, 4, 0, 0]}
         >
           <MenuItem to="/">Home</MenuItem>
-          <MenuItem to="/how">How It works </MenuItem>
-          <MenuItem to="/features">Features </MenuItem>
-          <MenuItem to="/pricing">Pricing </MenuItem>
+          <MenuItem to="/about">About us </MenuItem>
           <MenuItem to="/add-bills">
             <Button
               size="sm"
@@ -30,21 +28,21 @@ export default function MenuLinks({ isOpen }) {
               }}
               variant={'outline'}
             >
-              + Your Bill
+              Sign Up
             </Button>
           </MenuItem>
           <MenuItem to="/signup" isLast>
             <Button
               size="sm"
               rounded="xl"
-              color={["primary.500", "primary.500", "white", "white"]}
-              bg={["white", "white", "primary.100", "primary.100"]}
+              color={["primary.500", "primary.500", "white", "primary.100"]}
+              bg={["white", "white", "primary.100", "white"]}
               _hover={{
                 bg: ["primary.100", "primary.100", "primary.600", "primary.600"],
               }}
-              variant={'outline'}
+              variant={'solid'}
             >
-              Fight Your Bill
+              Sign In
             </Button>
           </MenuItem>
         </Stack>

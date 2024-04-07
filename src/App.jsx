@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import AddBill from './pages/AddBill';
 import MRI from './pages/MRI';
 import Xray from './pages/Xray';
+import About from './pages/About';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/addbillpage" element={<AddBill/>}/>
         <Route path="/mri" element={<MRI/>}/>
         <Route path="/xray" element={<Xray/>}/>
+        <Route path="/about" element={<About/>}/>
       </Routes>
     </Router>
   )
