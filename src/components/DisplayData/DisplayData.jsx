@@ -132,6 +132,12 @@ export default function DisplayData({procedureIndex}) {
             <img src={xrayImage} alt="Xray" className="procedureImageContainer" />
           </div>
         </div>
+      ) : selectedTabIndex === 1 ? (
+        <div className="imageContainer" >
+          <div>
+            <img src={xrayImage} alt="Xray" className="procedureImageContainer" />
+          </div>
+        </div>
       ) : (
         <div>
           {/* Content for all other cases */}

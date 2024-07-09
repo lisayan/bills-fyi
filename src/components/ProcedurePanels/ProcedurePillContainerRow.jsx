@@ -5,6 +5,7 @@ import ProcedurePill from './ProcedurePill.jsx';
 import '../../styles/procedurepanels.css';
 import mriIcon from "../../images/mri_icon.jpg";
 import xrayIcon from "../../images/xray_icon.jpg";
+import ctIcon from "../../images/ct-scan.png";
 import ERIcon from "../../images/emergency_room_icon.jpg";
 import IUDIcon from "../../images/iud.jpg";
 import ambulanceIcon from "../../images/ambulance_icon.jpg";
@@ -31,6 +32,12 @@ import rootCanalIcon from "../../images/root_canal.jpg";
 import stdIcon from "../../images/std.jpg";
 import dialysisIcon from "../../images/dialysis.png";
 import hairTransplantIcon from "../../images/hair_transplant.jpg";
+import tonsilsIcon from "../../images/tonsils.png";
+import cardiacRecorderIcon from "../../images/cardiac-monitor.png"
+import bruisesIcon from "../../images/bruises.png"
+import catheterIcon from "../../images/catheter.png"
+import jointsIcon from "../../images/joints.png"
+import abscessIcon from "../../images/abscess.png"
 
 export default function ProcedurePillContainerRow() {
   return (
@@ -61,82 +68,39 @@ export default function ProcedurePillContainerRow() {
             className="procedureCardRow"
           >
             <ProcedurePill
-              link="/MRI"
-              image={mriIcon}
-              procedure="MRI"
-            />
-            <ProcedurePill
-              link="/Xray"
-              image={xrayIcon}
-              procedure="X-Ray"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={ERIcon}
-              procedure="ER Visit"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={IUDIcon}
-              procedure="IUD"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={bloodTestIcon}
-              procedure="Blood Test"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={cardioIcon}
-              procedure="Cardiologist"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={acneIcon}
-              procedure="Acne"
-            />
-          </Stack>
-          <Stack
-            spacing={6}
-            align="flex-start"
-            direction={["column", "row", "row", "row"]}
-            pt={[4, 4, 0, 0]}
-            className="procedureCardRow"
-          >
-            <ProcedurePill
-              link="/MRI"
-              image={PTIcon}
-              procedure="PT"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={ambulanceIcon}
-              procedure="Ambulance"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={childBirthIcon}
-              procedure="Childbirth"
-            />
-            <ProcedurePill
-              link="/MRI"
+              link="/Mammogram"
               image={mammogramIcon}
               procedure="Mammogram"
             />
             <ProcedurePill
-              link="/MRI"
+              link="/MRI_brain"
+              image={mriIcon}
+              procedure="MRI Brain (no contrast)"
+            />
+            <ProcedurePill
+              link="/ct_abdomen_pelvis_contrast"
+              image={ctIcon}
+              procedure="CT Abdomen/Pelvis (contrast)"
+            />
+            <ProcedurePill
+              link="/ct_chest_contrast"
+              image={ctIcon}
+              procedure="CT Chest (contrast)"
+            />
+            <ProcedurePill
+              link="/xray_chest"
+              image={xrayIcon}
+              procedure="X-Ray Chest"
+            />
+            <ProcedurePill
+              link="/xray_foot"
+              image={xrayIcon}
+              procedure="X-Ray Foot"
+            />
+            <ProcedurePill
+              link="/colonoscopy"
               image={colonoscopyIcon}
               procedure="Colonoscopy"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={virtualIcon}
-              procedure="Virtual Visit"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={primaryCareIcon}
-              procedure="Primary Care"
             />
           </Stack>
           <Stack
@@ -147,64 +111,107 @@ export default function ProcedurePillContainerRow() {
             className="procedureCardRow"
           >
             <ProcedurePill
-              link="/MRI"
-              image={surgeryIcon}
-              procedure="Surgery"
+              link="/pt_therapeutic_exercise"
+              image={PTIcon}
+              procedure="Physical Therapy Therapeutic Exercise"
             />
             <ProcedurePill
-              link="/MRI"
-              image={lipFillerIcon}
-              procedure="Lip Filler"
+              link="/tonsils_under_12"
+              image={tonsilsIcon}
+              procedure="Tonsils Removal (under 12)"
             />
             <ProcedurePill
-              link="/MRI"
-              image={botoxIcon}
-              procedure="Botox"
+              link="/tonsils_over_12"
+              image={tonsilsIcon}
+              procedure="Tonsils Removal (over 12)"
             />
             <ProcedurePill
-              link="/MRI"
+              link="/implantable_cardiac_recorder_loop"
+              image={cardiacRecorderIcon}
+              procedure="Cardiac Recorder Loop"
+            />
+            <ProcedurePill
+              link="/surgical_drainage_hematoma_seroma"
+              image={bruisesIcon}
+              procedure="Surgical drainage of hematoma/seroma"
+            />
+            <ProcedurePill
+              link="/diagnostic_heart_catheterization"
+              image={catheterIcon}
+              procedure="Diagnostic heart catheterization"
+            />
+            <ProcedurePill
+              link="/drainage_small_joint"
+              image={jointsIcon}
+              procedure="Drainage small joint"
+            />
+          </Stack>
+          <Stack
+            spacing={6}
+            align="flex-start"
+            direction={["column", "row", "row", "row"]}
+            pt={[4, 4, 0, 0]}
+            className="procedureCardRow"
+          >
+            <ProcedurePill
+              link="/xray_hip_pelvis_2views"
+              image={xrayIcon}
+              procedure="X-Ray Hip/Pelvis (2 views)"
+            />
+            <ProcedurePill
+              link="/xray_hip_pelvis_5+views"
+              image={xrayIcon}
+              procedure="X-Ray Hip/Pelvis (5+ views)"
+            />
+            <ProcedurePill
+              link="/ct_cervical_spine_no_contrast"
+              image={ctIcon}
+              procedure="CT Cervical Spine (no contrast)"
+            />
+            <ProcedurePill
+              link="/stitches_under_2.5_cm"
               image={stitchesIcon}
-              procedure="Stitches"
+              procedure="Stitches <2.5CM"
             />
             <ProcedurePill
-              link="/MRI"
-              image={heartSurgeryIcon}
-              procedure="Heart Surgery"
+              link="/stitches_7.6_12.5_cm"
+              image={stitchesIcon}
+              procedure="Stitches 7.6-12.5CM"
             />
             <ProcedurePill
-              link="/MRI"
+              link="/drainage_skin_abscess"
+              image={abscessIcon}
+              procedure="Drainage skin abscess"
+            />
+            <ProcedurePill
+              link="/mri_leg_no_contrast"
+              image={mriIcon}
+              procedure="MRI Leg (no contrast)"
+            />
+          </Stack>
+          <Stack
+            spacing={6}
+            align="flex-start"
+            direction={["column", "row", "row", "row"]}
+            pt={[4, 4, 0, 0]}
+            className="procedureCardRow"
+          >
+            <ProcedurePill
+              link="/mri_shoulder_arm_hand_no_contrast"
+              image={mriIcon}
+              procedure="MRI shoulder/arm/hand (no contrast)"
+            />
+            <ProcedurePill
+              link="/pap_smear"
               image={papSmearIcon}
               procedure="Pap Smear"
             />
             <ProcedurePill
-              link="/MRI"
-              image={chemoIcon}
-              procedure="Chemotherapy"
+              link="/std_blood_test"
+              image={stdIcon}
+              procedure="STD Blood Test"
             />
-          </Stack>
-          <Stack
-            spacing={6}
-            align="flex-start"
-            direction={["column", "row", "row", "row"]}
-            pt={[4, 4, 0, 0]}
-            className="procedureCardRow"
-          >
-            <ProcedurePill
-              link="/MRI"
-              image={kneeSurgeryIcon}
-              procedure="Knee Surgery"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={hospitalStayIcon}
-              procedure="Hospital Stay"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={rootCanalIcon}
-              procedure="Root Canal"
-            />
-            <ProcedurePill
+            {/* <ProcedurePill
               link="/MRI"
               image={dentalCleaningIcon}
               procedure="Dental Visit"
@@ -223,7 +230,7 @@ export default function ProcedurePillContainerRow() {
               link="/MRI"
               image={dialysisIcon}
               procedure="Dialysis"
-            />
+            /> */}
           </Stack>
         </div>
       </Box>
