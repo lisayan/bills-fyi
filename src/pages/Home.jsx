@@ -3,6 +3,7 @@ import { Box, Flex, VStack, Heading, Text, Button, Center } from "@chakra-ui/rea
 import Header from "../components/Header";
 import ProcedurePanels from "../components/ProcedurePanels";
 import Signup from "../components/Signup";
+import heroImage from '../images/hero.png';
 
 export default function HomePage() {
     const procedurePanelsRef = useRef(null);
@@ -18,8 +19,32 @@ export default function HomePage() {
 
     return (
         <Box>
-            <Flex direction="column" minHeight="100vh" bg="gray.50">
-                <Box width="100%" position="absolute" top={0} zIndex={10}>
+            <Flex 
+                direction="column" 
+                minHeight="100vh" 
+                position="relative"
+            >
+                <Box
+                    position="absolute"
+                    top={0}
+                    left={0}
+                    right={0}
+                    bottom={0}
+                    bgImage={`url(${heroImage})`}
+                    bgPosition="center"
+                    bgRepeat="no-repeat"
+                    bgSize="cover"
+                    _after={{
+                        content: '""',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        bg: 'linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.6) 100%)',
+                    }}
+                />
+                <Box width="100%" position="relative" zIndex={10}>
                     <Header onSignUpClick={scrollToSignup} />
                 </Box>
                 <VStack
@@ -29,7 +54,8 @@ export default function HomePage() {
                     flex={1}
                     textAlign="center"
                     px={4}
-                    pt={20}
+                    position="relative"
+                    zIndex={1}
                 >
                     <Heading as="h1" size="2xl" color="gray.800">
                         Healthcare Costs Made Clear
