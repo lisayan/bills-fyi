@@ -117,7 +117,7 @@ export default function DisplayData({procedureType}) {
     'ct abdomen/pelvis (contrast)': ctAbdomenPelvisContrastBulletPoints,
     'ct cervical spine (no contrast)': ctCervicalSpineNoContrastBulletPoints,
     'ct chest (contrast)': ctChestContrastBulletPoints,
-    'ct head (no contrast)': ctHeadBrainNoContrastBulletPoints,
+    'ct head/brain (no contrast)': ctHeadBrainNoContrastBulletPoints,
     'diagnostic heart catheterization': diagnosticHeartCatheterizationBulletPoints,
     'drainage skin abscess': drainageSkinAbscessBulletPoints,
     'drainage small joint': drainageSmallJointBulletPoints,
@@ -127,7 +127,7 @@ export default function DisplayData({procedureType}) {
     'mri leg (no contrast)': mriLegNoContrastBulletPoints,
     'mri shoulder/arm/hand (no contrast)': mriShoulderArmHandNoContrastBulletPoints,
     'pap smear': papSmearBulletPoints,
-    'pt evaluation': ptEvaluationBulletPoints,
+    'physical therapy evaluation': ptEvaluationBulletPoints,
     'physical therapy therapeutic exercise': ptTherapeuticExerciseBulletPoints,
     'std blood test': stdBloodTestBulletPoints,
     'stitches 7.6-12.5cm': stitches7To12CMBulletPoints,
@@ -147,7 +147,7 @@ export default function DisplayData({procedureType}) {
     'ct abdomen/pelvis (contrast)': { src: mriImage2, alt: "CT Abdomen/Pelvis (contrast)" },
     'ct cervical spine (no contrast)': { src: mriImage2, alt: "CT Cervical Spine No Contrast" },
     'ct chest (contrast)': { src: mriImage2, alt: "CT Chest (contrast)" },
-    'ct head (no contrast)': { src: mriImage2, alt: "CT Head (no contrast)" },
+    'ct head/brain (no contrast)': { src: mriImage2, alt: "CT Head (no contrast)" },
     'diagnostic heart catheterization': { src: mriImage2, alt: "Diagnostic Heart Catheterization" },
     'drainage skin abscess': { src: mriImage2, alt: "Drainage Skin Abscess" },
     'drainage small joint': { src: mriImage2, alt: "Drainage Small Joint" },
@@ -157,7 +157,7 @@ export default function DisplayData({procedureType}) {
     'mri leg (no contrast)': { src: mriImage2, alt: "MRI Leg (no contrast)" },
     'mri shoulder/arm/hand (no contrast)': { src: mriImage2, alt: "MRI Shoulder (arm and hand) (no contrast)" },
     'pap smear': { src: mriImage2, alt: "Pap Smear" },
-    'pt evaluation': { src: mriImage2, alt: "PT Evaluation" },
+    'physical therapy evaluation': { src: mriImage2, alt: "Physical Therapy Evaluation" },
     'physical therapy therapeutic exercise': { src: mriImage2, alt: "Physical Therapy (Therapeutic Exercise)" },
     'std blood test': { src: mriImage2, alt: "STD Blood Test" },
     'stitches 7.6-12.5cm': { src: mriImage2, alt: "Stitches 7.6-12.5 cm" },
@@ -258,15 +258,15 @@ export default function DisplayData({procedureType}) {
           </div>
         </div>
       </div>
-      <div>
+      {/* <div>
         <HomePageTabs
           selectedTabIndex={selectedTabIndex}
           selectedSubTabIndex={selectedSubTabIndex}
           selectedSubSubTabIndex={selectedSubSubTabIndex}
           onTabChange={handleTabChange}
         />
-      </div>
-      <div className='parentContainer'>
+      </div> */}
+      {/* <div className='parentContainer'>
         <div>
           <div className='boxContainer'>
             <BoxPlotComponent
@@ -288,7 +288,7 @@ export default function DisplayData({procedureType}) {
             />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

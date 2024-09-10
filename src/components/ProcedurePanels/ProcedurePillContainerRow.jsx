@@ -180,6 +180,21 @@ export default function ProcedurePillContainerRow() {
               image={stdIcon}
               procedure="STD Blood Test"
             />
+            <ProcedurePill
+              link="/ct_head_brain_no_contrast"
+              image={stdIcon}
+              procedure="CT Head/Brain (no contrast)"
+            />
+            <ProcedurePill
+              link="/implantable_cardiac_recorder_loop"
+              image={stdIcon}
+              procedure="Implantable cardiac recorder loop"
+            />
+            <ProcedurePill
+              link="/pt_evaluation"
+              image={stdIcon}
+              procedure="Physical Therapy Evaluation"
+            />
             {/* <ProcedurePill
               link="/MRI"
               image={dentalCleaningIcon}
