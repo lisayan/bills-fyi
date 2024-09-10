@@ -1,7 +1,7 @@
-import React from 'react'
-import { Divider, Flex } from "@chakra-ui/react"
+import React from "react";
+import { Flex } from "@chakra-ui/react";
 
-export default function NavBarContainer({ children, ...props }) {
+const NavBarContainer = ({ children, ...props }) => {
   return (
     <Flex
       as="nav"
@@ -11,11 +11,18 @@ export default function NavBarContainer({ children, ...props }) {
       w="100%"
       mb={8}
       p={8}
-      bg={["primary.500", "primary.500", "transparent", "primary.100"]}
-      color={["white", "white", "primary.700", "white"]}
-      // {...props}
+      bg={["primary.500", "primary.500", "transparent", "transparent"]}
+      color={["white", "white", "primary.700", "primary.700"]}
+      borderRadius="full"
+      boxShadow="md"
+      marginX="auto"
+      maxWidth="90%"
+      marginTop={4}
+      {...props}
     >
       {children}
-  </Flex>
-  )
-}
+    </Flex>
+  );
+};
+
+export default NavBarContainer;

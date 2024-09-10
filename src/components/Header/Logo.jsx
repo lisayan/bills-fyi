@@ -1,15 +1,26 @@
 import React from "react"
-import { Box, Text } from "@chakra-ui/react"
+import { Box, Text, Flex } from "@chakra-ui/react"
 import logo from '../../images/logo_white.png'
-import '../../styles/logo.css';
 
 export default function Logo(props) {
   return (
-    <Box {...props} display="flex" alignItems="center">
-      <img src={logo} alt="logo" className="logoContainer" />
-      <Text fontSize="xl" fontWeight="bold" ml="2">
-        bills.exposed
-      </Text>
+    <Box {...props}>
+      <Flex alignItems="center">
+        <Flex
+          width="40px"
+          height="30px"
+          bg="orange.400"
+          borderRadius="md"
+          justifyContent="center"
+          alignItems="center"
+          mr={2}
+        >
+          <img src={logo} alt="logo" style={{ width: '20px', height: '20px' }} />
+        </Flex>
+        <Text fontSize="lg" fontWeight="bold">
+          bills.exposed
+        </Text>
+      </Flex>
     </Box>
   )
 }

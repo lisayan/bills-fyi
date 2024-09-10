@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Stack, Text, Flex, Grid } from '@chakra-ui/react';
 import ProcedurePill from './ProcedurePill.jsx';
 import '../../styles/procedurepanels.css';
 import mriIcon from "../../images/mri_icon.jpg";
@@ -43,30 +43,23 @@ export default function ProcedurePillContainerRow() {
   return (
     <div className='procedureCardContainer'>
       <Box p={4}>
-        <Text fontSize="30px" fontWeight="bold" marginBottom="10px" marginLeft="20px">Find a treatment</Text>
-        <Text fontSize="18px" marginLeft="20px" marginBottom="20px">Choose a condition to learn more, see prices, and get started. Help us improve our data by adding your bill.</Text>
-        <Link to="/addbillpage">
-          <Button
-            borderRadius="20px"
-            variant="outline"
-            borderStyle="dashed"
-            borderColor="#1B263B"
-            textColor="#1B263B"
-            p={3}
-            px={5}
-            width="200px"
-            height="110px"
-            marginLeft="20px"
-          >+ Add Your Bill</Button>
-        </Link>
+        <Flex direction="column" alignItems="center">
+          <Text fontSize="3xl" fontWeight="bold" mb={4} textAlign="center">Find a treatment</Text>
+          <Text fontSize="lg" mb={8} textAlign="center">Choose a condition to learn more, see prices, and get started. Help us improve our data by adding your bill.</Text>
+        </Flex>
         <div className="procedureCardSection">
-          <Stack
-            spacing={6}
-            align="flex-start"
-            direction={["column", "row", "row", "row"]}
-            pt={[4, 4, 0, 0]}
-            className="procedureCardRow"
-          >
+          <Grid templateColumns="repeat(auto-fill, minmax(150px, 1fr))" gap={6}>
+            <Link to="/addbillpage">
+              <Button
+                borderRadius="full"
+                variant="outline"
+                colorScheme="orange"
+                p={3}
+                px={5}
+                width="150px"
+                height="150px"
+              >+ Add Your Bill</Button>
+            </Link>
             <ProcedurePill
               link="/Mammogram"
               image={mammogramIcon}
@@ -102,14 +95,6 @@ export default function ProcedurePillContainerRow() {
               image={colonoscopyIcon}
               procedure="Colonoscopy"
             />
-          </Stack>
-          <Stack
-            spacing={6}
-            align="flex-start"
-            direction={["column", "row", "row", "row"]}
-            pt={[4, 4, 0, 0]}
-            className="procedureCardRow"
-          >
             <ProcedurePill
               link="/pt_therapeutic_exercise"
               image={PTIcon}
@@ -145,14 +130,6 @@ export default function ProcedurePillContainerRow() {
               image={jointsIcon}
               procedure="Drainage small joint"
             />
-          </Stack>
-          <Stack
-            spacing={6}
-            align="flex-start"
-            direction={["column", "row", "row", "row"]}
-            pt={[4, 4, 0, 0]}
-            className="procedureCardRow"
-          >
             <ProcedurePill
               link="/xray_hip_pelvis_2views"
               image={xrayIcon}
@@ -188,14 +165,6 @@ export default function ProcedurePillContainerRow() {
               image={mriIcon}
               procedure="MRI Leg (no contrast)"
             />
-          </Stack>
-          <Stack
-            spacing={6}
-            align="flex-start"
-            direction={["column", "row", "row", "row"]}
-            pt={[4, 4, 0, 0]}
-            className="procedureCardRow"
-          >
             <ProcedurePill
               link="/mri_shoulder_arm_hand_no_contrast"
               image={mriIcon}
@@ -225,16 +194,10 @@ export default function ProcedurePillContainerRow() {
               link="/MRI"
               image={hairTransplantIcon}
               procedure="Hair Transplant"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={dialysisIcon}
-              procedure="Dialysis"
             /> */}
-          </Stack>
+          </Grid>
         </div>
       </Box>
     </div>
   )
 }
-

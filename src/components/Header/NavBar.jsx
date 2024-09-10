@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
+import React from 'react'
 import NavBarContainer from "./NavBarContainer";
 import MenuToggle from "./MenuToggle";
 import MenuLinks from "./MenuLinks";
 import Logo from "./Logo";
 
-function NavBar(props) {
+function NavBar({ onSignUpClick, ...props }) {
     const [isOpen, setIsOpen] = React.useState(false);
   
     const toggle = () => setIsOpen(!isOpen);
@@ -13,10 +13,10 @@ function NavBar(props) {
       <NavBarContainer {...props}>
         <Logo
           w="150px"
-          color={["white", "white", "white", "white"]}
+          color="black"
         />
         <MenuToggle toggle={toggle} isOpen={isOpen} />
-        <MenuLinks isOpen={isOpen} />
+        <MenuLinks isOpen={isOpen} onSignUpClick={onSignUpClick} />
       </NavBarContainer>
     );
 }

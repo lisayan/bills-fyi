@@ -1,29 +1,39 @@
 import React from 'react';
-import { Box, Icon, Image, Text } from '@chakra-ui/react';
-import { FiMapPin } from 'react-icons/fi'; // Importing the location icon
+import { Box, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import {procedureCard, procedureCardInner, procedureIcon } from '../../styles/procedurepanels.css';
 
 export default function ProcedurePill({ link, image, procedure }) {
   return (
-    <div className="procedureCard">
-        <Link to={link}>
+    <Link to={link}>
+      <VStack spacing={3} width="150px" height="180px" justify="flex-start">
+        <Box
+          bg="orange.400"
+          borderRadius="full"
+          width="100px"
+          height="100px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           <Box
-            bg="#E0E1DD"
-            textAlign="left"
-            display="inline-block"
-            width="170px"
-            height="130px"
-            position="relative"
-            borderRadius="20px"
-            padding="12px"
-          >
-            <div className="procedureCardInner">
-              <Image src={image} alt="mri" width="56px" height="56px"/>
-              <Text marginTop="10px">{procedure}</Text>
-            </div>
-          </Box>
-        </Link>
-    </div>
-  )
-};
+            as="img"
+            src={image}
+            alt={procedure}
+            width="50px"
+            height="50px"
+            filter="brightness(0) invert(1)"
+          />
+        </Box>
+        <Text 
+          textAlign="center" 
+          fontWeight="medium"
+          fontSize="sm"
+          color="gray.700"
+          noOfLines={2}
+        >
+          {procedure}
+        </Text>
+      </VStack>
+    </Link>
+  );
+}
