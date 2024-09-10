@@ -6,7 +6,7 @@ export default function CTHeadBrainNoContrast() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureType="CT Head (no contrast)"/>
+            <DisplayData procedureType="CT Head/Brain (no contrast)"/>
         </div>
     )
 };
