@@ -6,7 +6,7 @@ export default function MRIShoulderArmHandNoContrast() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={'MRI Shoulder/Arm/Hand (no contrast)'}/>
         </div>
     )
 };

@@ -6,7 +6,7 @@ export default function DiagnosticHeartCatheterization() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType="Diagnostic Heart Catheterization"/>
         </div>
     )
 };

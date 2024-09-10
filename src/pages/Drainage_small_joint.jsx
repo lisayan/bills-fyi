@@ -6,7 +6,7 @@ export default function DrainageSmallJoint() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType="Drainage Small Joint"/>
         </div>
     )
 };

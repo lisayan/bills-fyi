@@ -6,7 +6,7 @@ export default function STDBloodTest() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={'STD Blood Test'}/>
         </div>
     )
 };

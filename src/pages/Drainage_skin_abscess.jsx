@@ -6,7 +6,7 @@ export default function DrainageSkinAbscess() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType="Drainage Skin Abscess"/>
         </div>
     )
 };

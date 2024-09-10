@@ -6,7 +6,7 @@ export default function XRayHipPelvis5Views() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={"X-ray Hip/Pelvis (5+ Views)"}/>
         </div>
     )
 };

@@ -6,7 +6,7 @@ export default function Colonoscopy() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType="Colonoscopy"/>
         </div>
     )
 };

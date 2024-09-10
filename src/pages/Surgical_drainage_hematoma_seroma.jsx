@@ -6,7 +6,7 @@ export default function SurgicalDrainageHematomaSeroma() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={"Surgical Drainage of Hematoma/Seroma"}/>
         </div>
     )
 };

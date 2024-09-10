@@ -6,7 +6,7 @@ export default function CTAbdomenPelvisContrast() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType="CT Abdomen/Pelvis (contrast)"/>
         </div>
     )
 };

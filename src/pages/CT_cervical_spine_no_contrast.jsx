@@ -6,7 +6,7 @@ export default function CTCervicalSpineNoContrast() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType="CT Cervical Spine (no contrast)"/>
         </div>
     )
 };

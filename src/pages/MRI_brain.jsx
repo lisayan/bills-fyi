@@ -6,7 +6,7 @@ export default function MRIBrainPage() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={'MRI Brain (no contrast)'}/>
         </div>
     )
 };

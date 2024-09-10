@@ -6,7 +6,7 @@ export default function MRILegNoContrast() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={'MRI Leg (no contrast)'}/>
         </div>
     )
 };

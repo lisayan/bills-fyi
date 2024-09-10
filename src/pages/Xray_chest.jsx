@@ -6,7 +6,7 @@ export default function XRayChest() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={"X-ray Chest"}/>
         </div>
     )
 };

@@ -6,7 +6,7 @@ export default function MammogramPage() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={'Mammogram'}/>
         </div>
     )
 };

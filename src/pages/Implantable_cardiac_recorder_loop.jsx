@@ -6,7 +6,7 @@ export default function ImplantableCardiacRecorderLoop() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType="Cardiac Recorder Loop"/>
         </div>
     )
 };

@@ -6,7 +6,7 @@ export default function Stitches7To12CM() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={"Stitches 7.6-12.5cm"}/>
         </div>
     )
 };

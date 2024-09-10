@@ -6,7 +6,7 @@ export default function PTTherapeuticExercise() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={'Physical Therapy Therapeutic Exercise'}/>
         </div>
     )
 };

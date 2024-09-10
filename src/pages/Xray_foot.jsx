@@ -6,7 +6,7 @@ export default function XRayFoot() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={"X-ray Foot"}/>
         </div>
     )
 };

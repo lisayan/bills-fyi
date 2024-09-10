@@ -6,7 +6,7 @@ export default function CTChestContrast() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType="CT Chest (contrast)"/>
         </div>
     )
 };

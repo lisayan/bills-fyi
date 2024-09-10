@@ -6,7 +6,7 @@ export default function TonsilsOver12() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={"Tonsils Removal (over 12)"}/>
         </div>
     )
 };

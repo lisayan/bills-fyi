@@ -6,7 +6,7 @@ export default function PTEvaluation() {
     return (
         <div>
             <Header/>
-            <DisplayData procedureIndex={0}/>
+            <DisplayData procedureType={'PT Evaluation'}/>
         </div>
     )
 };
