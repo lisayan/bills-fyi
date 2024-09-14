@@ -197,7 +197,7 @@ export default function DisplayData({procedureType}) {
   ];
 
   return (
-    <div>
+    <div style={{ paddingTop: '150px' }}> {/* Add padding to prevent overlap with NavBar */}
       <div className='parentContainer'>
       {(() => {
         const currentProcedure = procedureType.toLowerCase();
@@ -254,7 +254,7 @@ export default function DisplayData({procedureType}) {
             </div>
           ))}
           <div className="scrollDownContainer">
-            <button className="buttonStyle" onClick={handleScrollDown}>See more details</button>
+            <button className="buttonStyle" onClick={handleScrollDown} style={{ color: 'white' }}>Add to Cart</button>
           </div>
         </div>
       </div>

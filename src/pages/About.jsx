@@ -10,9 +10,9 @@ export default function AboutPage() {
     return (
         <div>
             <Header />
-            <div>
-                <Text marginTop="80px" marginLeft="100px" fontSize="5xl" fontWeight="bold">Meet the leadership team.</Text>
-                <Text noOfLines={3} marginTop="20px" marginLeft="100px" fontSize="15px">We've combined the best of healthcare leaders and
+            <Box paddingTop="120px"> {/* Added padding to the top */}
+                <Text marginLeft="100px" fontSize="5xl" fontWeight="bold">Meet the leadership team.</Text>
+                <Text noOfLines={3} marginTop="20px" marginLeft="100px" fontSize="20px">We've combined the best of healthcare leaders and
                     enterprise SaaS experts to lead us towards reducing
                     financial complexity.</Text>
                 <Stack
@@ -25,27 +25,27 @@ export default function AboutPage() {
                 >
                     <div>
                         <Image src={ethan} width="300px" height="300px"></Image>
-                        <Text marginLeft="20px" marginTop="10px">Ethan Zang</Text>
+                        <Text marginLeft="20px" marginTop="10px" fontWeight="bold">Ethan Zang</Text>
                         <Link marginLeft="20px" href='https://www.linkedin.com/in/ethanzang/' isExternal>
                             LinkedIn <ExternalLinkIcon mx='2px' />
                         </Link>
                     </div>
                     <div>
                         <Image src={lisa} width="300px" height="300px"></Image>
-                        <Text marginLeft="20px" marginTop="10px">Lisa Yan</Text>
+                        <Text marginLeft="20px" marginTop="10px" fontWeight="bold">Lisa Yan</Text>
                         <Link marginLeft="20px" href='https://www.linkedin.com/in/elizabeth-lisa-yan-32254989/' isExternal>
                             LinkedIn <ExternalLinkIcon mx='2px' />
                         </Link>
                     </div>
                     <div>
                         <Image src={serena} width="300px" height="300px"></Image>
-                        <Text marginLeft="20px" marginTop="10px">Serena Wang</Text>
+                        <Text marginLeft="20px" marginTop="10px" fontWeight="bold">Serena Wang</Text>
                         <Link marginLeft="20px" href='https://www.linkedin.com/https://www.linkedin.com/in/serena-w-719011b2//ethanzang/' isExternal>
                             LinkedIn <ExternalLinkIcon mx='2px' />
                         </Link>
                     </div>
                 </Stack>
-            </div>
+            </Box>
         </div>
     )
 };

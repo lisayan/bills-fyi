@@ -8,8 +8,8 @@ export default function Logo(props) {
       <Flex alignItems="center">
         <Flex
           width="40px"
-          height="30px"
-          bg="orange.400"
+          height="40px"
+          bg="var(--color-primary)"
           borderRadius="md"
           justifyContent="center"
           alignItems="center"
