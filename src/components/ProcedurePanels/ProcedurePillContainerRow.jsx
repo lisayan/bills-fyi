@@ -117,10 +117,6 @@ export default function ProcedurePillContainerRow() {
 
   const displayedProcedures = showAll ? sortedAndFilteredProcedures : sortedAndFilteredProcedures.slice(0, initialItemsToShow);
 
-  const initialItemsToShow = 7; // Show 9 procedures by default
-
-  const displayedProcedures = showAll ? sortedAndFilteredProcedures : sortedAndFilteredProcedures.slice(0, initialItemsToShow);
-
   return (
     <div className='procedureCardContainer'>
       <Box p={4}>
