@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import { Box, Flex, VStack, Heading, Text, Button, Center, FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react";
 import Header from "../components/Header";
 import ProcedurePanels from "../components/ProcedurePanels";
+import Mission from '../components/Mission';  // Make sure this import is correct
+import Signup from "../components/Signup";
 import heroImage from '../images/hero.png';
 import { useForm, ValidationError } from '@formspree/react';
 
@@ -107,7 +109,7 @@ export default function HomePage() {
                         We hate medical bills too.
                     </Heading>
                     <Text fontSize="xl" color="gray.600" maxWidth="600px">
-                        Crowdsourcing and making public the prices of our healthcare services.
+                        Crowdsourcing the prices of healthcare services for everyone to access.
                     </Text>
                     <Button
                         bg="var(--color-primary)"
@@ -124,6 +126,7 @@ export default function HomePage() {
             <Center ref={procedurePanelsRef}>
                 <ProcedurePanels />
             </Center>
+            <Mission/>  {/* Added Mission component here */}
             <Box ref={contactFormRef} py={12} bg="gray.50">
                 <VStack spacing={8} align="center">
                     <Heading as="h2" size="xl" color="gray.700">

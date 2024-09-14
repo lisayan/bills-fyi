@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Stack, Text, Flex, Grid, Input } from '@chakra-ui/react';
+import { Box, Button, Text, Flex, Grid, Center, Input } from '@chakra-ui/react';
 import ProcedurePill from './ProcedurePill.jsx';
 import '../../styles/procedurepanels.css';
 import mriIcon from "../../images/mri_icon.jpg";
@@ -40,6 +40,7 @@ import jointsIcon from "../../images/joints.png"
 import abscessIcon from "../../images/abscess.png"
 
 export default function ProcedurePillContainerRow() {
+  const [showAll, setShowAll] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   const procedures = [
@@ -82,12 +83,19 @@ export default function ProcedurePillContainerRow() {
       );
   }, [procedures, searchTerm]);
 
+  const initialItemsToShow = 7; // Show 9 procedures by default
+
+  const displayedProcedures = showAll ? sortedAndFilteredProcedures : sortedAndFilteredProcedures.slice(0, initialItemsToShow);
+
   return (
     <div className='procedureCardContainer'>
       <Box p={4}>
         <Flex direction="column" alignItems="center">
-          <Text fontSize="3xl" fontWeight="bold" mb={4} textAlign="center">Find a treatment</Text>
-          <Text fontSize="lg" mb={4} textAlign="center">Here are some cash estimates for procedures in Boston, MA. We want these to be accurate for you and your insurance plan. </Text>
+          <Text fontSize="3xl" fontWeight="bold" mb={4} textAlign="center">How much will it cost you to get treated?</Text>
+          <Text fontSize="lg" mb={4} textAlign="center" maxWidth="900px" mx="auto">
+            Here are some cash estimates for procedures in Boston, MA. Our plan is
+            to grow this to cover all procedures in the US for all insurance plans.
+          </Text>
           <Input
             placeholder="Search procedures..."
             value={searchTerm}
@@ -112,7 +120,7 @@ export default function ProcedurePillContainerRow() {
                 height="175px"
               >+ Add Your Bill</Button>
             </Link>
-            {sortedAndFilteredProcedures.map((proc, index) => (
+            {displayedProcedures.map((proc, index) => (
               <ProcedurePill
                 key={index}
                 link={proc.link}
@@ -122,6 +130,19 @@ export default function ProcedurePillContainerRow() {
             ))}
           </Grid>
         </div>
+        {!showAll && sortedAndFilteredProcedures.length > initialItemsToShow && (
+          <Center mt={8}>
+            <Button
+              onClick={() => setShowAll(true)}
+              borderColor="var(--color-primary)"
+              color="var(--color-primary)"
+              variant="outline"
+              _hover={{ bg: "var(--color-primary)", color: "white" }}
+            >
+              Show More
+            </Button>
+          </Center>
+        )}
       </Box>
     </div>
   )
