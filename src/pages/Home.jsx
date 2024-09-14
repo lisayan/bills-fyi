@@ -1,20 +1,61 @@
 import React, { useRef } from 'react';
-import { Box, Flex, VStack, Heading, Text, Button, Center } from "@chakra-ui/react";
+import { Box, Flex, VStack, Heading, Text, Button, Center, FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react";
 import Header from "../components/Header";
 import ProcedurePanels from "../components/ProcedurePanels";
-import Signup from "../components/Signup";
 import heroImage from '../images/hero.png';
+import { useForm, ValidationError } from '@formspree/react';
+
+function ContactForm() {
+    const [state, handleSubmit] = useForm("mblrezjy");
+    if (state.succeeded) {
+        return <Text color="green.500" fontWeight="bold">Thanks for joining!</Text>;
+    }
+    return (
+      <form onSubmit={handleSubmit}>
+        <VStack spacing={4} align="stretch">
+          <FormControl isRequired>
+            <FormLabel htmlFor="email">Email Address</FormLabel>
+            <Input
+              id="email"
+              type="email" 
+              name="email"
+            />
+            <ValidationError 
+              prefix="Email" 
+              field="email"
+              errors={state.errors}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="message">Message (Optional)</FormLabel>
+            <Textarea
+              id="message"
+              name="message"
+            />
+            <ValidationError 
+              prefix="Message" 
+              field="message"
+              errors={state.errors}
+            />
+          </FormControl>
+          <Button type="submit" disabled={state.submitting} colorScheme="orange">
+            Sign Up
+          </Button>
+        </VStack>
+      </form>
+    );
+  }
 
 export default function HomePage() {
     const procedurePanelsRef = useRef(null);
-    const signupSectionRef = useRef(null);
+    const contactFormRef = useRef(null);
 
     const scrollToProcedurePanels = () => {
         procedurePanelsRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
-    const scrollToSignup = () => {
-        signupSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const scrollToContactForm = () => {
+        contactFormRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
     return (
@@ -45,7 +86,7 @@ export default function HomePage() {
                     }}
                 />
                 <Box width="100%" position="relative" zIndex={10}>
-                    <Header onSignUpClick={scrollToSignup} />
+                    <Header onSignUpClick={scrollToContactForm} />
                 </Box>
                 <VStack
                     spacing={8}
@@ -77,8 +118,18 @@ export default function HomePage() {
             <Center ref={procedurePanelsRef}>
                 <ProcedurePanels />
             </Center>
-            <Box ref={signupSectionRef}>
-                <Signup />
+            <Box ref={contactFormRef} py={12} bg="gray.50">
+                <VStack spacing={8} align="center">
+                    <Heading as="h2" size="xl" color="gray.700">
+                        Stay Updated
+                    </Heading>
+                    <Text fontSize="lg" color="gray.600" maxWidth="600px" textAlign="center">
+                        Sign up to receive updates on healthcare costs and new features.
+                    </Text>
+                    <Box width="100%" maxWidth="400px">
+                        <ContactForm />
+                    </Box>
+                </VStack>
             </Box>
         </Box>
     );
