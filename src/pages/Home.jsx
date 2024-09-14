@@ -40,7 +40,7 @@ function ContactForm() {
               errors={state.errors}
             />
           </FormControl>
-          <Button type="submit" disabled={state.submitting} colorScheme="orange">
+          <Button type="submit" disabled={state.submitting} bg="var(--color-primary)" color="white" _hover={{ bg: "var(--color-secondary)" }}>
             Sign Up
           </Button>
         </VStack>

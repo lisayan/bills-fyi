@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
     --color-tertiary: #D8EAD6;
     --color-quaternary: #72727E;
     --color-quinary: #625F63;
+    --color-icon-green: #9FC2A0;
     --font-family: 'Montserrat', sans-serif;
   }
 

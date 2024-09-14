@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Button, Text, Flex, Grid, Center, Input } from '@chakra-ui/react';
 import ProcedurePill from './ProcedurePill.jsx';
@@ -38,50 +38,84 @@ import bruisesIcon from "../../images/bruises.png"
 import catheterIcon from "../../images/catheter.png"
 import jointsIcon from "../../images/joints.png"
 import abscessIcon from "../../images/abscess.png"
+import { fetchData } from '../DisplayData/AWS_DDB.jsx';
 
 export default function ProcedurePillContainerRow() {
   const [showAll, setShowAll] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [procedurePrices, setProcedurePrices] = useState({});
 
   const procedures = [
-    { link: "/Mammogram", image: mammogramIcon, procedure: "Mammogram" },
-    { link: "/MRI_brain", image: mriIcon, procedure: "MRI Brain (no contrast)" },
-    { link: "/ct_abdomen_pelvis_contrast", image: ctIcon, procedure: "CT Abdomen/Pelvis (contrast)" },
-    { link: "/ct_chest_contrast", image: ctIcon, procedure: "CT Chest (contrast)" },
-    { link: "/xray_chest", image: xrayIcon, procedure: "X-Ray Chest" },
-    { link: "/xray_foot", image: xrayIcon, procedure: "X-Ray Foot" },
-    { link: "/colonoscopy", image: colonoscopyIcon, procedure: "Colonoscopy" },
-    { link: "/pt_therapeutic_exercise", image: PTIcon, procedure: "Physical Therapy Therapeutic Exercise" },
-    { link: "/tonsils_under_12", image: tonsilsIcon, procedure: "Tonsils Removal (under 12)" },
-    { link: "/tonsils_over_12", image: tonsilsIcon, procedure: "Tonsils Removal (over 12)" },
-    { link: "/surgical_drainage_hematoma_seroma", image: bruisesIcon, procedure: "Surgical drainage of hematoma/seroma" },
-    { link: "/diagnostic_heart_catheterization", image: catheterIcon, procedure: "Diagnostic heart catheterization" },
-    { link: "/drainage_small_joint", image: jointsIcon, procedure: "Drainage small joint" },
-    { link: "/xray_hip_pelvis_2views", image: xrayIcon, procedure: "X-Ray Hip/Pelvis (2 views)" },
-    { link: "/xray_hip_pelvis_5+views", image: xrayIcon, procedure: "X-Ray Hip/Pelvis (5+ views)" },
-    { link: "/ct_cervical_spine_no_contrast", image: ctIcon, procedure: "CT Cervical Spine (no contrast)" },
-    { link: "/stitches_under_2.5_cm", image: stitchesIcon, procedure: "Stitches <2.5CM" },
-    { link: "/stitches_7.6_12.5_cm", image: stitchesIcon, procedure: "Stitches 7.6-12.5CM" },
-    { link: "/drainage_skin_abscess", image: abscessIcon, procedure: "Drainage skin abscess" },
-    { link: "/mri_leg_no_contrast", image: mriIcon, procedure: "MRI Leg (no contrast)" },
-    { link: "/mri_shoulder_arm_hand_no_contrast", image: mriIcon, procedure: "MRI shoulder/arm/hand (no contrast)" },
-    { link: "/pap_smear", image: papSmearIcon, procedure: "Pap Smear" },
-    { link: "/std_blood_test", image: stdIcon, procedure: "STD Blood Test" },
-    { link: "/ct_head_brain_no_contrast", image: stdIcon, procedure: "CT Head/Brain (no contrast)" },
-    { link: "/implantable_cardiac_recorder_loop", image: stdIcon, procedure: "Implantable cardiac recorder loop" },
-    { link: "/pt_evaluation", image: stdIcon, procedure: "Physical Therapy Evaluation" },
-    // { link: "/MRI", image: dentalCleaningIcon, procedure: "Dental Visit" },
-    // { link: "/MRI", image: stdIcon, procedure: "STD" },
-    // { link: "/MRI", image: hairTransplantIcon, procedure: "Hair Transplant" },
+    { link: "/Mammogram", image: mammogramIcon, procedure: "Mammogram", price: 250 },
+    { link: "/MRI_brain", image: mriIcon, procedure: "MRI Brain (no contrast)", price: 1200 },
+    { link: "/ct_abdomen_pelvis_contrast", image: ctIcon, procedure: "CT Abdomen/Pelvis (contrast)", price: 800 },
+    { link: "/ct_chest_contrast", image: ctIcon, procedure: "CT Chest (contrast)", price: 700 },
+    { link: "/xray_chest", image: xrayIcon, procedure: "X-Ray Chest", price: 150 },
+    { link: "/xray_foot", image: xrayIcon, procedure: "X-Ray Foot", price: 120 },
+    { link: "/colonoscopy", image: colonoscopyIcon, procedure: "Colonoscopy", price: 1500 },
+    { link: "/pt_therapeutic_exercise", image: PTIcon, procedure: "Physical Therapy Therapeutic Exercise", price: 100 },
+    { link: "/tonsils_under_12", image: tonsilsIcon, procedure: "Tonsils Removal (under 12)", price: 3000 },
+    { link: "/tonsils_over_12", image: tonsilsIcon, procedure: "Tonsils Removal (over 12)", price: 3500 },
+    { link: "/surgical_drainage_hematoma_seroma", image: bruisesIcon, procedure: "Surgical drainage of hematoma/seroma", price: 1000 },
+    { link: "/diagnostic_heart_catheterization", image: catheterIcon, procedure: "Diagnostic heart catheterization", price: 5000 },
+    { link: "/drainage_small_joint", image: jointsIcon, procedure: "Drainage small joint", price: 800 },
+    { link: "/xray_hip_pelvis_2views", image: xrayIcon, procedure: "X-Ray Hip/Pelvis (2 views)", price: 200 },
+    { link: "/xray_hip_pelvis_5+views", image: xrayIcon, procedure: "X-Ray Hip/Pelvis (5+ views)", price: 300 },
+    { link: "/ct_cervical_spine_no_contrast", image: ctIcon, procedure: "CT Cervical Spine (no contrast)", price: 600 },
+    { link: "/stitches_under_2.5_cm", image: stitchesIcon, procedure: "Stitches <2.5CM", price: 200 },
+    { link: "/stitches_7.6_12.5_cm", image: stitchesIcon, procedure: "Stitches 7.6-12.5CM", price: 400 },
+    { link: "/drainage_skin_abscess", image: abscessIcon, procedure: "Drainage skin abscess", price: 500 },
+    { link: "/mri_leg_no_contrast", image: mriIcon, procedure: "MRI Leg (no contrast)", price: 1000 },
+    { link: "/mri_shoulder_arm_hand_no_contrast", image: mriIcon, procedure: "MRI shoulder/arm/hand (no contrast)", price: 1100 },
+    { link: "/pap_smear", image: papSmearIcon, procedure: "Pap Smear", price: 150 },
+    { link: "/std_blood_test", image: stdIcon, procedure: "STD Blood Test", price: 200 },
+    { link: "/ct_head_brain_no_contrast", image: stdIcon, procedure: "CT Head/Brain (no contrast)", price: 500 },
+    { link: "/implantable_cardiac_recorder_loop", image: stdIcon, procedure: "Implantable cardiac recorder loop", price: 6000 },
+    { link: "/pt_evaluation", image: stdIcon, procedure: "Physical Therapy Evaluation", price: 150 },
   ];
+
+  useEffect(() => {
+    const fetchProcedurePrices = async () => {
+      try {
+        const rawData = await fetchData('bills-exposed-database');
+        const prices = {};
+        rawData.forEach(item => {
+          if (!prices[item.procedure]) {
+            prices[item.procedure] = [];
+          }
+          prices[item.procedure].push(parseFloat(item.amountPaidYou) || 0);
+        });
+
+        const averagePrices = Object.keys(prices).reduce((acc, procedure) => {
+          const avgPrice = prices[procedure].reduce((sum, price) => sum + price, 0) / prices[procedure].length;
+          acc[procedure] = Math.round(avgPrice);
+          return acc;
+        }, {});
+
+        setProcedurePrices(averagePrices);
+      } catch (error) {
+        console.error('Error fetching procedure prices:', error);
+      }
+    };
+
+    fetchProcedurePrices();
+  }, []);
 
   const sortedAndFilteredProcedures = useMemo(() => {
     return procedures
+      .map(proc => ({
+        ...proc,
+        price: procedurePrices[proc.procedure] || proc.price
+      }))
       .sort((a, b) => a.procedure.localeCompare(b.procedure))
       .filter(proc =>
         proc.procedure.toLowerCase().includes(searchTerm.toLowerCase())
       );
-  }, [procedures, searchTerm]);
+  }, [procedures, procedurePrices, searchTerm]);
+
+  const initialItemsToShow = 7; // Show 9 procedures by default
+
+  const displayedProcedures = showAll ? sortedAndFilteredProcedures : sortedAndFilteredProcedures.slice(0, initialItemsToShow);
 
   const initialItemsToShow = 7; // Show 9 procedures by default
 
@@ -126,6 +160,7 @@ export default function ProcedurePillContainerRow() {
                 link={proc.link}
                 image={proc.image}
                 procedure={proc.procedure}
+                price={proc.price}
               />
             ))}
           </Grid>
