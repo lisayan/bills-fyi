@@ -53,9 +53,13 @@ export default function Signup() {
             />
             <Button
               type="submit"
-              colorScheme="orange"
+              bg="var(--color-primary)"
+              color="white"
               size="lg"
               width="full"
+              _hover={{
+                bg: "var(--color-secondary)"
+              }}
             >
               Sign Up for Early Access
             </Button>

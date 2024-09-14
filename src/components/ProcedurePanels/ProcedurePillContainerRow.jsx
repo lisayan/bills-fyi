@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Stack, Text, Flex, Grid } from '@chakra-ui/react';
+import { Box, Button, Stack, Text, Flex, Grid, Input } from '@chakra-ui/react';
 import ProcedurePill from './ProcedurePill.jsx';
 import '../../styles/procedurepanels.css';
 import mriIcon from "../../images/mri_icon.jpg";
@@ -40,176 +40,86 @@ import jointsIcon from "../../images/joints.png"
 import abscessIcon from "../../images/abscess.png"
 
 export default function ProcedurePillContainerRow() {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const procedures = [
+    { link: "/Mammogram", image: mammogramIcon, procedure: "Mammogram" },
+    { link: "/MRI_brain", image: mriIcon, procedure: "MRI Brain (no contrast)" },
+    { link: "/ct_abdomen_pelvis_contrast", image: ctIcon, procedure: "CT Abdomen/Pelvis (contrast)" },
+    { link: "/ct_chest_contrast", image: ctIcon, procedure: "CT Chest (contrast)" },
+    { link: "/xray_chest", image: xrayIcon, procedure: "X-Ray Chest" },
+    { link: "/xray_foot", image: xrayIcon, procedure: "X-Ray Foot" },
+    { link: "/colonoscopy", image: colonoscopyIcon, procedure: "Colonoscopy" },
+    { link: "/pt_therapeutic_exercise", image: PTIcon, procedure: "Physical Therapy Therapeutic Exercise" },
+    { link: "/tonsils_under_12", image: tonsilsIcon, procedure: "Tonsils Removal (under 12)" },
+    { link: "/tonsils_over_12", image: tonsilsIcon, procedure: "Tonsils Removal (over 12)" },
+    { link: "/surgical_drainage_hematoma_seroma", image: bruisesIcon, procedure: "Surgical drainage of hematoma/seroma" },
+    { link: "/diagnostic_heart_catheterization", image: catheterIcon, procedure: "Diagnostic heart catheterization" },
+    { link: "/drainage_small_joint", image: jointsIcon, procedure: "Drainage small joint" },
+    { link: "/xray_hip_pelvis_2views", image: xrayIcon, procedure: "X-Ray Hip/Pelvis (2 views)" },
+    { link: "/xray_hip_pelvis_5+views", image: xrayIcon, procedure: "X-Ray Hip/Pelvis (5+ views)" },
+    { link: "/ct_cervical_spine_no_contrast", image: ctIcon, procedure: "CT Cervical Spine (no contrast)" },
+    { link: "/stitches_under_2.5_cm", image: stitchesIcon, procedure: "Stitches <2.5CM" },
+    { link: "/stitches_7.6_12.5_cm", image: stitchesIcon, procedure: "Stitches 7.6-12.5CM" },
+    { link: "/drainage_skin_abscess", image: abscessIcon, procedure: "Drainage skin abscess" },
+    { link: "/mri_leg_no_contrast", image: mriIcon, procedure: "MRI Leg (no contrast)" },
+    { link: "/mri_shoulder_arm_hand_no_contrast", image: mriIcon, procedure: "MRI shoulder/arm/hand (no contrast)" },
+    { link: "/pap_smear", image: papSmearIcon, procedure: "Pap Smear" },
+    { link: "/std_blood_test", image: stdIcon, procedure: "STD Blood Test" },
+    { link: "/ct_head_brain_no_contrast", image: stdIcon, procedure: "CT Head/Brain (no contrast)" },
+    { link: "/implantable_cardiac_recorder_loop", image: stdIcon, procedure: "Implantable cardiac recorder loop" },
+    { link: "/pt_evaluation", image: stdIcon, procedure: "Physical Therapy Evaluation" },
+    // { link: "/MRI", image: dentalCleaningIcon, procedure: "Dental Visit" },
+    // { link: "/MRI", image: stdIcon, procedure: "STD" },
+    // { link: "/MRI", image: hairTransplantIcon, procedure: "Hair Transplant" },
+  ];
+
+  const sortedAndFilteredProcedures = useMemo(() => {
+    return procedures
+      .sort((a, b) => a.procedure.localeCompare(b.procedure))
+      .filter(proc =>
+        proc.procedure.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+  }, [procedures, searchTerm]);
+
   return (
     <div className='procedureCardContainer'>
       <Box p={4}>
         <Flex direction="column" alignItems="center">
           <Text fontSize="3xl" fontWeight="bold" mb={4} textAlign="center">Find a treatment</Text>
-          <Text fontSize="lg" mb={8} textAlign="center">Choose a condition to learn more, see prices, and get started. Help us improve our data by adding your bill.</Text>
+          <Text fontSize="lg" mb={4} textAlign="center">Here are some cash estimates for procedures in Boston, MA. We want these to be accurate for you and your insurance plan. </Text>
+          <Input
+            placeholder="Search procedures..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            width="100%"
+            maxWidth="500px"
+            mb={8}
+          />
         </Flex>
         <div className="procedureCardSection">
-          <Grid templateColumns="repeat(auto-fill, minmax(150px, 1fr))" gap={6}>
+          <Grid templateColumns="repeat(auto-fill, minmax(175px, 1fr))" gap={8}>
             <Link to="/addbillpage">
               <Button
                 borderRadius="full"
                 variant="outline"
-                colorScheme="orange"
+                borderColor="var(--color-primary)"
+                color="var(--color-primary)"
+                _hover={{ bg: "var(--color-primary)", color: "white" }}
                 p={3}
                 px={5}
-                width="150px"
-                height="150px"
+                width="175px"
+                height="175px"
               >+ Add Your Bill</Button>
             </Link>
-            <ProcedurePill
-              link="/Mammogram"
-              image={mammogramIcon}
-              procedure="Mammogram"
-            />
-            <ProcedurePill
-              link="/MRI_brain"
-              image={mriIcon}
-              procedure="MRI Brain (no contrast)"
-            />
-            <ProcedurePill
-              link="/ct_abdomen_pelvis_contrast"
-              image={ctIcon}
-              procedure="CT Abdomen/Pelvis (contrast)"
-            />
-            <ProcedurePill
-              link="/ct_chest_contrast"
-              image={ctIcon}
-              procedure="CT Chest (contrast)"
-            />
-            <ProcedurePill
-              link="/xray_chest"
-              image={xrayIcon}
-              procedure="X-Ray Chest"
-            />
-            <ProcedurePill
-              link="/xray_foot"
-              image={xrayIcon}
-              procedure="X-Ray Foot"
-            />
-            <ProcedurePill
-              link="/colonoscopy"
-              image={colonoscopyIcon}
-              procedure="Colonoscopy"
-            />
-            <ProcedurePill
-              link="/pt_therapeutic_exercise"
-              image={PTIcon}
-              procedure="Physical Therapy Therapeutic Exercise"
-            />
-            <ProcedurePill
-              link="/tonsils_under_12"
-              image={tonsilsIcon}
-              procedure="Tonsils Removal (under 12)"
-            />
-            <ProcedurePill
-              link="/tonsils_over_12"
-              image={tonsilsIcon}
-              procedure="Tonsils Removal (over 12)"
-            />
-            <ProcedurePill
-              link="/implantable_cardiac_recorder_loop"
-              image={cardiacRecorderIcon}
-              procedure="Cardiac Recorder Loop"
-            />
-            <ProcedurePill
-              link="/surgical_drainage_hematoma_seroma"
-              image={bruisesIcon}
-              procedure="Surgical drainage of hematoma/seroma"
-            />
-            <ProcedurePill
-              link="/diagnostic_heart_catheterization"
-              image={catheterIcon}
-              procedure="Diagnostic heart catheterization"
-            />
-            <ProcedurePill
-              link="/drainage_small_joint"
-              image={jointsIcon}
-              procedure="Drainage small joint"
-            />
-            <ProcedurePill
-              link="/xray_hip_pelvis_2views"
-              image={xrayIcon}
-              procedure="X-Ray Hip/Pelvis (2 views)"
-            />
-            <ProcedurePill
-              link="/xray_hip_pelvis_5+views"
-              image={xrayIcon}
-              procedure="X-Ray Hip/Pelvis (5+ views)"
-            />
-            <ProcedurePill
-              link="/ct_cervical_spine_no_contrast"
-              image={ctIcon}
-              procedure="CT Cervical Spine (no contrast)"
-            />
-            <ProcedurePill
-              link="/stitches_under_2.5_cm"
-              image={stitchesIcon}
-              procedure="Stitches <2.5CM"
-            />
-            <ProcedurePill
-              link="/stitches_7.6_12.5_cm"
-              image={stitchesIcon}
-              procedure="Stitches 7.6-12.5CM"
-            />
-            <ProcedurePill
-              link="/drainage_skin_abscess"
-              image={abscessIcon}
-              procedure="Drainage skin abscess"
-            />
-            <ProcedurePill
-              link="/mri_leg_no_contrast"
-              image={mriIcon}
-              procedure="MRI Leg (no contrast)"
-            />
-            <ProcedurePill
-              link="/mri_shoulder_arm_hand_no_contrast"
-              image={mriIcon}
-              procedure="MRI shoulder/arm/hand (no contrast)"
-            />
-            <ProcedurePill
-              link="/pap_smear"
-              image={papSmearIcon}
-              procedure="Pap Smear"
-            />
-            <ProcedurePill
-              link="/std_blood_test"
-              image={stdIcon}
-              procedure="STD Blood Test"
-            />
-            <ProcedurePill
-              link="/ct_head_brain_no_contrast"
-              image={stdIcon}
-              procedure="CT Head/Brain (no contrast)"
-            />
-            <ProcedurePill
-              link="/implantable_cardiac_recorder_loop"
-              image={stdIcon}
-              procedure="Implantable cardiac recorder loop"
-            />
-            <ProcedurePill
-              link="/pt_evaluation"
-              image={stdIcon}
-              procedure="Physical Therapy Evaluation"
-            />
-            {/* <ProcedurePill
-              link="/MRI"
-              image={dentalCleaningIcon}
-              procedure="Dental Visit"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={stdIcon}
-              procedure="STD"
-            />
-            <ProcedurePill
-              link="/MRI"
-              image={hairTransplantIcon}
-              procedure="Hair Transplant"
-            /> */}
+            {sortedAndFilteredProcedures.map((proc, index) => (
+              <ProcedurePill
+                key={index}
+                link={proc.link}
+                image={proc.image}
+                procedure={proc.procedure}
+              />
+            ))}
           </Grid>
         </div>
       </Box>

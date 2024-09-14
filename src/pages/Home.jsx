@@ -10,7 +10,12 @@ export default function HomePage() {
     const signupSectionRef = useRef(null);
 
     const scrollToProcedurePanels = () => {
-        procedurePanelsRef.current?.scrollIntoView({ behavior: 'smooth' });
+        if (procedurePanelsRef.current) {
+            const navbarHeight = 80; // Adjust this value to match your navbar height
+            const yOffset = -navbarHeight - 20; // Additional 20px for some extra space
+            const y = procedurePanelsRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
     };
 
     const scrollToSignup = () => {
@@ -58,19 +63,20 @@ export default function HomePage() {
                     zIndex={1}
                 >
                     <Heading as="h1" size="2xl" color="gray.800">
-                        Healthcare Costs Made Clear
+                        We hate medical bills too.
                     </Heading>
                     <Text fontSize="xl" color="gray.600" maxWidth="600px">
-                        Navigate medical billing with ease. Get transparent pricing and 
-                        understand your healthcare costs in simple terms.
+                        Crowdsourcing and making public the prices of our healthcare services.
                     </Text>
                     <Button
-                        colorScheme="orange"
+                        bg="var(--color-primary)"
+                        color="white"
                         size="lg"
                         fontWeight="bold"
+                        _hover={{ bg: "var(--color-secondary)" }}
                         onClick={scrollToProcedurePanels}
                     >
-                        Check Procedure Costs
+                        Join the Fight
                     </Button>
                 </VStack>
             </Flex>

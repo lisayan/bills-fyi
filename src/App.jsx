@@ -14,13 +14,13 @@ import DrainageSkinAbscess from "./pages/Drainage_skin_abscess";
 import DrainageSmallJoint from "./pages/Drainage_small_joint";
 import ImplantableCardiacRecorderLoop from "./pages/Implantable_cardiac_recorder_loop";
 import Mammogram from './pages/Mammogram';
-import MRI from './pages/MRI';
 import MRI_brain from './pages/MRI_brain';
 import MRILegNoContrast from "./pages/MRI_leg_no_contrast";
 import MRIShoulderArmHandNoContrast from "./pages/MRI_shoulder_arm_hand_no_contrast";
 import PapSmear from "./pages/Pap_smear";
 import PTEvaluation from "./pages/PT_evaluation";
 import PTTherapeuticExercise from "./pages/PT_therapeutic_exercise";
+import ShoppingCart from "./pages/ShoppingCart";
 import STDBloodTest from "./pages/STD_blood_test";
 import Stitches7To12CM from "./pages/Stitches_7.6_12.5_cm";
 import StitchesUnder2Point5CM from "./pages/Stitches_under_2.5cm";
@@ -41,6 +41,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home/>} />
+          <Route path="/cart" element={<ShoppingCart/>} />
           <Route path="/addbillpage" element={<AddBill/>}/>
           <Route path="/xray_chest" element={<XRayChest/>}/>
           <Route path="/ct_cervical_spine_no_contrast" element={<CTCervicalSpineNoContrast/>}/>
@@ -51,8 +52,6 @@ export default function App() {
           <Route path="/diagnostic_heart_catheterization" element={<DiagnosticHeartCatheterization/>}/>
           <Route path="/drainage_skin_abscess" element={<DrainageSkinAbscess/>}/>
           <Route path="/drainage_small_joint" element={<DrainageSmallJoint/>}/>
-          <Route path="/mri" element={<MRI/>}/>
-          <Route path="/xray" element={<Xray/>}/>
           <Route path="/implantable_cardiac_recorder_loop" element={<ImplantableCardiacRecorderLoop/>}/>
           <Route path="/mammogram" element={<Mammogram/>}/>
           <Route path="/mri_brain" element={<MRI_brain/>}/>

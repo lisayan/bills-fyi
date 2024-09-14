@@ -8,9 +8,8 @@ const NavBarContainer = ({ children, ...props }) => {
       align="center"
       justify="space-between"
       wrap="wrap"
-      w="100%"
       mb={8}
-      p={8}
+      p={6}
       bg="white"
       color={["white", "white", "primary.700", "primary.700"]}
       borderRadius="full"
