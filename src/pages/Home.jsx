@@ -51,6 +51,7 @@ function ContactForm() {
 export default function HomePage() {
     const procedurePanelsRef = useRef(null);
     const contactFormRef = useRef(null);
+    const missionRef = useRef(null);
 
     const scrollToProcedurePanels = () => {
         if (procedurePanelsRef.current) {
@@ -63,6 +64,15 @@ export default function HomePage() {
 
     const scrollToContactForm = () => {
         contactFormRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    const scrollToMission = () => {
+        if (missionRef.current) {
+            const navbarHeight = 80; // Adjust this value to match your navbar height
+            const yOffset = -navbarHeight - 20; // Additional 20px for some extra space
+            const y = missionRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
     };
 
     return (
@@ -93,7 +103,7 @@ export default function HomePage() {
                     }}
                 />
                 <Box width="100%" position="relative" zIndex={10}>
-                    <Header onSignUpClick={scrollToContactForm} />
+                    <Header onSignUpClick={scrollToContactForm} onPricesClick={scrollToProcedurePanels} onMissionClick={scrollToMission}/>
                 </Box>
                 <VStack
                     spacing={8}
@@ -111,23 +121,41 @@ export default function HomePage() {
                     <Text fontSize="xl" color="gray.600" maxWidth="600px">
                         Crowdsourcing the prices of healthcare services for everyone to access.
                     </Text>
-                    <Button
-                        bg="var(--color-primary)"
-                        color="white"
-                        size="lg"
-                        fontWeight="bold"
-                        _hover={{ bg: "var(--color-secondary)" }}
-                        onClick={scrollToProcedurePanels}
-                    >
-                        Join the Fight
-                    </Button>
+                    <Flex gap={4}>
+                        <Button
+                            bg="var(--color-primary)"
+                            color="white"
+                            size="lg"
+                            fontWeight="bold"
+                            borderRadius="full"
+                            _hover={{ bg: "var(--color-secondary)" }}
+                            onClick={scrollToProcedurePanels}
+                        >
+                            See Prices
+                        </Button>
+                        <Button
+                            bg="var(--color-secondary)"
+                            color="white"
+                            size="lg"
+                            fontWeight="bold"
+                            borderRadius="full"
+                            borderWidth={2}
+                            borderColor="var(--color-primary)"
+                            _hover={{ bg: "var(--color-primary)", color: "white" }}
+                            onClick={scrollToMission}
+                        >
+                            Join the Fight
+                        </Button>
+                    </Flex>
                 </VStack>
             </Flex>
             <Center ref={procedurePanelsRef}>
                 <ProcedurePanels />
             </Center>
-            <Mission/>  {/* Added Mission component here */}
-            <Box ref={contactFormRef} py={12} bg="gray.50">
+            <Box ref={missionRef}>
+                <Mission/>  {/* Added Mission component here */}
+            </Box>
+            <Box ref={contactFormRef} py={12} bg="white">
                 <VStack spacing={8} align="center">
                     <Heading as="h2" size="xl" color="gray.700">
                         Stay Updated

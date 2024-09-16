@@ -35,7 +35,7 @@ const Divider = styled.hr`
 export default function ProcedurePill({ link, image, procedure, price }) {
   return (
     <Link to={link}>
-      <StyledCard width="200px" height="240px">
+      <StyledCard width="200px" height="240px" borderRadius="3xl">
         <VStack spacing={0} height="100%">
           <Box
             width="100%"

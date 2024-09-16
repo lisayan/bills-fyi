@@ -5,7 +5,7 @@ import MenuToggle from "./MenuToggle"
 import MenuLinks from "./MenuLinks"
 import Logo from "./Logo"
 
-function NavBar({ onSignUpClick, ...props }) {
+function NavBar({ onSignUpClick, onPricesClick, onMissionClick, ...props }) {
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
   
@@ -33,7 +33,7 @@ function NavBar({ onSignUpClick, ...props }) {
             color="black"
           />
           <MenuToggle toggle={toggle} isOpen={isOpen} />
-          <MenuLinks isOpen={isOpen} onSignUpClick={onSignUpClick} />
+          <MenuLinks isOpen={isOpen} onSignUpClick={onSignUpClick} onPricesClick={onPricesClick} onMissionClick={onMissionClick} />
         </Flex>
       </NavBarContainer>
     )

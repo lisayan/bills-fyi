@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Stack, Button, Box, Text, Icon, Tooltip, IconButton } from "@chakra-ui/react";
-import { FaShoppingCart, FaInfoCircle } from 'react-icons/fa';
+import { Stack, Button, Box, Text, Icon, Tooltip } from "@chakra-ui/react";
+import { FaDollarSign, FaInfoCircle } from 'react-icons/fa';
 import MenuItem from "./MenuItem";
 
-export default function MenuLinks({ isOpen, onSignUpClick }) {
+export default function MenuLinks({ isOpen, onSignUpClick, onMissionClick, onPricesClick }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const handleJoinClick = (e) => {
+  const handleCommunityClick = (e) => {
     e.preventDefault();
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -27,12 +27,15 @@ export default function MenuLinks({ isOpen, onSignUpClick }) {
         <MenuItem to="/">
           <Text fontSize="med" fontWeight="bold">Home</Text>
         </MenuItem>
-        <MenuItem to="/about">
-          <Text fontSize="med" fontWeight="bold">About us</Text>
+        <MenuItem onClick={(e) => {
+          e.preventDefault();
+          onMissionClick();
+        }}>
+          <Text fontSize="med" fontWeight="bold">Join the Fight</Text>
         </MenuItem>
         <Box position="relative">
           <Button
-            onClick={handleJoinClick}
+            onClick={handleCommunityClick}
             size="med"
             rounded="md"
             color="black"
@@ -42,7 +45,7 @@ export default function MenuLinks({ isOpen, onSignUpClick }) {
               bg: "whiteAlpha.300"
             }}
           >
-            Join
+            Community
           </Button>
           {isDropdownOpen && (
             <Box
@@ -105,7 +108,39 @@ export default function MenuLinks({ isOpen, onSignUpClick }) {
             </Box>
           )}
         </Box>
-        <MenuItem>
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            onPricesClick();
+          }}
+          size="sm"
+          rounded="md"
+          borderRadius="full"
+          color="white"
+          fontWeight="bold"
+          leftIcon={<Icon as={FaDollarSign} />}
+          rightIcon={
+            <Tooltip 
+              label="See costs of medical procedures. We are growing this to more cities, providers, and to cover insurance plans." 
+              aria-label="Cart information"
+              placement="bottom-end"
+              closeOnClick={false}
+              hasArrow
+            >
+              <Box as="span" fontSize="xs" lineHeight="1">
+                <Icon as={FaInfoCircle} boxSize="0.8em" />
+              </Box>
+            </Tooltip>
+          }
+          bg="var(--color-primary)"
+          _hover={{
+            bg: "var(--color-secondary)"
+          }}
+          height="50px"
+        >
+          Prices
+        </Button>
+        {/* <MenuItem>
           <Box display="flex" alignItems="center" width="100%">
             <Button
               as={Link}
@@ -135,7 +170,7 @@ export default function MenuLinks({ isOpen, onSignUpClick }) {
               Cart
             </Button>
           </Box>
-        </MenuItem>
+        </MenuItem> */}
       </Stack>
     </Box>
   )
