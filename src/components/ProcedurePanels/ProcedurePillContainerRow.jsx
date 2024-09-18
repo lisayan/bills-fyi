@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { 
+import {
   Box, Text, Flex, Grid, Input, Button, Menu, MenuButton, MenuList, MenuItem,
   InputGroup, InputLeftElement, Tooltip, Icon
 } from '@chakra-ui/react';
@@ -120,7 +120,7 @@ export default function ProcedurePillContainerRow() {
             Object.keys(prices[procedure][city]).forEach(state => {
               Object.keys(prices[procedure][city][state]).forEach(insurance => {
                 const avgPrice = Math.round(
-                  prices[procedure][city][state][insurance].reduce((sum, price) => sum + price, 0) / 
+                  prices[procedure][city][state][insurance].reduce((sum, price) => sum + price, 0) /
                   prices[procedure][city][state][insurance].length
                 );
                 prices[procedure][city][state][insurance] = avgPrice;
@@ -130,11 +130,11 @@ export default function ProcedurePillContainerRow() {
         });
 
         setProcedurePrices(prices);
-        
+
         const sortedCities = Array.from(uniqueCities).sort();
         const sortedStates = Array.from(uniqueStates).sort();
         const sortedInsurances = Array.from(uniqueInsurances).sort();
-        
+
         setCities(['All Cities', ...sortedCities]);
         setStates(['All States', ...sortedStates]);
         setInsurances(['All Insurances', ...sortedInsurances]);
@@ -192,7 +192,7 @@ export default function ProcedurePillContainerRow() {
         <Text fontSize="lg" color="gray.600" mb={6}>
           We are growing this to cover all procedures, providers, and insurance plans in the US. But we need your help. Add your bill.
         </Text>
-        
+
         {/* Search Bar */}
         <Box maxWidth="1200px" mx="auto">
           <InputGroup size="lg">
@@ -217,10 +217,10 @@ export default function ProcedurePillContainerRow() {
       <Flex justifyContent="center" px={4} mb={12}>
         <Flex maxWidth="1200px" width="100%">
           {/* Filters Column */}
-          <Box 
-            width="250px" 
+          <Box
+            width="250px"
             pr={8}
-            borderRight="1px solid" 
+            borderRight="1px solid"
             borderColor="gray.200"
           >
             <Flex alignItems="center" justifyContent="space-between" mb={4}>
@@ -228,8 +228,8 @@ export default function ProcedurePillContainerRow() {
                 <Text fontSize="2xl" fontWeight="bold" mr={2}>
                   Filters
                 </Text>
-                <Tooltip 
-                  label="We are actively growing to more cities, providers, and insurance plans. Add your bill to help us grow." 
+                <Tooltip
+                  label="We are actively growing to more cities, providers, and insurance plans. Add your bill to help us grow."
                   aria-label="Filter information"
                   placement="top"
                   hasArrow
@@ -295,8 +295,8 @@ export default function ProcedurePillContainerRow() {
             <Flex alignItems="center" mb={4}>
               <Flex alignItems="center" position="relative">
                 <Text fontSize="2xl" fontWeight="bold" mr={2}>Procedures</Text>
-                <Tooltip 
-                  label="Click on a procedure to see more details and price breakdowns. These are the top procedures in the region. We are growing this list. Add your bill to help." 
+                <Tooltip
+                  label="Click on a procedure to see more details and price breakdowns. These are the top procedures in the region. We are growing this list. Add your bill to help."
                   aria-label="Procedures information"
                   placement="top"
                   hasArrow
@@ -312,24 +312,31 @@ export default function ProcedurePillContainerRow() {
                 </Tooltip>
               </Flex>
             </Flex>
-            
+
             <Grid templateColumns="repeat(4, 1fr)" gap={6} justifyContent="center">
               <Link to="/addbillpage">
-                <Button
-                  borderRadius="full"
-                  variant="outline"
-                  borderColor="var(--color-primary)"
-                  color="var(--color-primary)"
-                  _hover={{ bg: "var(--color-primary)", color: "white" }}
-                  width="100%"
-                  height="0"
-                  paddingBottom="100%"
-                  position="relative"
+                <Box
+                  width="200px"
+                  height="240px"
+                  borderRadius="16px"
+                  overflow="hidden"
+                  boxShadow="0 4px 6px rgba(0, 0, 0, 0.1)"
+                  border="1px solid #e0e0e0"
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="center"
+                  bg="var(--color-primary)"
+                  color="white"
+                  _hover={{ bg: "var(--color-secondary)" }}
                 >
-                  <Box position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)">
+                  <Text fontSize="xl" fontWeight="bold" textAlign="center" px={4} maxWidth="160px">
                     + Add Your Bill
-                  </Box>
-                </Button>
+                  </Text>
+                  <Text fontSize="sm" textAlign="center" mt={2} maxWidth="160px">
+                    Help others by sharing your costs
+                  </Text>
+                </Box>
               </Link>
               {displayedProcedures.map((proc, index) => (
                 <ProcedurePill

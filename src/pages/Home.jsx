@@ -6,6 +6,7 @@ import Mission from '../components/Mission';  // Make sure this import is correc
 import Signup from "../components/Signup";
 import heroImage from '../images/hero.png';
 import { useForm, ValidationError } from '@formspree/react';
+import { Link } from 'react-router-dom';
 
 function ContactForm() {
     const [state, handleSubmit] = useForm("mblrezjy");
