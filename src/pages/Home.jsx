@@ -1,12 +1,14 @@
-import React, { useRef } from 'react';
-import { Box, Flex, VStack, Heading, Text, Button, Center, FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react";
+import React, { useRef, useState, useEffect } from 'react';
+import { Box, Flex, VStack, Heading, Text, Button, Center, FormControl, FormLabel, Input, Textarea, Container } from "@chakra-ui/react";
+import { motion, AnimatePresence } from "framer-motion";
 import Header from "../components/Header";
 import ProcedurePanels from "../components/ProcedurePanels";
-import Mission from '../components/Mission';  // Make sure this import is correct
+import Headline from '../components/Headline';
 import Signup from "../components/Signup";
-import heroImage from '../images/hero.png';
+import heroImage from '../images/vial.jpg';
 import { useForm, ValidationError } from '@formspree/react';
 import { Link } from 'react-router-dom';
+import { FaHospital, FaPills, FaUserMd, FaHeartbeat, FaDiscord } from 'react-icons/fa';
 
 function ContactForm() {
     const [state, handleSubmit] = useForm("mblrezjy");
@@ -53,6 +55,19 @@ export default function HomePage() {
     const procedurePanelsRef = useRef(null);
     const contactFormRef = useRef(null);
     const missionRef = useRef(null);
+    const [currentWord, setCurrentWord] = useState("Ozempic");
+    const words = ["Ozempic", "Wegovy", "Mounjaro"];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentWord(prevWord => {
+                const currentIndex = words.indexOf(prevWord);
+                return words[(currentIndex + 1) % words.length];
+            });
+        }, 2000); // Change word every 3 seconds
+
+        return () => clearInterval(interval);
+    }, []);
 
     const scrollToProcedurePanels = () => {
         if (procedurePanelsRef.current) {
@@ -102,10 +117,61 @@ export default function HomePage() {
                         bottom: 0,
                         bg: 'linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.6) 100%)',
                     }}
-                />
-                <Box width="100%" position="relative" zIndex={10}>
-                    <Header onSignUpClick={scrollToContactForm} onPricesClick={scrollToProcedurePanels} onMissionClick={scrollToMission}/>
+                >
+                    <Container maxW="container.xl" h="100%" position="relative">
+                        {/* Top-left corner */}
+                        <Box
+                            position="absolute"
+                            top="15vh"
+                            left="2vw"
+                            width="30px"
+                            height="30px"
+                            borderTop="2px solid"
+                            borderLeft="2px solid"
+                            borderColor="var(--color-secondary)"
+                            opacity={0.7}
+                        />
+                        {/* Top-right corner */}
+                        <Box
+                            position="absolute"
+                            top="15vh"
+                            right="2vw"
+                            width="30px"
+                            height="30px"
+                            borderTop="2px solid"
+                            borderRight="2px solid"
+                            borderColor="var(--color-secondary)"
+                            opacity={0.7}
+                        />
+                        {/* Bottom-left corner */}
+                        <Box
+                            position="absolute"
+                            bottom="5vh"
+                            left="2vw"
+                            width="30px"
+                            height="30px"
+                            borderBottom="2px solid"
+                            borderLeft="2px solid"
+                            borderColor="var(--color-secondary)"
+                            opacity={0.7}
+                        />
+                        {/* Bottom-right corner */}
+                        <Box
+                            position="absolute"
+                            bottom="5vh"
+                            right="2vw"
+                            width="30px"
+                            height="30px"
+                            borderBottom="2px solid"
+                            borderRight="2px solid"
+                            borderColor="var(--color-secondary)"
+                            opacity={0.7}
+                        />
+                    </Container>
                 </Box>
+                <Container maxW="container.xl" position="relative" zIndex={10}>
+                    <Header onSignUpClick={scrollToContactForm} onPricesClick={scrollToProcedurePanels} onMissionClick={scrollToMission}/>
+                </Container>
                 <VStack
                     spacing={8}
                     align="center"
@@ -116,11 +182,39 @@ export default function HomePage() {
                     position="relative"
                     zIndex={1}
                 >
-                    <Heading as="h1" size="2xl" color="gray.800">
-                        We hate medical bills too.
+                    <Heading as="h1" size="2xl" mb={6} display="flex" justifyContent="center" alignItems="center" flexWrap="wrap">
+                        <Text as="span" color="black">Shopping for</Text>{" "}
+                        <Box
+                            display="inline-flex"
+                            position="relative"
+                            width="auto"
+                            minWidth="300px"
+                            maxWidth="400px"
+                            height="1.5em"
+                            justifyContent="center"
+                            alignItems="center"
+                            mx={2}
+                            overflow="hidden"
+                        >
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={currentWord}
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 20 }}
+                                    transition={{ duration: 0.5 }}
+                                    style={{ position: 'absolute', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                >
+                                    <Text as="span" fontSize="1.2em" color="var(--color-secondary)" whiteSpace="nowrap">
+                                        {currentWord}
+                                    </Text>
+                                </motion.div>
+                            </AnimatePresence>
+                        </Box>{" "}
+                        <Text as="span" color="black">is hard.</Text>
                     </Heading>
-                    <Text fontSize="xl" color="gray.600" maxWidth="600px">
-                        Crowdsourcing the prices of healthcare services for everyone to access.
+                    <Text as="h3" fontSize="2xl" mb={6} fontWeight="medium" color="gray.600">
+                        We find the best care and prices for you.
                     </Text>
                     <Flex gap={4}>
                         <Button
@@ -135,6 +229,8 @@ export default function HomePage() {
                             See Prices
                         </Button>
                         <Button
+                            as={Link}
+                            to="/join"
                             bg="var(--color-secondary)"
                             color="white"
                             size="lg"
@@ -143,9 +239,10 @@ export default function HomePage() {
                             borderWidth={2}
                             borderColor="var(--color-primary)"
                             _hover={{ bg: "var(--color-primary)", color: "white" }}
-                            onClick={scrollToMission}
+                            target="_blank"
+                            rel="noopener noreferrer"
                         >
-                            Join the Fight
+                            Get Started
                         </Button>
                     </Flex>
                 </VStack>
@@ -154,19 +251,91 @@ export default function HomePage() {
                 <ProcedurePanels />
             </Center>
             <Box ref={missionRef}>
-                <Mission/>  {/* Added Mission component here */}
+                <Headline onShopClick={scrollToProcedurePanels} />
             </Box>
-            <Box ref={contactFormRef} py={12} bg="white">
+            <Box ref={contactFormRef} py={12} bg="white" position="relative">
+                {/* Top-left corner */}
+                <Box
+                    position="absolute"
+                    top="10px"
+                    left={{ base: "5%", md: "32%" }}
+                    width={{ base: "40px", md: "20px" }}
+                    height="20px"
+                    borderTop="2px solid"
+                    borderLeft="2px solid"
+                    borderColor="var(--color-secondary)"
+                />
+                {/* Top-right corner */}
+                <Box
+                    position="absolute"
+                    top="10px"
+                    right={{ base: "5%", md: "32%" }}
+                    width={{ base: "40px", md: "20px" }}
+                    height="20px"
+                    borderTop="2px solid"
+                    borderRight="2px solid"
+                    borderColor="var(--color-secondary)"
+                />
+                {/* Bottom-left corner */}
+                <Box
+                    position="absolute"
+                    bottom="10px"
+                    left={{ base: "5%", md: "32%" }}
+                    width={{ base: "40px", md: "20px" }}
+                    height="20px"
+                    borderBottom="2px solid"
+                    borderLeft="2px solid"
+                    borderColor="var(--color-secondary)"
+                />
+                {/* Bottom-right corner */}
+                <Box
+                    position="absolute"
+                    bottom="10px"
+                    right={{ base: "5%", md: "32%" }}
+                    width={{ base: "40px", md: "20px" }}
+                    height="20px"
+                    borderBottom="2px solid"
+                    borderRight="2px solid"
+                    borderColor="var(--color-secondary)"
+                />
                 <VStack spacing={8} align="center">
                     <Heading as="h2" size="xl" color="gray.700">
-                        Stay Updated
+                        Stay in Touch
                     </Heading>
                     <Text fontSize="lg" color="gray.600" maxWidth="600px" textAlign="center">
-                        Sign up to receive updates on healthcare costs and new features.
+                        Stay connected and join our Discord community.
                     </Text>
-                    <Box width="100%" maxWidth="400px">
-                        <ContactForm />
-                    </Box>
+                    <Flex gap={4} alignItems="center">
+                        <Button
+                            as={Link}
+                            to="/join"
+                            bg="var(--color-primary)"
+                            color="white"
+                            size="lg"
+                            fontWeight="bold"
+                            borderRadius="full"
+                            _hover={{ bg: "var(--color-secondary)" }}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Join us
+                        </Button>
+                        <Button
+                            as="a"
+                            href="https://discord.com/invite/DdaNsrVr"
+                            bg="var(--color-secondary)"
+                            color="white"
+                            size="lg"
+                            fontWeight="bold"
+                            borderRadius="full"
+                            _hover={{ bg: "var(--color-primary)" }}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            leftIcon={<FaDiscord />}
+                        >
+                            Discord
+                        </Button>
+                    </Flex>
                 </VStack>
             </Box>
         </Box>

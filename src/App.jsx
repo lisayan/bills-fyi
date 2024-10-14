@@ -33,7 +33,7 @@ import XRayFoot from './pages/Xray_foot'
 import XRayHipPelvis2Views from "./pages/Xray_hip_pelvis_2_views";
 import XRayHipPelvis5Views from "./pages/XRay_hip_pelvis_5+views";
 import About from './pages/About';
-
+import JoinForm from './pages/JoinForm';
 export default function App() {
   return (
     <>
@@ -70,6 +70,7 @@ export default function App() {
           <Route path="/xray_hip_pelvis_2views" element={<XRayHipPelvis2Views/>}/>
           <Route path="/xray_hip_pelvis_5+views" element={<XRayHipPelvis5Views/>}/>
           <Route path="/about" element={<About/>}/>
+          <Route path="/join" element={<JoinForm/>}/>
         </Routes>
       </Router>
     </>

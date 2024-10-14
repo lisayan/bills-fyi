@@ -27,11 +27,14 @@ export default function MenuLinks({ isOpen, onSignUpClick, onMissionClick, onPri
         <MenuItem to="/">
           <Text fontSize="med" fontWeight="bold">Home</Text>
         </MenuItem>
+        <MenuItem to="/join" target="_blank" rel="noopener noreferrer">
+          <Text fontSize="med" fontWeight="bold">Get Started</Text>
+        </MenuItem>
         <MenuItem onClick={(e) => {
           e.preventDefault();
           onMissionClick();
         }}>
-          <Text fontSize="med" fontWeight="bold">Join the Fight</Text>
+          <Text fontSize="med" fontWeight="bold">Learn more</Text>
         </MenuItem>
         <Box position="relative">
           <Button
@@ -121,7 +124,7 @@ export default function MenuLinks({ isOpen, onSignUpClick, onMissionClick, onPri
           leftIcon={<Icon as={FaDollarSign} />}
           rightIcon={
             <Tooltip 
-              label="See costs of medical procedures. We are growing this to more cities, providers, and to cover insurance plans." 
+              label="See costs of Ozempic, Wegovy, and other weight loss medications." 
               aria-label="Cart information"
               placement="bottom-end"
               closeOnClick={false}

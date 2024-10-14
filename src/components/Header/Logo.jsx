@@ -18,7 +18,7 @@ export default function Logo(props) {
           <img src={logo} alt="logo" style={{ width: '20px', height: '20px' }} />
         </Flex>
         <Text fontSize="lg" fontWeight="bold">
-          bills.exposed
+          Ozzi Health
         </Text>
       </Flex>
     </Box>
