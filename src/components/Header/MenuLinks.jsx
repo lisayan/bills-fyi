@@ -25,16 +25,16 @@ export default function MenuLinks({ isOpen, onSignUpClick, onMissionClick, onPri
         pt={[4, 4, 0, 0]}
       >
         <MenuItem to="/">
-          <Text fontSize="med" fontWeight="bold">Home</Text>
+          <Text fontSize="med" fontWeight="bold" color="black">Home</Text>
         </MenuItem>
         <MenuItem to="/join" target="_blank" rel="noopener noreferrer">
-          <Text fontSize="med" fontWeight="bold">Get Started</Text>
+          <Text fontSize="med" fontWeight="bold" color="black">Get Started</Text>
         </MenuItem>
         <MenuItem onClick={(e) => {
           e.preventDefault();
           onMissionClick();
         }}>
-          <Text fontSize="med" fontWeight="bold">Learn more</Text>
+          <Text fontSize="med" fontWeight="bold" color="black">Learn more</Text>
         </MenuItem>
         <Box position="relative">
           <Button
