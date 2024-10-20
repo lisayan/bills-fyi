@@ -14,39 +14,37 @@ export default function ProcedurePillContainerRow() {
   const [searchTerm, setSearchTerm] = useState('');
   const [procedures, setProcedures] = useState([]);
   const [states, setStates] = useState(['All States']);
-  const [insurances, setInsurances] = useState(['All Insurances']);
   const [selectedState, setSelectedState] = useState('All States');
+  const [insurances, setInsurances] = useState(['All Insurances']);
   const [selectedInsurance, setSelectedInsurance] = useState('All Insurances');
-  const [medications, setMedications] = useState([]);
-  const [selectedMedications, setSelectedMedications] = useState([]);
+  const [selectedMedication, setSelectedMedication] = useState('All');
 
   useEffect(() => {
     const fetchProcedures = async () => {
       try {
         const rawData = await fetchData('bills-exposed-database');
         const uniqueProcedures = new Set();
+        const uniqueMedications = new Set();
         const uniqueStates = new Set();
         const uniqueInsurances = new Set();
-        const uniqueMedications = new Set();
         const proceduresMap = new Map();
 
         rawData.forEach(item => {
           uniqueProcedures.add(item.procedure);
+          uniqueMedications.add(item.insurance);
           uniqueStates.add(item.state);
-          uniqueInsurances.add(item.insurance);
-          if (item.medication) {
-            uniqueMedications.add(item.medication);
-          }
+          uniqueInsurances.add(item.insurance_actual);
 
-          const key = item.procedure;
+          const key = `${item.procedure}-${item.insurance}`;
           if (!proceduresMap.has(key)) {
             proceduresMap.set(key, {
               procedure: item.procedure,
               price: parseFloat(item.price_0_25) || 0,
               count: 1,
               state: item.state,
-              insurance: item.insurance,
-              medication: item.medication
+              insurance: item.insurance_actual,
+              medication: item.insurance,
+              website: item.website
             });
           } else {
             const existing = proceduresMap.get(key);
@@ -65,19 +63,17 @@ export default function ProcedurePillContainerRow() {
 
         const sortedStates = Array.from(uniqueStates).sort();
         const sortedInsurances = Array.from(uniqueInsurances).sort();
-        const sortedMedications = Array.from(uniqueMedications).sort();
 
         setStates(['All States', ...sortedStates]);
-        
+
         // Update insurance options
         const insuranceOptions = ['All Insurances', ...sortedInsurances];
         setInsurances(insuranceOptions);
-        
+
         // Set default insurance to "None" if it exists, otherwise "All Insurances"
         const defaultInsurance = insuranceOptions.includes('None') ? 'None' : 'All Insurances';
         setSelectedInsurance(defaultInsurance);
 
-        setMedications(sortedMedications);
       } catch (error) {
         console.error('Error fetching procedures:', error);
       }
@@ -92,22 +88,14 @@ export default function ProcedurePillContainerRow() {
         const matchesSearch = proc.procedure.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesState = selectedState === 'All States' || proc.state === selectedState;
         const matchesInsurance = selectedInsurance === 'All Insurances' || proc.insurance === selectedInsurance;
-        const matchesMedication = selectedMedications.length === 0 || selectedMedications.includes(proc.medication);
+        const matchesMedication = selectedMedication === 'All' || proc.medication === selectedMedication;
         return matchesSearch && matchesState && matchesInsurance && matchesMedication;
       })
       .sort((a, b) => a.procedure.localeCompare(b.procedure));
-  }, [procedures, searchTerm, selectedState, selectedInsurance, selectedMedications]);
+  }, [procedures, searchTerm, selectedState, selectedInsurance, selectedMedication]);
 
   const initialItemsToShow = 7;
   const displayedProcedures = showAll ? sortedAndFilteredProcedures : sortedAndFilteredProcedures.slice(0, initialItemsToShow);
-
-  const toggleMedication = (medication) => {
-    setSelectedMedications(prev => 
-      prev.includes(medication)
-        ? prev.filter(med => med !== medication)
-        : [...prev, medication]
-    );
-  };
 
   return (
     <Box width="100%" maxWidth="1400px" mx="auto" pt={12} pb={20}>
@@ -119,7 +107,7 @@ export default function ProcedurePillContainerRow() {
         </Text>
 
         {/* Search Bar */}
-        <Box maxWidth="1200px" mx="auto">
+        <Box maxWidth="1200px" mx="auto" mb={6}>
           <InputGroup size="lg">
             <InputLeftElement pointerEvents="none" height="100%">
               <SearchIcon color="gray.300" boxSize={6} />
@@ -136,170 +124,112 @@ export default function ProcedurePillContainerRow() {
             />
           </InputGroup>
         </Box>
+
+        {/* Filters */}
+        <Flex justifyContent="center" mb={8}>
+          <Flex gap={4} alignItems="center">
+            <Menu>
+              <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full">
+                <Flex alignItems="center">
+                  <Text mr={2}>State:</Text>
+                  <Text fontWeight="bold">{selectedState}</Text>
+                </Flex>
+              </MenuButton>
+              <MenuList maxHeight="200px" overflowY="auto">
+                {states.map((state, index) => (
+                  <MenuItem key={index} onClick={() => setSelectedState(state)}>{state}</MenuItem>
+                ))}
+              </MenuList>
+            </Menu>
+
+            <Menu>
+              <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full">
+                <Flex alignItems="center">
+                  <Text mr={2}>Insurance:</Text>
+                  <Text fontWeight="bold">{selectedInsurance}</Text>
+                </Flex>
+              </MenuButton>
+              <MenuList maxHeight="200px" overflowY="auto">
+                {insurances.map((insurance, index) => (
+                  <MenuItem key={index} onClick={() => setSelectedInsurance(insurance)}>{insurance}</MenuItem>
+                ))}
+              </MenuList>
+            </Menu>
+
+            <ButtonGroup isAttached variant="outline" borderRadius="full" overflow="hidden">
+              {['All', 'Ozempic', 'Wegovy', 'Mounjaro', 'Zepbound'].map((medication, index) => (
+                <Button
+                  key={medication}
+                  onClick={() => setSelectedMedication(medication)}
+                  isActive={selectedMedication === medication}
+                  bg={selectedMedication === medication ? "blue.100" : "gray.100"}
+                  color="black"
+                  _hover={{
+                    bg: "gray.200",
+                  }}
+                  _active={{
+                    bg: "blue.300",
+                  }}
+                  borderRadius={index === 0 ? "full" : index === 3 ? "full" : 0}
+                  borderLeftRadius={index === 0 ? "full" : 0}
+                  borderRightRadius={index === 3 ? "full" : 0}
+                >
+                  {medication}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </Flex>
+        </Flex>
       </Box>
 
-      {/* Center-aligned container for Filters and Procedures */}
-      <Flex justifyContent="center" px={4} mb={12}>
-        <Flex maxWidth="1200px" width="100%">
-          {/* Filters Column */}
-          <Box
-            width="250px"
-            pr={8}
-            borderRight="1px solid"
-            borderColor="gray.200"
-          >
-            <Flex alignItems="center" justifyContent="space-between" mb={4}>
-              <Flex alignItems="flex-start">
-                <Text fontSize="2xl" fontWeight="bold" mr={2}>
-                  Filters
-                </Text>
-                <Tooltip
-                  label="We are actively growing to more cities, providers, and insurance plans. Add your bill to help us grow."
-                  aria-label="Filter information"
-                  placement="top"
-                  hasArrow
-                >
-                  <Box>
-                    <InfoOutlineIcon
-                      boxSize={4}
-                      color="var(--color-primary)"
-                      cursor="pointer"
-                    />
-                  </Box>
-                </Tooltip>
-              </Flex>
-            </Flex>
-            <Flex direction="column" gap={3} mb={4}>
-              <Menu>
-                <MenuButton as={Button} rightIcon={<ChevronDownIcon />} width="100%" justifyContent="space-between" bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full">
-                  <Flex width="100%" justifyContent="space-between" alignItems="center">
-                    <Text>State:</Text>
-                    <Text>{selectedState}</Text>
-                  </Flex>
-                </MenuButton>
-                <MenuList maxHeight="200px" overflowY="auto">
-                  {states.map((state, index) => (
-                    <MenuItem key={index} onClick={() => setSelectedState(state)}>{state}</MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
-
-              <Menu>
-                <MenuButton as={Button} rightIcon={<ChevronDownIcon />} width="100%" justifyContent="space-between" bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full">
-                  <Flex width="100%" justifyContent="space-between" alignItems="center">
-                    <Text>Insurance:</Text>
-                    <Text>{selectedInsurance}</Text>
-                  </Flex>
-                </MenuButton>
-                <MenuList maxHeight="200px" overflowY="auto">
-                  {insurances.map((insurance, index) => (
-                    <MenuItem key={index} onClick={() => setSelectedInsurance(insurance)}>{insurance}</MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
-
-              <Box>
-                <Text mb={2} fontWeight="bold">Medication:</Text>
-                <Wrap spacing={2}>
-                  {medications.map((medication, index) => (
-                    <WrapItem key={index}>
-                      <Button
-                        size="sm"
-                        onClick={() => toggleMedication(medication)}
-                        bg={selectedMedications.includes(medication) ? "var(--color-secondary)" : "gray.100"}
-                        color={selectedMedications.includes(medication) ? "white" : "black"}
-                        _hover={{ 
-                          bg: selectedMedications.includes(medication) 
-                            ? "var(--color-secondary)" 
-                            : "gray.200",
-                          opacity: selectedMedications.includes(medication) ? 0.8 : 1
-                        }}
-                        borderRadius="full"
-                      >
-                        {medication}
-                      </Button>
-                    </WrapItem>
-                  ))}
-                </Wrap>
-              </Box>
-            </Flex>
-          </Box>
-
-          {/* Procedures Column */}
-          <Box flex={1} pl={8}>
-            {/* New title for procedure cards section with info icon */}
-            <Flex alignItems="center" mb={4}>
-              <Flex alignItems="center" position="relative">
-                <Text fontSize="2xl" fontWeight="bold" mr={2}>Providers</Text>
-                <Tooltip
-                  label="Click on a procedure to see more details and price breakdowns. These are the top procedures in the region. We are growing this list. Add your bill to help."
-                  aria-label="Procedures information"
-                  placement="top"
-                  hasArrow
-                >
-                  <InfoOutlineIcon
-                    boxSize={4}
-                    color="var(--color-primary)"
-                    cursor="pointer"
-                    position="absolute"
-                    top="1"
-                    right="-20px"
-                  />
-                </Tooltip>
-              </Flex>
-            </Flex>
-
-            <Grid templateColumns="repeat(4, 1fr)" gap={6} justifyContent="center">
-              <Link to="/addbillpage">
-                <Box
-                  width="200px"
-                  height="240px"
-                  borderRadius="16px"
-                  overflow="hidden"
-                  boxShadow="0 4px 6px rgba(0, 0, 0, 0.1)"
-                  border="1px solid #e0e0e0"
-                  display="flex"
-                  flexDirection="column"
-                  justifyContent="center"
-                  alignItems="center"
-                  bg="var(--color-primary)"
-                  color="white"
-                  _hover={{ bg: "var(--color-secondary)" }}
-                >
-                  <Text fontSize="xl" fontWeight="bold" textAlign="center" px={4} maxWidth="160px">
-                    + Add Your Bill
-                  </Text>
-                  <Text fontSize="sm" textAlign="center" mt={2} maxWidth="160px">
-                    Help others by sharing your costs
-                  </Text>
-                </Box>
-              </Link>
-              {displayedProcedures.map((proc, index) => (
-                <ProcedurePill
-                  key={index}
-                  link={proc.link}
-                  procedure={proc.procedure}
-                  price={proc.price}
-                />
-              ))}
-            </Grid>
-            {!showAll && sortedAndFilteredProcedures.length > initialItemsToShow && (
-              <Flex justifyContent="center" mt={8}>
-                <Button
-                  onClick={() => setShowAll(true)}
-                  borderColor="var(--color-primary)"
-                  borderRadius="full"
-                  color="var(--color-primary)"
-                  variant="outline"
-                  _hover={{ bg: "var(--color-primary)", color: "white" }}
-                >
-                  Show More
-                </Button>
-              </Flex>
-            )}
-          </Box>
+      {/* Procedures */}
+      <Box maxWidth="1200px" mx="auto">
+        {/* Title for procedure cards section with info icon */}
+        <Flex alignItems="center" mb={4}>
+          <Flex alignItems="center" position="relative">
+            <Text fontSize="2xl" fontWeight="bold" mr={2}>Providers</Text>
+            <Tooltip
+              label="Click on a procedure to see more details and price breakdowns. These are the top procedures in the region. We are growing this list. Add your bill to help."
+              aria-label="Procedures information"
+              placement="top"
+              hasArrow
+            >
+              <InfoOutlineIcon
+                boxSize={4}
+                color="var(--color-primary)"
+                cursor="pointer"
+              />
+            </Tooltip>
+          </Flex>
         </Flex>
-      </Flex>
+
+        <Grid templateColumns="repeat(4, 1fr)" gap={6} justifyContent="center">
+          {displayedProcedures.map((proc, index) => (
+            <ProcedurePill
+              key={index}
+              link={proc.link}
+              website={proc.website}
+              procedure={proc.procedure}
+              price={proc.price}
+              medication={proc.medication}
+            />
+          ))}
+        </Grid>
+        {!showAll && sortedAndFilteredProcedures.length > initialItemsToShow && (
+          <Flex justifyContent="center" mt={8}>
+            <Button
+              onClick={() => setShowAll(true)}
+              borderColor="var(--color-primary)"
+              borderRadius="full"
+              color="var(--color-primary)"
+              variant="outline"
+              _hover={{ bg: "var(--color-primary)", color: "white" }}
+            >
+              Show More
+            </Button>
+          </Flex>
+        )}
+      </Box>
     </Box>
   );
 }
