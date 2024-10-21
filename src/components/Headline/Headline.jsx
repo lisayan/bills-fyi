@@ -50,17 +50,29 @@ export default function OzempicSolutions({ onShopClick }) {
   ];
 
   return (
-    <Box bg="gray.50" width="100%">
+    <Box width="100%">
       <Container maxW="container.xl" py={10}>
-        {/* Scrolling questions */}
+        {/* Scrolling questions with fading edges */}
         <Box 
           position="relative" 
-          height="60px"  // Increased height
+          height="60px"
           mb={6}
           overflow="hidden"
           borderBottom="2px solid rgba(255, 255, 255, 0.7)"
-          pb={4}  // Added some bottom padding
+          pb={4}
         >
+          {/* Add gradient overlays for fading effect */}
+          <Box
+            position="absolute"
+            top={0}
+            left={0}
+            right={0}
+            bottom={0}
+            zIndex={1}
+            pointerEvents="none"
+            bgGradient="linear(to-r, white, transparent 10%, transparent 90%, white)"
+          />
+          
           <motion.div
             animate={{ x: [0, -totalWidth] }}
             transition={{
@@ -75,7 +87,7 @@ export default function OzempicSolutions({ onShopClick }) {
               position: 'absolute',
               whiteSpace: 'nowrap',
               display: 'flex',
-              bottom: '8px',  // Adjusted to move text slightly up from the bottom
+              bottom: '8px',
             }}
           >
             {[...questions, ...questions].map((question, index) => (
