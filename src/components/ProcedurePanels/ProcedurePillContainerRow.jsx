@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   Box, Text, Flex, Grid, Input, Button, Menu, MenuButton, MenuList, MenuItem,
-  InputGroup, InputLeftElement, Tooltip, Icon, ButtonGroup, Wrap, WrapItem
+  InputGroup, InputLeftElement, Tooltip, Icon, ButtonGroup, Wrap, WrapItem,
+  Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton
 } from '@chakra-ui/react';
 import { ChevronDownIcon, SearchIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import ProcedurePill from './ProcedurePill.jsx';
@@ -17,7 +18,9 @@ export default function ProcedurePillContainerRow() {
   const [selectedState, setSelectedState] = useState('All States');
   const [insurances, setInsurances] = useState(['All Insurances']);
   const [selectedInsurance, setSelectedInsurance] = useState('All Insurances');
-  const [selectedMedication, setSelectedMedication] = useState('All');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedMedication, setSelectedMedication] = useState(searchParams.get('medication') || 'All');
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     const fetchProcedures = async () => {
@@ -82,6 +85,11 @@ export default function ProcedurePillContainerRow() {
     fetchProcedures();
   }, []);
 
+  useEffect(() => {
+    const showPopup = searchParams.get('popup') === 'true';
+    setIsPopupOpen(showPopup);
+  }, [searchParams]);
+
   const sortedAndFilteredProcedures = useMemo(() => {
     return procedures
       .filter(proc => {
@@ -97,8 +105,37 @@ export default function ProcedurePillContainerRow() {
   const initialItemsToShow = 7;
   const displayedProcedures = showAll ? sortedAndFilteredProcedures : sortedAndFilteredProcedures.slice(0, initialItemsToShow);
 
+  // Update URL when medication changes
+  const handleMedicationChange = (medication) => {
+    if (medication === 'All') {
+      searchParams.delete('medication');
+    } else {
+      searchParams.set('medication', medication);
+    }
+    setSearchParams(searchParams);
+    setSelectedMedication(medication);
+  };
+
   return (
     <Box width="100%" maxWidth="1400px" mx="auto" pt={12} pb={20}>
+      <Modal isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton 
+            bg="var(--color-secondary)"
+            borderRadius="full"
+            _hover={{
+              bg: "var(--color-secondary)",
+              opacity: 0.8
+            }}
+          />
+          <ModalHeader>Which drug is right for you?</ModalHeader>
+          <ModalBody pb={6}>
+            <Text>Brand names like Ozempic, Wegovy, Mounjaro, and Zepbound start at around $500. Compounded alternatives (semaglutide and tirzepatide) are usually less than $1000.</Text>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
       {/* Title and Subtitle */}
       <Box mb={8} textAlign="center">
         <Text fontSize="3xl" fontWeight="bold" mb={2}>See GLP-1 providers for your needs.</Text>
@@ -160,7 +197,7 @@ export default function ProcedurePillContainerRow() {
               {['All', 'Ozempic', 'Wegovy', 'Mounjaro', 'Zepbound'].map((medication, index) => (
                 <Button
                   key={medication}
-                  onClick={() => setSelectedMedication(medication)}
+                  onClick={() => handleMedicationChange(medication)}
                   isActive={selectedMedication === medication}
                   bg={selectedMedication === medication ? "blue.100" : "gray.100"}
                   color="black"
@@ -168,7 +205,7 @@ export default function ProcedurePillContainerRow() {
                     bg: "gray.200",
                   }}
                   _active={{
-                    bg: "blue.300",
+                    bg: "var(--color-secondary)",
                   }}
                   borderRadius={index === 0 ? "full" : index === 3 ? "full" : 0}
                   borderLeftRadius={index === 0 ? "full" : 0}
@@ -221,9 +258,9 @@ export default function ProcedurePillContainerRow() {
               onClick={() => setShowAll(true)}
               borderColor="var(--color-primary)"
               borderRadius="full"
-              color="var(--color-primary)"
-              variant="outline"
-              _hover={{ bg: "var(--color-primary)", color: "white" }}
+              color="white"
+              bg="var(--color-primary)"
+              _hover={{ opacity: 0.8 }}
             >
               Show More
             </Button>

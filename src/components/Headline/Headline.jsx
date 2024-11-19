@@ -91,7 +91,7 @@ export default function OzempicSolutions({ onShopClick }) {
             }}
           >
             {[...questions, ...questions].map((question, index) => (
-              <Heading key={index} as="h1" size="xl" color="var(--color-primary)" mr={8}>
+              <Heading key={index} as="h1" size="xl" color="var(--color-primary)" mr={8} fontWeight="normal">
                 {question}
               </Heading>
             ))}

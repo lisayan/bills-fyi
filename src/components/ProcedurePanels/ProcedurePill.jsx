@@ -39,9 +39,20 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
         }}
         position="relative"
       >
-        <Box bg="blue.400" height="8px" width="100%" />
+        <Box bg="var(--color-primary)" height="8px" width="100%" />
         <Tag size="sm" bg="green.100" color="gray.800" position="absolute" top="12px" left="24px">
-          Verified
+          Turnip Verified
+        </Tag>
+        <Tag 
+          size="sm" 
+          variant="solid" 
+          bg="blue.100" 
+          color="gray.800"
+          position="absolute"
+          top="12px"
+          right="24px"
+        >
+          Ships
         </Tag>
         <VStack align="flex-start" spacing={4} p={6}>
           <HStack justify="space-between" w="100%" alignItems="flex-start" mt={2}>
@@ -62,11 +73,6 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
               </Text>
             </VStack>
           </HStack>
-          <Flex justify="flex-end" width="100%" mb={2}>
-            <Tag size="sm" variant="solid" bg="blue.100" color="gray.800">
-              Ships
-            </Tag>
-          </Flex>
         </VStack>
       </Box>
 

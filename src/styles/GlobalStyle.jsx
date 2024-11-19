@@ -1,16 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
   :root {
-    --color-primary: #274C77;
-    --color-secondary: #6096BA;
+    --color-primary: #7013C4;
+    --color-secondary: #C68BFD;
     --color-tertiary: #D8EAD6;
     --color-quaternary: #72727E;
     --color-quinary: #625F63;
     --color-icon-green: #9FC2A0;
-    --font-family: 'Montserrat', sans-serif;
+    --font-family: 'Poppins', sans-serif;
   }
 
   *, *::before, *::after {
@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-family);
-    font-weight: 700;
+    font-weight: 400;
     color: var(--color-quaternary);
   }
 

@@ -5,10 +5,11 @@ import Header from "../components/Header";
 import ProcedurePanels from "../components/ProcedurePanels";
 import Headline from '../components/Headline';
 import Signup from "../components/Signup";
-import heroImage from '../images/vial.jpg';
+import heroImage from '../images/branding_bg.jpg';
 import { useForm, ValidationError } from '@formspree/react';
-import { Link } from 'react-router-dom';
-import { FaHospital, FaPills, FaUserMd, FaHeartbeat, FaDiscord } from 'react-icons/fa';
+import { Link, useSearchParams } from 'react-router-dom';
+import { FaHospital, FaPills, FaUserMd, FaHeartbeat, FaDiscord, FaLinkedin, FaTwitter, FaFacebook } from 'react-icons/fa';
+import logo from '../images/full_logo.jpeg';
 
 function ContactForm() {
     const [state, handleSubmit] = useForm("mblrezjy");
@@ -57,6 +58,7 @@ export default function HomePage() {
     const missionRef = useRef(null);
     const [currentWord, setCurrentWord] = useState("Ozempic");
     const words = ["Ozempic", "Wegovy", "Mounjaro"];
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -68,6 +70,13 @@ export default function HomePage() {
 
         return () => clearInterval(interval);
     }, []);
+
+    useEffect(() => {
+        // Check for prices=true in URL params
+        if (searchParams.get('prices') === 'true') {
+            scrollToProcedurePanels();
+        }
+    }, [searchParams]); // Run when searchParams changes
 
     const scrollToProcedurePanels = () => {
         if (procedurePanelsRef.current) {
@@ -115,7 +124,7 @@ export default function HomePage() {
                         left: 0,
                         right: 0,
                         bottom: 0,
-                        bg: 'linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.6) 100%)',
+                        bg: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 100%)',
                     }}
                 >
                     <Container maxW="container.xl" h="100%" position="relative">
@@ -173,7 +182,7 @@ export default function HomePage() {
                     <Header onSignUpClick={scrollToContactForm} onPricesClick={scrollToProcedurePanels} onMissionClick={scrollToMission}/>
                 </Container>
                 <VStack
-                    spacing={8}
+                    spacing={24}
                     align="center"
                     justify="center"
                     flex={1}
@@ -182,7 +191,7 @@ export default function HomePage() {
                     position="relative"
                     zIndex={1}
                 >
-                    <Heading as="h1" size="2xl" mb={6} display="flex" justifyContent="center" alignItems="center" flexWrap="wrap">
+                    <Heading as="h1" size="2xl" mb={12} display="flex" justifyContent="center" alignItems="center" flexWrap="wrap">
                         <Text as="span" color="black">Shopping for</Text>{" "}
                         <Box
                             display="inline-flex"
@@ -205,7 +214,7 @@ export default function HomePage() {
                                     transition={{ duration: 0.5 }}
                                     style={{ position: 'absolute', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                                 >
-                                    <Text as="span" fontSize="1.2em" color="var(--color-secondary)" whiteSpace="nowrap">
+                                    <Text as="span" fontSize="1.2em" color="white" whiteSpace="nowrap">
                                         {currentWord}
                                     </Text>
                                 </motion.div>
@@ -213,9 +222,6 @@ export default function HomePage() {
                         </Box>{" "}
                         <Text as="span" color="black">is hard.</Text>
                     </Heading>
-                    <Text as="h3" fontSize="2xl" mb={6} fontWeight="medium" color="gray.600">
-                        We find the best care and prices for you.
-                    </Text>
                     <Flex gap={4}>
                         <Button
                             bg="var(--color-primary)"
@@ -223,10 +229,13 @@ export default function HomePage() {
                             size="lg"
                             fontWeight="bold"
                             borderRadius="full"
+                            borderWidth={2}
+                            borderColor="white"
                             _hover={{ bg: "var(--color-secondary)" }}
                             onClick={scrollToProcedurePanels}
+                            style={{ boxShadow: '0 0 0 2px rgba(255, 255, 255, 1.0)' }}
                         >
-                            See Prices
+                            See Providers and Prices
                         </Button>
                         <Button
                             as={Link}
@@ -237,12 +246,11 @@ export default function HomePage() {
                             fontWeight="bold"
                             borderRadius="full"
                             borderWidth={2}
-                            borderColor="var(--color-primary)"
                             _hover={{ bg: "var(--color-primary)", color: "white" }}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            Get Started
+                            Find Drug for You
                         </Button>
                     </Flex>
                 </VStack>
@@ -337,6 +345,30 @@ export default function HomePage() {
                         </Button>
                     </Flex>
                 </VStack>
+            </Box>
+            
+            {/* Updated Footer Section */}
+            <Box bg="var(--color-primary)" color="white" py={6}>
+                <Container maxW="container.xl">
+                    <Flex direction={{ base: "column", md: "row" }} justify="space-between" align="center">
+                        <Flex align="center" mb={{ base: 4, md: 0 }}>
+                            <Box 
+                                as="img" 
+                                src={logo} 
+                                alt="Turnip Health Logo" 
+                                h={{ base: "35px", md: "50px" }}  // Increased height significantly
+                                mr={4} 
+                                mt="-2rem"  // Negative margin to pull it up
+                                mb="-2rem"  // Negative margin to pull it down
+                                objectFit="contain"  // Ensures the image maintains its aspect ratio
+                            />
+                        </Flex>
+                        <Flex direction={{ base: "column", sm: "row" }} align="center">
+                            <Text as="a" href="/terms" mx={2} my={{ base: 1, sm: 0 }} color="white" _hover={{ textDecoration: "underline" }}>Terms of Service</Text>
+                            <Text as="a" href="/privacy" mx={2} my={{ base: 1, sm: 0 }} color="white" _hover={{ textDecoration: "underline" }}>Privacy Policy</Text>
+                        </Flex>
+                    </Flex>
+                </Container>
             </Box>
         </Box>
     );
