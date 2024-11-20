@@ -19,8 +19,15 @@ export default function ProcedurePillContainerRow() {
   const [insurances, setInsurances] = useState(['All Insurances']);
   const [selectedInsurance, setSelectedInsurance] = useState('All Insurances');
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedMedication, setSelectedMedication] = useState(searchParams.get('medication') || 'All');
+  const [selectedMedications, setSelectedMedications] = useState(() => {
+    const medication = searchParams.get('medication');
+    return medication ? medication.split(',') : ['All'];
+  });
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedPriceRange, setSelectedPriceRange] = useState(() => {
+    const price = searchParams.get('price');
+    return price || 'All Prices';
+  });
 
   useEffect(() => {
     const fetchProcedures = async () => {
@@ -98,29 +105,64 @@ export default function ProcedurePillContainerRow() {
         const matchesSearch = proc.procedure.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesState = selectedState === 'All States' || proc.state === selectedState;
         const matchesInsurance = selectedInsurance === 'All Insurances' || proc.insurance === selectedInsurance;
-        const matchesMedication = selectedMedication === 'All' || proc.medication === selectedMedication;
-        return matchesSearch && matchesState && matchesInsurance && matchesMedication;
+        const matchesMedication = selectedMedications.includes('All') || selectedMedications.includes(proc.medication);
+        
+        const matchesPrice = selectedPriceRange === 'All Prices' || 
+          (selectedPriceRange === '<$500' && proc.price < 500) ||
+          (selectedPriceRange === '$500-$1000' && proc.price >= 500 && proc.price <= 1000) ||
+          (selectedPriceRange === '>$1000' && proc.price > 1000);
+        
+        return matchesSearch && matchesState && matchesInsurance && matchesMedication && matchesPrice;
       })
       .sort((a, b) => a.procedure.localeCompare(b.procedure));
-  }, [procedures, searchTerm, selectedState, selectedInsurance, selectedMedication]);
+  }, [procedures, searchTerm, selectedState, selectedInsurance, selectedMedications, selectedPriceRange]);
 
   const initialItemsToShow = 7;
   const displayedProcedures = showAll ? sortedAndFilteredProcedures : sortedAndFilteredProcedures.slice(0, initialItemsToShow);
 
-  // Update URL when medication changes
+  // Update URL when medications change
   const handleMedicationChange = (medication) => {
+    let newMedications;
+    
     if (medication === 'All') {
-      searchParams.delete('medication');
+      newMedications = ['All'];
+    } else if (selectedMedications.includes(medication)) {
+      newMedications = selectedMedications.filter(med => med !== medication);
+      if (newMedications.length === 0) newMedications = ['All'];
     } else {
-      searchParams.set('medication', medication);
+      newMedications = selectedMedications.filter(med => med !== 'All');
+      newMedications.push(medication);
     }
-    setSearchParams(searchParams);
-    setSelectedMedication(medication);
+
+    // Preserve the current search params but exclude 'popup'
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.delete('popup');  // Always remove popup parameter
+
+    // Update medication parameter
+    if (newMedications.length === 1 && newMedications[0] === 'All') {
+      newSearchParams.delete('medication');
+    } else {
+      newSearchParams.set('medication', newMedications.join(','));
+    }
+
+    setSearchParams(newSearchParams);
+    setSelectedMedications(newMedications);
   };
 
   return (
     <Box width="100%" maxWidth="1400px" mx="auto" pt={12} pb={20}>
-      <Modal isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+      <Modal isOpen={isPopupOpen} onClose={() => {
+        setIsPopupOpen(false);
+        
+        // Get current URL and remove popup parameter while preserving others exactly as they are
+        const currentUrl = window.location.href;
+        const newUrl = currentUrl
+          .replace('?popup=true&', '?')  // If popup is first parameter
+          .replace('&popup=true', '')    // If popup is not first parameter
+          .replace('?popup=true', '');   // If popup is the only parameter
+        
+        window.history.replaceState({}, '', newUrl);
+      }}>
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton 
@@ -133,7 +175,16 @@ export default function ProcedurePillContainerRow() {
           />
           <ModalHeader>Which drug is right for you?</ModalHeader>
           <ModalBody pb={6}>
-            <Text>Brand names like Ozempic, Wegovy, Mounjaro, and Zepbound start at around $500. Compounded alternatives (semaglutide and tirzepatide) are usually less than $1000.</Text>
+            {(selectedMedications.some(med => ['Ozempic', 'Wegovy', 'Mounjaro', 'Zepbound'].includes(med)) && 
+              selectedPriceRange === '<$500') ? (
+              <Text>
+                You selected {selectedMedications.join(', ')} but your budget is &lt;$500.  {/* Two spaces here */}
+                {selectedMedications.length === 1 ? selectedMedications[0] : 'These medications are'} is usually 
+                &gt;$1000. We recommend exploring compounded semaglutide or tirzepatide.
+              </Text>
+            ) : (
+              <Text>Brand names like Ozempic, Wegovy, Mounjaro, and Zepbound are more expensive than compounded alternatives (semaglutide and tirzepatide). Brand names are usually over $1000, while compounds are less than $500.</Text>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -195,13 +246,42 @@ export default function ProcedurePillContainerRow() {
               </MenuList>
             </Menu>
 
+            <Menu>
+              <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full">
+                <Flex alignItems="center">
+                  <Text mr={2}>Price (per month):</Text>
+                  <Text fontWeight="bold">{selectedPriceRange}</Text>
+                </Flex>
+              </MenuButton>
+              <MenuList>
+                {['All Prices', '<$500', '$500-$1000', '>$1000'].map((price) => (
+                  <MenuItem key={price} onClick={() => {
+                    setSelectedPriceRange(price);
+                    
+                    // Update URL params while preserving existing params (except popup)
+                    const newSearchParams = new URLSearchParams(searchParams);
+                    newSearchParams.delete('popup');  // Add this line to ensure popup param is removed
+                    
+                    if (price === 'All Prices') {
+                      newSearchParams.delete('price');
+                    } else {
+                      newSearchParams.set('price', price);
+                    }
+                    setSearchParams(newSearchParams);
+                  }}>
+                    {price}
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </Menu>
+
             <ButtonGroup isAttached variant="outline" borderRadius="full" overflow="hidden">
               {['All', 'Ozempic', 'Wegovy', 'Mounjaro', 'Zepbound'].map((medication, index) => (
                 <Button
                   key={medication}
                   onClick={() => handleMedicationChange(medication)}
-                  isActive={selectedMedication === medication}
-                  bg={selectedMedication === medication ? "blue.100" : "gray.100"}
+                  isActive={selectedMedications.includes(medication)}
+                  bg={selectedMedications.includes(medication) ? "blue.100" : "gray.100"}
                   color="black"
                   _hover={{
                     bg: "gray.200",
@@ -209,9 +289,9 @@ export default function ProcedurePillContainerRow() {
                   _active={{
                     bg: "var(--color-secondary)",
                   }}
-                  borderRadius={index === 0 ? "full" : index === 3 ? "full" : 0}
+                  borderRadius={index === 0 ? "full" : index === 4 ? "full" : 0}
                   borderLeftRadius={index === 0 ? "full" : 0}
-                  borderRightRadius={index === 3 ? "full" : 0}
+                  borderRightRadius={index === 4 ? "full" : 0}
                 >
                   {medication}
                 </Button>
@@ -228,7 +308,7 @@ export default function ProcedurePillContainerRow() {
           <Flex alignItems="center" position="relative">
             <Text fontSize="2xl" fontWeight="bold" mr={2}>Providers</Text>
             <Tooltip
-              label="Click on a procedure to see more details and price breakdowns. These are the top procedures in the region. We are growing this list. Add your bill to help."
+              label="Click on a provider to see reviews, price breakdowns, and more."
               aria-label="Procedures information"
               placement="top"
               hasArrow
