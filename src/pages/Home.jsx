@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import ProcedurePanels from "../components/ProcedurePanels";
 import Headline from '../components/Headline';
 import Signup from "../components/Signup";
-import heroImage from '../images/branding_bg.jpg';
+import heroImage from '../images/fixed_branding_bg.jpg';
 import { useForm, ValidationError } from '@formspree/react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { FaHospital, FaPills, FaUserMd, FaHeartbeat, FaDiscord, FaLinkedin, FaTwitter, FaFacebook } from 'react-icons/fa';
@@ -73,7 +73,7 @@ export default function HomePage() {
 
     useEffect(() => {
         // Check for prices=true in URL params
-        if (searchParams.get('prices') === 'true') {
+        if (searchParams.get('showPrices') === 'true') {
             scrollToProcedurePanels();
         }
     }, [searchParams]); // Run when searchParams changes
@@ -127,62 +127,12 @@ export default function HomePage() {
                         bg: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 100%)',
                     }}
                 >
-                    <Container maxW="container.xl" h="100%" position="relative">
-                        {/* Top-left corner */}
-                        <Box
-                            position="absolute"
-                            top="15vh"
-                            left="2vw"
-                            width="30px"
-                            height="30px"
-                            borderTop="2px solid"
-                            borderLeft="2px solid"
-                            borderColor="var(--color-secondary)"
-                            opacity={0.7}
-                        />
-                        {/* Top-right corner */}
-                        <Box
-                            position="absolute"
-                            top="15vh"
-                            right="2vw"
-                            width="30px"
-                            height="30px"
-                            borderTop="2px solid"
-                            borderRight="2px solid"
-                            borderColor="var(--color-secondary)"
-                            opacity={0.7}
-                        />
-                        {/* Bottom-left corner */}
-                        <Box
-                            position="absolute"
-                            bottom="5vh"
-                            left="2vw"
-                            width="30px"
-                            height="30px"
-                            borderBottom="2px solid"
-                            borderLeft="2px solid"
-                            borderColor="var(--color-secondary)"
-                            opacity={0.7}
-                        />
-                        {/* Bottom-right corner */}
-                        <Box
-                            position="absolute"
-                            bottom="5vh"
-                            right="2vw"
-                            width="30px"
-                            height="30px"
-                            borderBottom="2px solid"
-                            borderRight="2px solid"
-                            borderColor="var(--color-secondary)"
-                            opacity={0.7}
-                        />
-                    </Container>
                 </Box>
                 <Container maxW="container.xl" position="relative" zIndex={10}>
                     <Header onSignUpClick={scrollToContactForm} onPricesClick={scrollToProcedurePanels} onMissionClick={scrollToMission}/>
                 </Container>
                 <VStack
-                    spacing={24}
+                    spacing={8}
                     align="center"
                     justify="center"
                     flex={1}
@@ -191,7 +141,7 @@ export default function HomePage() {
                     position="relative"
                     zIndex={1}
                 >
-                    <Heading as="h1" size="2xl" mb={12} display="flex" justifyContent="center" alignItems="center" flexWrap="wrap">
+                    <Heading as="h1" size="2xl" mb={6} display="flex" justifyContent="center" alignItems="center" flexWrap="wrap">
                         <Text as="span" color="black">Shopping for</Text>{" "}
                         <Box
                             display="inline-flex"
