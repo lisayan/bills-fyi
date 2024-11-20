@@ -240,13 +240,14 @@ export default function HomePage() {
                         <Button
                             as={Link}
                             to="/join"
-                            bg="var(--color-secondary)"
-                            color="white"
+                            bg="white"
+                            color="#4A148C"
                             size="lg"
                             fontWeight="bold"
                             borderRadius="full"
                             borderWidth={2}
-                            _hover={{ bg: "var(--color-primary)", color: "white" }}
+                            borderColor="#4A148C"
+                            _hover={{ bg: "#4A148C", color: "white" }}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
