@@ -3,13 +3,32 @@ import { Link } from 'react-router-dom';
 import {
   Box, Text, HStack, VStack, Tag, Modal, ModalOverlay, ModalContent,
   ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Input, Button,
-  Flex, Icon
+  Flex, Icon, Image, IconButton
 } from '@chakra-ui/react';
 import { FaStar } from 'react-icons/fa';
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 export default function ProcedurePill({ link, website, procedure, quantity, refills, price, rating, reviewCount, medication }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [email, setEmail] = useState('');
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Select images based on procedure name
+  const getImages = () => {
+    if (procedure.toLowerCase().includes('eden')) {
+      return ['eden1.png', 'eden2.png', 'eden3.png'];
+    } else if (procedure.toLowerCase().includes('friday')) {
+      return ['fridays1.png', 'fridays2.png', 'fridays3.png'];
+    } else if (procedure.toLowerCase().includes('mochi')) {
+      return ['mochi1.png', 'mochi2.png', 'mochi3.png'];
+    } else if (procedure.toLowerCase().includes('ro')) {
+      return ['ro1.png', 'ro2.png', 'ro3.png'];
+    } else if (procedure.toLowerCase().includes('good')) {
+      return ['good1.png', 'good2.png', 'good3.png'];
+    }
+  };
+
+  const images = getImages();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +37,13 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
     // Redirect to the website or perform any other action
   };
 
-  console.log(website);
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   return (
     <>
@@ -54,8 +79,8 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
         >
           Ships
         </Tag>
-        <VStack align="flex-start" spacing={4} p={6}>
-          <HStack justify="space-between" w="100%" alignItems="flex-start" mt={2}>
+        <VStack align="flex-start" spacing={2} p={6}>
+          <HStack justify="space-between" w="100%" alignItems="flex-start">
             <VStack align="flex-start" spacing={0}>
               <Text fontSize="24px" fontWeight="bold" color="black" lineHeight="shorter">
                 {procedure}
@@ -72,6 +97,19 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
                 / month
               </Text>
             </VStack>
+          </HStack>
+          <HStack spacing={1}>
+            {[...Array(5)].map((_, i) => (
+              <Icon
+                key={i}
+                as={FaStar}
+                boxSize={3}
+                color={i < Math.floor(rating) ? "yellow.400" : "gray.300"}
+              />
+            ))}
+            <Text fontSize="sm" color="gray.600" ml={1}>
+              {rating} ({reviewCount})
+            </Text>
           </HStack>
         </VStack>
       </Box>
@@ -100,7 +138,7 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
           </ModalHeader>
           <ModalBody px={8} py={6}>
             <VStack spacing={6} align="stretch">
-              <HStack>
+            <HStack>
                 {[...Array(5)].map((_, i) => (
                   <Icon
                     key={i}
@@ -110,6 +148,49 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
                 ))}
                 <Text ml={2}>{rating} ({reviewCount})</Text>
               </HStack>
+              <Box position="relative">
+                <Flex justify="center" align="center" position="relative">
+                  <IconButton
+                    icon={<ChevronLeftIcon />}
+                    onClick={prevImage}
+                    position="absolute"
+                    left={-6}
+                    zIndex={2}
+                    bg="white"
+                    rounded="full"
+                    border="1px solid"
+                    borderColor="gray.200"
+                  />
+                  <Image
+                    src={images[currentImageIndex]}
+                    alt={`Review image ${currentImageIndex + 1}`}
+                    maxH="300px"
+                    objectFit="cover"
+                  />
+                  <IconButton
+                    icon={<ChevronRightIcon />}
+                    onClick={nextImage}
+                    position="absolute"
+                    right={-6}
+                    zIndex={2}
+                    bg="white"
+                    rounded="full"
+                    border="1px solid"
+                    borderColor="gray.200"
+                  />
+                </Flex>
+                <HStack justify="center" mt={2} spacing={2}>
+                  {images.map((_, index) => (
+                    <Box
+                      key={index}
+                      w="8px"
+                      h="8px"
+                      borderRadius="full"
+                      bg={index === currentImageIndex ? "blue.500" : "gray.300"}
+                    />
+                  ))}
+                </HStack>
+              </Box>
               <form onSubmit={handleSubmit}>
                 <VStack spacing={6}>
                   <Input

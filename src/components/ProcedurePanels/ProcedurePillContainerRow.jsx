@@ -47,7 +47,9 @@ export default function ProcedurePillContainerRow() {
               state: item.state,
               insurance: item.insurance_actual,
               medication: item.insurance,
-              website: item.website
+              website: item.website,
+              star_rating: item.star_rating || 0,
+              number_reviews: item.number_reviews || 0
             });
           } else {
             const existing = proceduresMap.get(key);
@@ -249,6 +251,8 @@ export default function ProcedurePillContainerRow() {
               procedure={proc.procedure}
               price={proc.price}
               medication={proc.medication}
+              rating={proc.star_rating}
+              reviewCount={proc.number_reviews}
             />
           ))}
         </Grid>
