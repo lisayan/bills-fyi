@@ -179,11 +179,12 @@ export default function HomePage() {
                             size="lg"
                             fontWeight="bold"
                             borderRadius="full"
-                            borderWidth={2}
+                            border="2px solid"
                             borderColor="white"
                             _hover={{ bg: "var(--color-secondary)" }}
                             onClick={scrollToProcedurePanels}
-                            style={{ boxShadow: '0 0 0 2px rgba(255, 255, 255, 1.0)' }}
+                            h="48px"
+                            px={6}
                         >
                             See Providers and Prices
                         </Button>
@@ -191,15 +192,17 @@ export default function HomePage() {
                             as={Link}
                             to="/join"
                             bg="white"
-                            color="#4A148C"
+                            color="var(--color-primary)"
                             size="lg"
                             fontWeight="bold"
                             borderRadius="full"
-                            borderWidth={2}
-                            borderColor="#4A148C"
-                            _hover={{ bg: "#4A148C", color: "white" }}
+                            border="2px solid"
+                            borderColor="var(--color-primary)"
+                            _hover={{ bg: "var(--color-secondary)", color: "white" }}
                             target="_blank"
                             rel="noopener noreferrer"
+                            h="48px"
+                            px={6}
                         >
                             Find Drug for You
                         </Button>
