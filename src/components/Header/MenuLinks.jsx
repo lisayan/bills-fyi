@@ -27,14 +27,14 @@ export default function MenuLinks({ isOpen, onSignUpClick, onMissionClick, onPri
         <MenuItem to="/">
           <Text fontSize="med" fontWeight="bold" color="black">Home</Text>
         </MenuItem>
+        <MenuItem to="/about">
+          <Text fontSize="med" fontWeight="bold" color="black">About the Team</Text>
+        </MenuItem>
         <MenuItem to="/join" target="_blank" rel="noopener noreferrer">
           <Text fontSize="med" fontWeight="bold" color="black">Get Started</Text>
         </MenuItem>
-        <MenuItem onClick={(e) => {
-          e.preventDefault();
-          onMissionClick();
-        }}>
-          <Text fontSize="med" fontWeight="bold" color="black">Learn more</Text>
+        <MenuItem to="/learn_more">
+          <Text fontSize="med" fontWeight="bold" color="black">Learn More</Text>
         </MenuItem>
         <Box position="relative">
           <Button

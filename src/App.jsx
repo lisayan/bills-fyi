@@ -36,6 +36,8 @@ import About from './pages/About';
 import JoinForm from './pages/JoinForm';
 import TermsOfService from './pages/Terms';
 import Privacy from './pages/Privacy';
+import LearnMore from './pages/LearnMore';
+
 export default function App() {
   return (
     <>
@@ -75,6 +77,7 @@ export default function App() {
           <Route path="/join" element={<JoinForm/>}/>
           <Route path="/terms" element={<TermsOfService/>}/>
           <Route path="/privacy" element={<Privacy/>}/>
+          <Route path="/learn_more" element={<LearnMore/>}/>
         </Routes>
       </Router>
     </>
