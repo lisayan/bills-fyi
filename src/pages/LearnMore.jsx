@@ -1,11 +1,17 @@
 import React from 'react';
 import Header from "../components/Header";
 import { Box, Text, Container, UnorderedList, ListItem, Heading, VStack, Divider } from "@chakra-ui/react";
+import { useNavigate } from 'react-router-dom';
 
 export default function LearnMore() {
+    const navigate = useNavigate();
+
     return (
         <div>
-            <Header />
+            <Header onPricesClick={() => {
+                sessionStorage.setItem('scrollToPrices', 'true');
+                navigate('/');
+            }} />
             <Box 
                 paddingTop="120px" 
                 minHeight="100vh"

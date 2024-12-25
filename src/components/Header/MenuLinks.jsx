@@ -124,7 +124,7 @@ export default function MenuLinks({ isOpen, onSignUpClick, onMissionClick, onPri
           leftIcon={<Icon as={FaDollarSign} />}
           rightIcon={
             <Tooltip 
-              label="See costs of Ozempic, Wegovy, and other weight loss medications." 
+              label="See costs of and Ozempic, Wegovy, and other weight loss medications." 
               aria-label="Cart information"
               placement="bottom-end"
               closeOnClick={false}

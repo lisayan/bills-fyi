@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from "../components/Header";
+import { useNavigate } from 'react-router-dom';
 import { Container, VStack, Box, Text, Image, Link, Heading, SimpleGrid } from "@chakra-ui/react";
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import ethan from '../images/ethan.png';
@@ -7,9 +8,14 @@ import lisa from '../images/lisa.png';
 import serena from "../images/serena.png";
 
 export default function AboutPage() {
+    const navigate = useNavigate();
+
     return (
         <div>
-            <Header />
+            <Header onPricesClick={() => {
+                sessionStorage.setItem('scrollToPrices', 'true');
+                navigate('/');
+            }} />
             <Container maxW="6xl" py={40} px={8}>
                 <VStack spacing={6} align="center" mb={16}>
                     <Heading 
@@ -21,10 +27,10 @@ export default function AboutPage() {
                         bgClip="text"
                         letterSpacing="tight"
                     >
-                        Meet the Leadership Team
+                        We believe in transparency
                     </Heading>
                     <Text fontSize="xl" textAlign="center" color="gray.600" maxW="3xl">
-                        We've combined the best of healthcare leaders and enterprise SaaS experts to lead us towards reducing financial complexity.
+                        We've combined the best of healthcare leaders and enterprise SaaS experts to make it easier for you to find the best GLP-1 solution tailored to your needs.
                     </Text>
                 </VStack>
 
@@ -38,12 +44,12 @@ export default function AboutPage() {
                         </Text>
                         <Text fontSize="lg" fontStyle="italic" color="gray.700">
                             Sincerely,<br/>
-                            Ethan, Lisa, and Serena
+                            The Turnip Health Team
                         </Text>
                     </VStack>
                 </Box>
 
-                <SimpleGrid columns={[1, null, 3]} spacing={10} justifyItems="center">
+                {/* <SimpleGrid columns={[1, null, 3]} spacing={10} justifyItems="center">
                     <VStack spacing={4}>
                         <Box 
                             borderRadius="xl" 
@@ -91,7 +97,7 @@ export default function AboutPage() {
                             LinkedIn <ExternalLinkIcon mx='2px' />
                         </Link>
                     </VStack>
-                </SimpleGrid>
+                </SimpleGrid> */}
             </Container>
         </div>
     )

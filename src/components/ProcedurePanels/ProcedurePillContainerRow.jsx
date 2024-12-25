@@ -57,7 +57,7 @@ export default function ProcedurePillContainerRow() {
           if (!proceduresMap.has(key)) {
             proceduresMap.set(key, {
               procedure: item.procedure,
-              price: parseFloat(item.price_0_25) || 0,
+              price: parseFloat(item.insurance === "Compounded Tirzepatide" ? item.price_2_5 : item.price_0_25) || 0,
               count: 1,
               state: item.state,
               insurance: item.insurance_actual,
@@ -68,7 +68,7 @@ export default function ProcedurePillContainerRow() {
             });
           } else {
             const existing = proceduresMap.get(key);
-            existing.price += parseFloat(item.price_0_25) || 0;
+            existing.price += parseFloat(item.insurance === "Compounded Tirzepatide" ? item.price_2_5 : item.price_0_25) || 0;
             existing.count += 1;
           }
         });
@@ -117,7 +117,18 @@ export default function ProcedurePillContainerRow() {
         
         return matchesSearch && matchesState && matchesInsurance && matchesMedication && matchesPrice;
       })
-      .sort((a, b) => a.procedure.localeCompare(b.procedure));
+      .sort((a, b) => {
+        // Check if either procedure contains "Mochi Health"
+        const isMochiA = a.procedure.includes('Mochi Health');
+        const isMochiB = b.procedure.includes('Mochi Health');
+
+        // If one is Mochi Health and the other isn't, prioritize Mochi Health
+        if (isMochiA && !isMochiB) return -1;
+        if (!isMochiA && isMochiB) return 1;
+
+        // If neither or both are Mochi Health, sort alphabetically
+        return a.procedure.localeCompare(b.procedure);
+      });
   }, [procedures, searchTerm, selectedState, selectedInsurance, selectedMedications, selectedPriceRange]);
 
   const initialItemsToShow = useBreakpointValue({ base: 4, sm: 6, md: 8, lg: 12 });
@@ -276,36 +287,91 @@ export default function ProcedurePillContainerRow() {
             </MenuList>
           </Menu>
 
-          <Wrap justify="center" spacing={2}>
-            {['All', 'Ozempic', 'Wegovy', 'Mounjaro', 'Zepbound'].map((medication) => (
-              <WrapItem key={medication}>
-                <Button
+          <Menu>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full">
+              <Flex alignItems="center">
+                <Text mr={2}>Medication:</Text>
+                <Text fontWeight="bold">
+                  {selectedMedications.includes('All') 
+                    ? 'All' 
+                    : selectedMedications.length > 1 
+                      ? `${selectedMedications.length} selected` 
+                      : selectedMedications[0]}
+                </Text>
+              </Flex>
+            </MenuButton>
+            <MenuList maxHeight="200px" overflowY="auto">
+              {['All', 'Ozempic', 'Wegovy', 'Mounjaro', 'Zepbound', 'Compounded Semaglutide', 'Compounded Tirzepatide'].map((medication) => (
+                <MenuItem 
+                  key={medication} 
                   onClick={() => handleMedicationChange(medication)}
-                  isActive={selectedMedications.includes(medication)}
-                  bg={selectedMedications.includes(medication) ? "blue.100" : "gray.100"}
-                  color="black"
-                  _hover={{
-                    bg: "gray.200",
-                  }}
-                  _active={{
-                    bg: "var(--color-secondary)",
-                  }}
-                  borderRadius="full"
-                  size={buttonSize}
-                  fontSize={fontSize}
+                  bg={selectedMedications.includes(medication) ? "blue.100" : "transparent"}
                 >
                   {medication}
-                </Button>
-              </WrapItem>
-            ))}
-          </Wrap>
-        </Stack>
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
+          </Stack>
       </Box>
 
-      <Box maxWidth="1200px" mx="auto" px={2}>
+      {/* Procedures */}
+      <Box maxWidth="1200px" mx="auto">
+        {/* Featured Provider Spotlight */}
+        {sortedAndFilteredProcedures.some(proc => 
+          proc.procedure.includes('Mochi Health') && 
+          proc.medication === 'Compounded Semaglutide'
+        ) && (
+          <Box 
+            mb={8} 
+            p={6}
+            borderRadius="xl"
+            border="1px solid"
+            borderColor="var(--color-secondary)"
+            maxWidth="400px"
+            mx="auto"
+          >
+            <Flex alignItems="center" mb={4} justifyContent="center">
+              <Text 
+                fontSize="lg" 
+                fontWeight="bold" 
+                color="white"
+                px={3}
+                py={1}
+                bg="var(--color-secondary)"
+                borderRadius="full"
+                mr={3}
+              >
+                Featured
+              </Text>
+            </Flex>
+            <Flex justifyContent="center">
+              {sortedAndFilteredProcedures
+                .filter(proc => 
+                  proc.procedure.includes('Mochi Health') && 
+                  proc.medication === 'Compounded Semaglutide'
+                )
+                .slice(0, 1)
+                .map((proc, index) => (
+                  <ProcedurePill
+                    key={`featured-${index}`}
+                    link={proc.link}
+                    website={proc.website}
+                    procedure={proc.procedure}
+                    price={proc.price}
+                    medication={proc.medication}
+                    rating={proc.star_rating}
+                    reviewCount={proc.number_reviews}
+                  />
+                ))}
+            </Flex>
+          </Box>
+        )}
+
+        {/* Title for all providers section */}
         <Flex alignItems="center" mb={4}>
           <Flex alignItems="center" position="relative">
-            <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" mr={2}>Providers</Text>
+            <Text fontSize="2xl" fontWeight="bold" mr={2}>All Providers</Text>
             <Tooltip
               label="Click on a provider to see reviews, price breakdowns, and more."
               aria-label="Procedures information"

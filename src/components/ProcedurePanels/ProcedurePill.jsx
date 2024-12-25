@@ -15,20 +15,25 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
 
   // Select images based on procedure name
   const getImages = () => {
-    if (procedure.toLowerCase().includes('eden')) {
+    if (!procedure) return [];  // Add safety check
+    
+    const procedureLower = procedure.toLowerCase();
+    if (procedureLower.includes('eden')) {
       return ['eden1.png', 'eden2.png', 'eden3.png'];
-    } else if (procedure.toLowerCase().includes('friday')) {
+    } else if (procedureLower.includes('friday')) {
       return ['fridays1.png', 'fridays2.png', 'fridays3.png'];
-    } else if (procedure.toLowerCase().includes('mochi')) {
+    } else if (procedureLower.includes('mochi')) {
       return ['mochi1.png', 'mochi2.png', 'mochi3.png'];
-    } else if (procedure.toLowerCase().includes('ro')) {
+    } else if (procedureLower.includes('ro')) {
       return ['ro1.png', 'ro2.png', 'ro3.png'];
-    } else if (procedure.toLowerCase().includes('good')) {
+    } else if (procedureLower.includes('good')) {
       return ['good1.png', 'good2.png', 'good3.png'];
     }
+    return [];  // Return empty array if no matches
   };
 
   const images = getImages();
+  const hasImages = images && images.length > 0;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,7 +55,7 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
       <Box
         onClick={onOpen}
         width="300px"
-        height="160px"
+        height="175px"
         borderRadius="xl"
         overflow="hidden"
         boxShadow="lg"
@@ -65,9 +70,11 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
         position="relative"
       >
         <Box bg="var(--color-primary)" height="8px" width="100%" />
-        <Tag size="sm" bg="green.100" color="gray.800" position="absolute" top="12px" left="24px">
-          Turnip Verified
-        </Tag>
+        {procedure === "Mochi Health" && (
+          <Tag size="sm" bg="green.100" color="gray.800" position="absolute" top="12px" left="24px">
+            Turnip Verified
+          </Tag>
+        )}
         <Tag 
           size="sm" 
           variant="solid" 
@@ -138,7 +145,7 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
           </ModalHeader>
           <ModalBody px={8} py={6}>
             <VStack spacing={6} align="stretch">
-            <HStack>
+              <HStack>
                 {[...Array(5)].map((_, i) => (
                   <Icon
                     key={i}
@@ -148,49 +155,54 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
                 ))}
                 <Text ml={2}>{rating} ({reviewCount})</Text>
               </HStack>
-              <Box position="relative">
-                <Flex justify="center" align="center" position="relative">
-                  <IconButton
-                    icon={<ChevronLeftIcon />}
-                    onClick={prevImage}
-                    position="absolute"
-                    left={-6}
-                    zIndex={2}
-                    bg="white"
-                    rounded="full"
-                    border="1px solid"
-                    borderColor="gray.200"
-                  />
-                  <Image
-                    src={images[currentImageIndex]}
-                    alt={`Review image ${currentImageIndex + 1}`}
-                    maxH="300px"
-                    objectFit="cover"
-                  />
-                  <IconButton
-                    icon={<ChevronRightIcon />}
-                    onClick={nextImage}
-                    position="absolute"
-                    right={-6}
-                    zIndex={2}
-                    bg="white"
-                    rounded="full"
-                    border="1px solid"
-                    borderColor="gray.200"
-                  />
-                </Flex>
-                <HStack justify="center" mt={2} spacing={2}>
-                  {images.map((_, index) => (
-                    <Box
-                      key={index}
-                      w="8px"
-                      h="8px"
-                      borderRadius="full"
-                      bg={index === currentImageIndex ? "blue.500" : "gray.300"}
+              
+              {/* Only show image carousel if there are images */}
+              {hasImages && (
+                <Box position="relative">
+                  <Flex justify="center" align="center" position="relative">
+                    <IconButton
+                      icon={<ChevronLeftIcon />}
+                      onClick={prevImage}
+                      position="absolute"
+                      left={-6}
+                      zIndex={2}
+                      bg="white"
+                      rounded="full"
+                      border="1px solid"
+                      borderColor="gray.200"
                     />
-                  ))}
-                </HStack>
-              </Box>
+                    <Image
+                      src={images[currentImageIndex]}
+                      alt={`Review image ${currentImageIndex + 1}`}
+                      maxH="300px"
+                      objectFit="cover"
+                    />
+                    <IconButton
+                      icon={<ChevronRightIcon />}
+                      onClick={nextImage}
+                      position="absolute"
+                      right={-6}
+                      zIndex={2}
+                      bg="white"
+                      rounded="full"
+                      border="1px solid"
+                      borderColor="gray.200"
+                    />
+                  </Flex>
+                  <HStack justify="center" mt={2} spacing={2}>
+                    {images.map((_, index) => (
+                      <Box
+                        key={index}
+                        w="8px"
+                        h="8px"
+                        borderRadius="full"
+                        bg={index === currentImageIndex ? "blue.500" : "gray.300"}
+                      />
+                    ))}
+                  </HStack>
+                </Box>
+              )}
+
               <form onSubmit={handleSubmit}>
                 <VStack spacing={6}>
                   <Input

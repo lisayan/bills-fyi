@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 
 export const setupAWSEnv = () => {
     const configuration = { 
-        region: 'us-east-1',
-        secretAccessKey: '', //re-add this 
-        accessKeyId: 'AKIA6ODUZTKWCTGNDVLT',
+        region: process.env.REACT_APP_AWS_REGION || 'us-east-1',
+        secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY,
+        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
     }
 
     AWS.config.update(configuration)
@@ -42,3 +42,9 @@ export const fetchData = async(tableName) => {
 }
 
 export default fetchData;
+
+// We can use this color scheme from your AWS_DDB component if it matches your brand
+const colors = {
+  primary: '#7C3AED', // Purple color if this is your brand color
+  background: '#FFFFFF'
+};
