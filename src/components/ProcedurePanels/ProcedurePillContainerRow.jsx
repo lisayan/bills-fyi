@@ -3,7 +3,8 @@ import { Link, useSearchParams } from 'react-router-dom';
 import {
   Box, Text, Flex, Grid, Input, Button, Menu, MenuButton, MenuList, MenuItem,
   InputGroup, InputLeftElement, Tooltip, Icon, ButtonGroup, Wrap, WrapItem,
-  Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton
+  Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton,
+  Stack, useBreakpointValue
 } from '@chakra-ui/react';
 import { ChevronDownIcon, SearchIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import ProcedurePill from './ProcedurePill.jsx';
@@ -28,6 +29,13 @@ export default function ProcedurePillContainerRow() {
     const price = searchParams.get('price');
     return price || 'All Prices';
   });
+
+  // Responsive values
+  const gridColumns = useBreakpointValue({ base: 1, sm: 2, md: 3, lg: 4 });
+  const spacing = useBreakpointValue({ base: 4, md: 6 });
+  const buttonSize = useBreakpointValue({ base: "sm", md: "md" });
+  const fontSize = useBreakpointValue({ base: "sm", md: "md" });
+  const padding = useBreakpointValue({ base: 4, md: 8 });
 
   useEffect(() => {
     const fetchProcedures = async () => {
@@ -77,12 +85,8 @@ export default function ProcedurePillContainerRow() {
         const sortedInsurances = Array.from(uniqueInsurances).sort();
 
         setStates(['All States', ...sortedStates]);
-
-        // Update insurance options
         const insuranceOptions = ['All Insurances', ...sortedInsurances];
         setInsurances(insuranceOptions);
-
-        // Set default insurance to "None" if it exists, otherwise "All Insurances"
         const defaultInsurance = insuranceOptions.includes('None') ? 'None' : 'All Insurances';
         setSelectedInsurance(defaultInsurance);
 
@@ -106,7 +110,6 @@ export default function ProcedurePillContainerRow() {
         const matchesState = selectedState === 'All States' || proc.state === selectedState;
         const matchesInsurance = selectedInsurance === 'All Insurances' || proc.insurance === selectedInsurance;
         const matchesMedication = selectedMedications.includes('All') || selectedMedications.includes(proc.medication);
-        
         const matchesPrice = selectedPriceRange === 'All Prices' || 
           (selectedPriceRange === '<$500' && proc.price < 500) ||
           (selectedPriceRange === '$500-$1000' && proc.price >= 500 && proc.price <= 1000) ||
@@ -117,10 +120,9 @@ export default function ProcedurePillContainerRow() {
       .sort((a, b) => a.procedure.localeCompare(b.procedure));
   }, [procedures, searchTerm, selectedState, selectedInsurance, selectedMedications, selectedPriceRange]);
 
-  const initialItemsToShow = 7;
+  const initialItemsToShow = useBreakpointValue({ base: 4, sm: 6, md: 8, lg: 12 });
   const displayedProcedures = showAll ? sortedAndFilteredProcedures : sortedAndFilteredProcedures.slice(0, initialItemsToShow);
 
-  // Update URL when medications change
   const handleMedicationChange = (medication) => {
     let newMedications;
     
@@ -134,11 +136,9 @@ export default function ProcedurePillContainerRow() {
       newMedications.push(medication);
     }
 
-    // Preserve the current search params but exclude 'popup'
     const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.delete('popup');  // Always remove popup parameter
+    newSearchParams.delete('popup');
 
-    // Update medication parameter
     if (newMedications.length === 1 && newMedications[0] === 'All') {
       newSearchParams.delete('medication');
     } else {
@@ -150,21 +150,18 @@ export default function ProcedurePillContainerRow() {
   };
 
   return (
-    <Box width="100%" maxWidth="1400px" mx="auto" pt={12} pb={20}>
+    <Box width="100%" maxWidth="1400px" mx="auto" pt={6} pb={10} px={padding}>
       <Modal isOpen={isPopupOpen} onClose={() => {
         setIsPopupOpen(false);
-        
-        // Get current URL and remove popup parameter while preserving others exactly as they are
         const currentUrl = window.location.href;
         const newUrl = currentUrl
-          .replace('?popup=true&', '?')  // If popup is first parameter
-          .replace('&popup=true', '')    // If popup is not first parameter
-          .replace('?popup=true', '');   // If popup is the only parameter
-        
+          .replace('?popup=true&', '?')
+          .replace('&popup=true', '')
+          .replace('?popup=true', '');
         window.history.replaceState({}, '', newUrl);
       }}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent mx={4}>
           <ModalCloseButton 
             bg="var(--color-secondary)"
             borderRadius="full"
@@ -173,112 +170,116 @@ export default function ProcedurePillContainerRow() {
               opacity: 0.8
             }}
           />
-          <ModalHeader>Which drug is right for you?</ModalHeader>
+          <ModalHeader fontSize={fontSize}>Which drug is right for you?</ModalHeader>
           <ModalBody pb={6}>
             {(selectedMedications.some(med => ['Ozempic', 'Wegovy', 'Mounjaro', 'Zepbound'].includes(med)) && 
               selectedPriceRange === '<$500') ? (
-              <Text>
-                You selected {selectedMedications.join(', ')} but your budget is &lt;$500.  {/* Two spaces here */}
+              <Text fontSize={fontSize}>
+                You selected {selectedMedications.join(', ')} but your budget is &lt;$500.
                 {selectedMedications.length === 1 ? selectedMedications[0] : 'These medications are'} is usually 
                 &gt;$1000. We recommend exploring compounded semaglutide or tirzepatide.
               </Text>
             ) : (
-              <Text>Brand names like Ozempic, Wegovy, Mounjaro, and Zepbound are more expensive than compounded alternatives (semaglutide and tirzepatide). Brand names are usually over $1000, while compounds are less than $500.</Text>
+              <Text fontSize={fontSize}>
+                Brand names like Ozempic, Wegovy, Mounjaro, and Zepbound are more expensive than compounded alternatives (semaglutide and tirzepatide). Brand names are usually over $1000, while compounds are less than $500.
+              </Text>
             )}
           </ModalBody>
         </ModalContent>
       </Modal>
 
-      {/* Title and Subtitle */}
-      <Box mb={8} textAlign="center">
-        <Text fontSize="3xl" fontWeight="bold" mb={2}>See GLP-1 providers for your needs.</Text>
-        <Text fontSize="lg" color="gray.600" mb={6}>
+      <Box mb={6} textAlign="center">
+        <Text fontSize={{ base: "2xl", md: "3xl" }} fontWeight="bold" mb={2}>
+          See GLP-1 providers for your needs.
+        </Text>
+        <Text fontSize={{ base: "md", md: "lg" }} color="gray.600" mb={4}>
           We are actively growing this to more cities, providers, and GLP-1 medications.
         </Text>
 
-        {/* Search Bar */}
-        <Box maxWidth="1200px" mx="auto" mb={6}>
-          <InputGroup size="lg">
+        <Box maxWidth="1200px" mx="auto" mb={4} px={2}>
+          <InputGroup size={buttonSize}>
             <InputLeftElement pointerEvents="none" height="100%">
-              <SearchIcon color="gray.300" boxSize={6} />
+              <SearchIcon color="gray.300" boxSize={4} />
             </InputLeftElement>
             <Input
               placeholder="Search providers..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               borderRadius="full"
-              fontSize="lg"
-              py={6}
-              pl={12}
-              pr={6}
+              fontSize={fontSize}
+              py={4}
+              pl={10}
+              pr={4}
             />
           </InputGroup>
         </Box>
 
-        {/* Filters */}
-        <Flex justifyContent="center" mb={8}>
-          <Flex gap={4} alignItems="center">
-            <Menu>
-              <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full">
-                <Flex alignItems="center">
-                  <Text mr={2}>State:</Text>
-                  <Text fontWeight="bold">{selectedState}</Text>
-                </Flex>
-              </MenuButton>
-              <MenuList maxHeight="200px" overflowY="auto">
-                {states.map((state, index) => (
-                  <MenuItem key={index} onClick={() => setSelectedState(state)}>{state}</MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
+        <Stack 
+          direction={{ base: "column", md: "row" }} 
+          spacing={4} 
+          mb={6}
+          px={2}
+          align="center"
+          justify="center"
+        >
+          <Menu>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full" size={buttonSize}>
+              <Flex alignItems="center">
+                <Text mr={2} fontSize={fontSize}>State:</Text>
+                <Text fontWeight="bold" fontSize={fontSize}>{selectedState}</Text>
+              </Flex>
+            </MenuButton>
+            <MenuList maxHeight="200px" overflowY="auto">
+              {states.map((state, index) => (
+                <MenuItem key={index} onClick={() => setSelectedState(state)} fontSize={fontSize}>{state}</MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
 
-            <Menu>
-              <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full">
-                <Flex alignItems="center">
-                  <Text mr={2}>Insurance:</Text>
-                  <Text fontWeight="bold">{selectedInsurance}</Text>
-                </Flex>
-              </MenuButton>
-              <MenuList maxHeight="200px" overflowY="auto">
-                {insurances.map((insurance, index) => (
-                  <MenuItem key={index} onClick={() => setSelectedInsurance(insurance)}>{insurance}</MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
+          <Menu>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full" size={buttonSize}>
+              <Flex alignItems="center">
+                <Text mr={2} fontSize={fontSize}>Insurance:</Text>
+                <Text fontWeight="bold" fontSize={fontSize}>{selectedInsurance}</Text>
+              </Flex>
+            </MenuButton>
+            <MenuList maxHeight="200px" overflowY="auto">
+              {insurances.map((insurance, index) => (
+                <MenuItem key={index} onClick={() => setSelectedInsurance(insurance)} fontSize={fontSize}>{insurance}</MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
 
-            <Menu>
-              <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full">
-                <Flex alignItems="center">
-                  <Text mr={2}>Price (per month):</Text>
-                  <Text fontWeight="bold">{selectedPriceRange}</Text>
-                </Flex>
-              </MenuButton>
-              <MenuList>
-                {['All Prices', '<$500', '$500-$1000', '>$1000'].map((price) => (
-                  <MenuItem key={price} onClick={() => {
-                    setSelectedPriceRange(price);
-                    
-                    // Update URL params while preserving existing params (except popup)
-                    const newSearchParams = new URLSearchParams(searchParams);
-                    newSearchParams.delete('popup');  // Add this line to ensure popup param is removed
-                    
-                    if (price === 'All Prices') {
-                      newSearchParams.delete('price');
-                    } else {
-                      newSearchParams.set('price', price);
-                    }
-                    setSearchParams(newSearchParams);
-                  }}>
-                    {price}
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
+          <Menu>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full" size={buttonSize}>
+              <Flex alignItems="center">
+                <Text mr={2} fontSize={fontSize}>Price:</Text>
+                <Text fontWeight="bold" fontSize={fontSize}>{selectedPriceRange}</Text>
+              </Flex>
+            </MenuButton>
+            <MenuList>
+              {['All Prices', '<$500', '$500-$1000', '>$1000'].map((price) => (
+                <MenuItem key={price} onClick={() => {
+                  setSelectedPriceRange(price);
+                  const newSearchParams = new URLSearchParams(searchParams);
+                  newSearchParams.delete('popup');
+                  if (price === 'All Prices') {
+                    newSearchParams.delete('price');
+                  } else {
+                    newSearchParams.set('price', price);
+                  }
+                  setSearchParams(newSearchParams);
+                }} fontSize={fontSize}>
+                  {price}
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
 
-            <ButtonGroup isAttached variant="outline" borderRadius="full" overflow="hidden">
-              {['All', 'Ozempic', 'Wegovy', 'Mounjaro', 'Zepbound'].map((medication, index) => (
+          <Wrap justify="center" spacing={2}>
+            {['All', 'Ozempic', 'Wegovy', 'Mounjaro', 'Zepbound'].map((medication) => (
+              <WrapItem key={medication}>
                 <Button
-                  key={medication}
                   onClick={() => handleMedicationChange(medication)}
                   isActive={selectedMedications.includes(medication)}
                   bg={selectedMedications.includes(medication) ? "blue.100" : "gray.100"}
@@ -289,24 +290,22 @@ export default function ProcedurePillContainerRow() {
                   _active={{
                     bg: "var(--color-secondary)",
                   }}
-                  borderRadius={index === 0 ? "full" : index === 4 ? "full" : 0}
-                  borderLeftRadius={index === 0 ? "full" : 0}
-                  borderRightRadius={index === 4 ? "full" : 0}
+                  borderRadius="full"
+                  size={buttonSize}
+                  fontSize={fontSize}
                 >
                   {medication}
                 </Button>
-              ))}
-            </ButtonGroup>
-          </Flex>
-        </Flex>
+              </WrapItem>
+            ))}
+          </Wrap>
+        </Stack>
       </Box>
 
-      {/* Procedures */}
-      <Box maxWidth="1200px" mx="auto">
-        {/* Title for procedure cards section with info icon */}
+      <Box maxWidth="1200px" mx="auto" px={2}>
         <Flex alignItems="center" mb={4}>
           <Flex alignItems="center" position="relative">
-            <Text fontSize="2xl" fontWeight="bold" mr={2}>Providers</Text>
+            <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" mr={2}>Providers</Text>
             <Tooltip
               label="Click on a provider to see reviews, price breakdowns, and more."
               aria-label="Procedures information"
@@ -322,7 +321,7 @@ export default function ProcedurePillContainerRow() {
           </Flex>
         </Flex>
 
-        <Grid templateColumns="repeat(4, 1fr)" gap={6} justifyContent="center">
+        <Grid templateColumns={`repeat(${gridColumns}, 1fr)`} gap={spacing} justifyContent="center">
           {displayedProcedures.map((proc, index) => (
             <ProcedurePill
               key={index}
@@ -336,8 +335,9 @@ export default function ProcedurePillContainerRow() {
             />
           ))}
         </Grid>
+        
         {!showAll && sortedAndFilteredProcedures.length > initialItemsToShow && (
-          <Flex justifyContent="center" mt={8}>
+          <Flex justifyContent="center" mt={6}>
             <Button
               onClick={() => setShowAll(true)}
               borderColor="var(--color-primary)"
@@ -345,6 +345,7 @@ export default function ProcedurePillContainerRow() {
               color="white"
               bg="var(--color-primary)"
               _hover={{ opacity: 0.8 }}
+              size={buttonSize}
             >
               Show More
             </Button>

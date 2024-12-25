@@ -18,7 +18,7 @@ export default function Headline({ onShopClick }) {
     },
     {
       icon: providerIcon,
-      title: "Meet our team of experts",
+      title: "Meet our team of experts", 
       description: "Learn about the team of doctors and engineers working to make GLP-1 medication pricing transparent",
       buttonText: "About Us",
       buttonLink: "/about",
@@ -33,36 +33,49 @@ export default function Headline({ onShopClick }) {
   ];
 
   return (
-    <Box width="100%" bg="white" py={16}>
-      <Container maxW="container.xl" px={4}>
+    <Box width="100%" bg="white" py={[8, 12, 16]} px={[4, 6, 8]}>
+      <Container maxW="container.xl">
         <Heading
           as="h2"
-          size="2xl"
+          size={["xl", "2xl"]}
           textAlign="center"
-          mb={16}
+          mb={[8, 12, 16]}
           fontWeight="normal"
           bgGradient="linear(to-r, purple.600, purple.400)"
           bgClip="text"
-          fontSize={["3xl", "4xl", "5xl"]} // Responsive font size
-          lineHeight={1.2} // Adjust line height
-          width="100%"
+          px={[2, 4]}
           mx="auto"
-          px={4} // Add padding on the sides
-          whiteSpace="normal" // Ensure text wraps properly
+          lineHeight={[1.4, 1.2]}
         >
           Wondering how to get started? It's as easy as 1-2-3!
         </Heading>
 
-        <SimpleGrid columns={[1, null, 3]} spacing={12}>
+        <SimpleGrid 
+          columns={[1, 2, 3]} 
+          spacing={[8, 10, 12]}
+          px={[2, 4]}
+        >
           {steps.map((step, index) => (
-            <VStack key={index} align="center" spacing={6}>
+            <VStack 
+              key={index} 
+              align="center" 
+              spacing={[4, 5, 6]}
+              p={[4, 6]}
+              borderRadius="xl"
+              transition="all 0.3s"
+              _hover={{
+                transform: "translateY(-4px)",
+                boxShadow: "lg"
+              }}
+            >
               <Center
                 bg="white"
-                w="120px"
-                h="120px"
+                w={["100px", "110px", "120px"]}
+                h={["100px", "110px", "120px"]}
                 borderRadius="full"
-                mb={4}
+                mb={[2, 3, 4]}
                 overflow="hidden"
+                boxShadow="md"
               >
                 <Image
                   src={step.icon}
@@ -74,7 +87,7 @@ export default function Headline({ onShopClick }) {
               </Center>
               <Heading
                 as="h3"
-                size="lg"
+                size={["md", "lg"]}
                 textAlign="center"
                 fontWeight="bold"
                 bgGradient="linear(to-r, purple.600, purple.400)"
@@ -83,7 +96,7 @@ export default function Headline({ onShopClick }) {
                 {step.title}
               </Heading>
               <Text
-                fontSize="lg"
+                fontSize={["md", "lg"]}
                 textAlign="center"
                 color="black"
               >
@@ -96,11 +109,13 @@ export default function Headline({ onShopClick }) {
                 bgGradient="linear(to-r, purple.600, purple.400)"
                 bgClip="text"
                 textDecoration="underline"
-                fontSize="lg"
+                fontSize={["md", "lg"]}
                 alignSelf="center"
                 _hover={{
-                  opacity: 0.8
+                  opacity: 0.8,
+                  transform: "translateX(4px)"
                 }}
+                transition="all 0.3s"
               >
                 {step.buttonText} →
               </Button>
