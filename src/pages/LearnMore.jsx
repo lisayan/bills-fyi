@@ -29,7 +29,7 @@ export default function LearnMore() {
                                 bgClip="text"
                                 letterSpacing="tight"
                             >
-                                Starting a GLP-1 Medication: What to Expect on Your Journey to Better Health
+                                Starting GLP-1s: What to Expect
                             </Heading>
 
                             <Text 
