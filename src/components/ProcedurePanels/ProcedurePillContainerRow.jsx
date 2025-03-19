@@ -17,8 +17,6 @@ export default function ProcedurePillContainerRow() {
   const [procedures, setProcedures] = useState([]);
   const [states, setStates] = useState(['All States']);
   const [selectedState, setSelectedState] = useState('All States');
-  const [insurances, setInsurances] = useState(['All Insurances']);
-  const [selectedInsurance, setSelectedInsurance] = useState('All Insurances');
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedMedications, setSelectedMedications] = useState(() => {
     const medication = searchParams.get('medication');
@@ -44,14 +42,12 @@ export default function ProcedurePillContainerRow() {
         const uniqueProcedures = new Set();
         const uniqueMedications = new Set();
         const uniqueStates = new Set();
-        const uniqueInsurances = new Set();
         const proceduresMap = new Map();
 
         rawData.forEach(item => {
           uniqueProcedures.add(item.procedure);
           uniqueMedications.add(item.insurance);
           uniqueStates.add(item.state);
-          uniqueInsurances.add(item.insurance_actual);
 
           const key = `${item.procedure}-${item.insurance}`;
           if (!proceduresMap.has(key)) {
@@ -82,13 +78,7 @@ export default function ProcedurePillContainerRow() {
         setProcedures(proceduresList);
 
         const sortedStates = Array.from(uniqueStates).sort();
-        const sortedInsurances = Array.from(uniqueInsurances).sort();
-
         setStates(['All States', ...sortedStates]);
-        const insuranceOptions = ['All Insurances', ...sortedInsurances];
-        setInsurances(insuranceOptions);
-        const defaultInsurance = insuranceOptions.includes('None') ? 'None' : 'All Insurances';
-        setSelectedInsurance(defaultInsurance);
 
       } catch (error) {
         console.error('Error fetching procedures:', error);
@@ -108,14 +98,13 @@ export default function ProcedurePillContainerRow() {
       .filter(proc => {
         const matchesSearch = proc.procedure.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesState = selectedState === 'All States' || proc.state === selectedState;
-        const matchesInsurance = selectedInsurance === 'All Insurances' || proc.insurance === selectedInsurance;
         const matchesMedication = selectedMedications.includes('All') || selectedMedications.includes(proc.medication);
         const matchesPrice = selectedPriceRange === 'All Prices' || 
           (selectedPriceRange === '<$500' && proc.price < 500) ||
           (selectedPriceRange === '$500-$1000' && proc.price >= 500 && proc.price <= 1000) ||
           (selectedPriceRange === '>$1000' && proc.price > 1000);
         
-        return matchesSearch && matchesState && matchesInsurance && matchesMedication && matchesPrice;
+        return matchesSearch && matchesState && matchesMedication && matchesPrice;
       })
       .sort((a, b) => {
         // Check if either procedure contains "Mochi Health"
@@ -129,7 +118,7 @@ export default function ProcedurePillContainerRow() {
         // If neither or both are Mochi Health, sort alphabetically
         return a.procedure.localeCompare(b.procedure);
       });
-  }, [procedures, searchTerm, selectedState, selectedInsurance, selectedMedications, selectedPriceRange]);
+  }, [procedures, searchTerm, selectedState, selectedMedications, selectedPriceRange]);
 
   const initialItemsToShow = useBreakpointValue({ base: 4, sm: 6, md: 8, lg: 12 });
   const displayedProcedures = showAll ? sortedAndFilteredProcedures : sortedAndFilteredProcedures.slice(0, initialItemsToShow);
@@ -250,20 +239,6 @@ export default function ProcedurePillContainerRow() {
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full" size={buttonSize}>
               <Flex alignItems="center">
-                <Text mr={2} fontSize={fontSize}>Insurance:</Text>
-                <Text fontWeight="bold" fontSize={fontSize}>{selectedInsurance}</Text>
-              </Flex>
-            </MenuButton>
-            <MenuList maxHeight="200px" overflowY="auto">
-              {insurances.map((insurance, index) => (
-                <MenuItem key={index} onClick={() => setSelectedInsurance(insurance)} fontSize={fontSize}>{insurance}</MenuItem>
-              ))}
-            </MenuList>
-          </Menu>
-
-          <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="gray.100" _hover={{ bg: "gray.200" }} borderRadius="full" size={buttonSize}>
-              <Flex alignItems="center">
                 <Text mr={2} fontSize={fontSize}>Price:</Text>
                 <Text fontWeight="bold" fontSize={fontSize}>{selectedPriceRange}</Text>
               </Flex>
@@ -305,7 +280,7 @@ export default function ProcedurePillContainerRow() {
                 <MenuItem 
                   key={medication} 
                   onClick={() => handleMedicationChange(medication)}
-                  bg={selectedMedications.includes(medication) ? "blue.100" : "transparent"}
+                  bg={selectedMedications.includes(medication) ? "gray.200" : "transparent"}
                 >
                   {medication}
                 </MenuItem>
