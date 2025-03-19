@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Box, Text, HStack, VStack, Tag, Modal, ModalOverlay, ModalContent,
-  ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Input, Button,
+  ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Button,
   Flex, Icon, Image, IconButton
 } from '@chakra-ui/react';
 import { FaStar } from 'react-icons/fa';
@@ -10,7 +10,6 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 export default function ProcedurePill({ link, website, procedure, quantity, refills, price, rating, reviewCount, medication }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [email, setEmail] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Select images based on procedure name
@@ -35,13 +34,6 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
   const images = getImages();
   const hasImages = images && images.length > 0;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle email submission logic here
-    console.log('Email submitted:', email);
-    // Redirect to the website or perform any other action
-  };
-
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
   };
@@ -52,7 +44,7 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
 
   return (
     <>
-      <Box
+      <Flex
         onClick={onOpen}
         width="300px"
         height="175px"
@@ -68,6 +60,8 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
           boxShadow: "xl",
         }}
         position="relative"
+        m={2}
+        direction="column"
       >
         <Box bg="var(--color-primary)" height="8px" width="100%" />
         {procedure === "Mochi Health" && (
@@ -86,7 +80,7 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
         >
           Ships
         </Tag>
-        <VStack align="flex-start" spacing={2} p={6}>
+        <VStack align="flex-start" spacing={2} p={6} flex={1}>
           <HStack justify="space-between" w="100%" alignItems="flex-start">
             <VStack align="flex-start" spacing={0}>
               <Text fontSize="24px" fontWeight="bold" color="black" lineHeight="shorter">
@@ -119,7 +113,7 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
             </Text>
           </HStack>
         </VStack>
-      </Box>
+      </Flex>
 
       <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
         <ModalOverlay />
@@ -203,35 +197,17 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
                 </Box>
               )}
 
-              <form onSubmit={handleSubmit}>
-                <VStack spacing={6}>
-                  <Input
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    type="email"
-                    required
-                    size="lg"
-                  />
-                  <Button 
-                    as="a" 
-                    href={website} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    colorScheme="green" 
-                    width="100%" 
-                    size="lg"
-                    onClick={(e) => {
-                      if (!email) {
-                        e.preventDefault();
-                        alert("Please enter your email before continuing.");
-                      }
-                    }}
-                  >
-                    Continue to Website
-                  </Button>
-                </VStack>
-              </form>
+              <Button 
+                as="a" 
+                href={website} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                colorScheme="green" 
+                width="100%" 
+                size="lg"
+              >
+                Continue to Website
+              </Button>
             </VStack>
           </ModalBody>
         </ModalContent>
