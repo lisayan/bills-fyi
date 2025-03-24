@@ -8,6 +8,25 @@ import {
 import { FaStar } from 'react-icons/fa';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
+const PartialStar = ({ fill }) => {
+  return (
+    <Box position="relative" display="inline-block">
+      {/* Background star (gray) */}
+      <Icon as={FaStar} color="gray.300" />
+      {/* Foreground star (yellow, clipped) */}
+      <Box
+        position="absolute"
+        top={0}
+        left={0}
+        width={`${fill * 100}%`}
+        overflow="hidden"
+      >
+        <Icon as={FaStar} color="yellow.400" />
+      </Box>
+    </Box>
+  );
+};
+
 export default function ProcedurePill({ link, website, procedure, quantity, refills, price, rating, reviewCount, medication }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -47,7 +66,7 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
       <Flex
         onClick={onOpen}
         width="300px"
-        height="175px"
+        height="190px"
         borderRadius="xl"
         overflow="hidden"
         boxShadow="lg"
@@ -63,7 +82,13 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
         m={2}
         direction="column"
       >
-        <Box bg="var(--color-primary)" height="8px" width="100%" />
+        <Box 
+          bg="var(--color-primary, #7013C4)" 
+          height="8px" 
+          width="100%" 
+          position="relative"
+          zIndex={1}
+        />
         {procedure === "Mochi Health" && (
           <Tag size="sm" bg="green.100" color="gray.800" position="absolute" top="12px" left="24px">
             Turnip Verified
@@ -80,7 +105,7 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
         >
           Ships
         </Tag>
-        <VStack align="flex-start" spacing={2} p={6} flex={1}>
+        <VStack align="flex-start" spacing={2} p={6} flex={1} justify="space-between">
           <HStack justify="space-between" w="100%" alignItems="flex-start">
             <VStack align="flex-start" spacing={0}>
               <Text fontSize="24px" fontWeight="bold" color="black" lineHeight="shorter">
@@ -99,15 +124,12 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
               </Text>
             </VStack>
           </HStack>
-          <HStack spacing={1}>
-            {[...Array(5)].map((_, i) => (
-              <Icon
-                key={i}
-                as={FaStar}
-                boxSize={3}
-                color={i < Math.floor(rating) ? "yellow.400" : "gray.300"}
-              />
-            ))}
+          
+          <HStack spacing={1} w="100%">
+            {[...Array(5)].map((_, i) => {
+              const fill = Math.min(Math.max(rating - i, 0), 1);
+              return <PartialStar key={i} fill={fill} />;
+            })}
             <Text fontSize="sm" color="gray.600" ml={1}>
               {rating} ({reviewCount})
             </Text>
@@ -140,13 +162,10 @@ export default function ProcedurePill({ link, website, procedure, quantity, refi
           <ModalBody px={8} py={6}>
             <VStack spacing={6} align="stretch">
               <HStack>
-                {[...Array(5)].map((_, i) => (
-                  <Icon
-                    key={i}
-                    as={FaStar}
-                    color={i < Math.floor(rating) ? "yellow.400" : "gray.300"}
-                  />
-                ))}
+                {[...Array(5)].map((_, i) => {
+                  const fill = Math.min(Math.max(rating - i, 0), 1);
+                  return <PartialStar key={i} fill={fill} />;
+                })}
                 <Text ml={2}>{rating} ({reviewCount})</Text>
               </HStack>
               

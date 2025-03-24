@@ -40,14 +40,14 @@ export default function Headline({ onShopClick }) {
           size={["xl", "2xl"]}
           textAlign="center"
           mb={[8, 12, 16]}
-          fontWeight="normal"
+          fontWeight="bold"
           bgGradient="linear(to-r, purple.600, purple.400)"
           bgClip="text"
           px={[2, 4]}
           mx="auto"
           lineHeight={[1.4, 1.2]}
         >
-          Wondering how to get started? It's as easy as 1-2-3!
+          Wondering how to get started?
         </Heading>
 
         <SimpleGrid 
